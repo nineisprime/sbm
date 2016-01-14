@@ -1,0 +1,21 @@
+@article{zhangminimax,
+	  title={MINIMAX RATES OF COMMUNITY DETECTION IN 
+		  	STOCHASTIC BLOCK MODEL},
+	  author={Zhang, Anderson Y and Zhou, Harrison H}
+}
+
+@article{gao2015achieving,
+  title={Achieving Optimal Misclassification Proportion in Stochastic Block Model},
+  author={Gao, Chao and Ma, Zongming and Zhang, Anderson Y and Zhou, Harrison H},
+  journal={arXiv preprint arXiv:1505.03772},
+  year={2015}
+}
+
+@article{jog2015information,
+  title={Information-theoretic bounds for exact recovery in weighted stochastic block models using the Renyi divergence},
+  author={Jog, Varun and Loh, Po-Ling},
+  journal={arXiv preprint arXiv:1509.06418},
+  year={2015}
+}
+
+

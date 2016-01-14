@@ -1,0 +1,578 @@
+\documentclass{article}
+\usepackage{minx_math}
+ 
+\begin{document}
+
+\title{Community Detection in Colorful Graphs}
+\maketitle
+
+\section{Problem Set-up}
+
+Let $P = (P_0, P_1, ..., P_L)$ and $Q = (Q_0, Q_1, ..., Q_L)$ be discrete distributions over $L$ colors and $0$. Let $\sigma_0 : [n] \rightarrow K$ be the true clustering. For a pair $(i,j)$ in the same cluster ($\sigma_0(i) = \sigma_0(j)$), suppose $A_{ij} \sim P$ and for a pair $(i,j)$ in different clusters, we suppose $A_{ij} \sim Q$. \\
+
+We observe the colorful matrix $A$ but not $P$ and $Q$ and the goal is to recover the clusters. We refer to the setting where $P,Q$ are known as the oracle setting. \\
+
+Note that under the oracle setting, the log-likelihood of a clustering $\sigma$ is 
+\begin{align*}
+l(A \given \sigma) &= 
+  \sum_{i<j} \mathbf{1}_{\sigma(i) = \sigma(j)} \sum_{l=0}^L \log P_l \mathbf{1}_{A_{ij} = l} + 
+  \sum_{i<j} \mathbf{1}_{\sigma(i)\neq\sigma(j)} \sum_{l=0}^L \log Q_l \mathbf{1}_{A_{ij} = l} \\
+ &= \sum_{i<j} \mathbf{1}_{\sigma(i)=\sigma(j)} \sum_{l=0}^L \log \frac{P_l}{Q_l} \mathbf{1}_{A_{ij} = l} + \sum_{i<j} \sum_{l=0}^L \log Q_l \mathbf{1}_{A_{ij} = l} 
+\end{align*}
+
+Let $I_{tot} = -2 \log \sum_l \sqrt{P_l Q_l}$ be the $1/2$ Renyi-divergence between the distributions $P,Q$. 
+
+\section{Weak Recovery Under the Oracle Setting}
+
+\cite{zhangminimax} characterizes the minimax rate of weak recovery for Bernoulli $P,Q$. Their results and proofs can be extended in a straightforward manner to general discrete $P,Q$ under the oracle setting. 
+
+\begin{proposition} (Upper bound)
+Assume $\frac{n I_{tot}}{K \log K} \rightarrow \infty$. The maximum likelihood estimator $\hat{\sigma}$ in the oracle setting achieves:
+\[
+\sup_{\Theta(n, K, \beta, P, Q)} \E r(\hat{\sigma}, \sigma) \leq \left\{ 
+    \begin{array}{cc} 
+   \exp \left( - (1 + o(1)) \frac{nI_{tot}}{2} \right ), \, & K=2, \\
+   \exp \left( - (1 + o(1)) \frac{nI_{tot}}{\beta K} \right ), \,& K\geq 3
+  \end{array} \right. 
+\]   
+\end{proposition}
+
+\begin{proof}
+Proof of this proposition follows that of Theorem 3.2 in~\cite{zhangminimax}. We describe only the parts that need to be modified. 
+
+Because we have a different likelihood function, our $T(\sigma)$ takes on a different form from that of~\cite{zhangminimax} at the bottom of page 8:
+\[
+T(\sigma) = \sum_{i<j} \mathbf{1}_{\sigma(i) = \sigma(j)} \sum_{l=0}^L \log \frac{P_l}{Q_l} \mathbf{1}_{A_{ij} = l} 
+\]
+
+Let $\sigma_0$ denote the true community assignment. We make a mistake if for some other community assignment $\sigma$, we get $T(\sigma) > T(\sigma_0)$. The key part of the proof is to bound
+
+$$
+P_m \equiv P\left(\exists \sigma \,:\,  T(\sigma) > T(\sigma_0),\, d_H(\sigma, \sigma_0) = m \right)
+$$
+
+To that end, we bound the probability of error of a fixed $\sigma$ $m$-distant from $\sigma_0$ in Hamming distance. We will prove an analogue of Proposition 5.1 in~\cite{zhangminimax}:
+
+Let $\sigma$ be an arbitrary assignment satisfying $d(\sigma, \sigma_0) = m$. Let $X_i, Y_i$ be random variables such that
+\[
+X_i = \log \frac{P_l}{Q_l} \trm{ w.p. $P_l$} \qquad 
+Y_i = \log \frac{P_l}{Q_l} \trm{ w.p. $Q_l$} 
+\]
+and $\alpha, \gamma$ be integers where
+\[
+\alpha = | \{ (i,j) \,:\, \sigma_0(i) = \sigma_0(j) \wedge \sigma(i) \neq \sigma(j) \} | 
+\quad
+\gamma = | \{ (i,j) \,:\, \sigma_0(i) \neq \sigma_0(j) \wedge \sigma(i) = \sigma(j) \} | 
+\]
+
+Then
+\begin{align}
+P( T(\sigma) \geq T(\sigma_0) ) \leq 
+  P\left( \sum_{i=1}^\alpha X_i - \sum_{i=1}^\gamma Y_i < 0 \right) \leq 
+  \exp( - \frac{\gamma + \alpha}{2} I) \label{eqn:new_prop51}
+\end{align}
+
+Lemma 5.3 from~\cite{zhangminimax} bounds $\alpha, \gamma$ and Proposition 5.2 bounds the number of $\sigma$'s (up to equivalent classes) such that $d_H(\sigma, \sigma_0) = m$. These pieces together bounds $P_m$. The rest of the proof follows~\cite{zhangminimax} exactly starting from Page 16. \\
+
+We devote the rest of the proof toward proving equation~\ref{eqn:new_prop51}.
+
+\begin{align*}
+T(\sigma_0) - T(\sigma') = &
+   \sum_{i<j} \mathbf{1}_{\sigma_0(i) = \sigma_0(j) \wedge \sigma'(i) \neq \sigma'(j)} \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l} \\
+    &- \sum_{i<j} \mathbf{1}_{\sigma_0(i) \neq \sigma_0(j) \wedge \sigma'(i) = \sigma'(j)} \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l} \\
+ &=  \sum_{i=1}^\alpha X_i - \sum_{i=1}^\gamma Y_i 
+\end{align*}
+
+
+\begin{align*}
+P( \sum_{i=1}^\gamma Y_i - \sum_{i=1}^\alpha X_i > 0 ) &\leq 
+  \E \left( e^{- t \sum_{i=1}^\alpha X_i} e^{t \sum_{i=1}^\gamma Y_i} \right) \\
+ & \leq  \E \left( e^{ - t X_1 \alpha} e^{ t Y_1 \gamma} \right ) \\
+ &\leq \left( \E e^{ - t X_i} \E e^{t Y_1} \right)^{(1-w)\alpha + w \gamma} 
+       \frac{ \left( \E e^{t Y_1} \right)^{(1-w)(\gamma - \alpha)} }
+            { \left( \E e^{-t X_1} \right)^{w (\gamma - \alpha)} }
+\end{align*}
+
+We will show that when $t=1/2$ and $w=1/2$, the fraction term equals $1$ and the first term equals $\exp\left( - (1/2 \alpha + 1/2 \gamma) I \right)$. 
+
+Note that 
+\begin{align*}
+\E e^{ -t X_1} &= \sum_l P_l e^{ - t \log \frac{P_l}{Q_l}} \\
+   &= \sum_l P_l \left( \frac{Q_l}{P_l} \right)^t \\ 
+   &= \sum_l \sqrt{P_l Q_l} \quad \trm{(if $t=1/2$)}
+\end{align*}
+
+\begin{align*}
+\E e^{ t Y_1} &= \sum_l Q_l e^{ t \log \frac{P_l}{Q_l} } \\
+   &= \sum_l Q_l \left( \frac{P_l}{Q_l} \right)^t \\
+   &= \sum_l \sqrt{P_l Q_l} \quad \trm{if $t=1/2$}
+\end{align*}
+
+\begin{align*}
+P( \sum_{i=1}^\gamma Y_i - \sum_{i=1}^\alpha X_i > 0) &\leq 
+    \left( \sum_l \sqrt{P_lQ_l} \right)^{\alpha + \gamma} \\
+   &\leq  \exp( - \frac{1}{2} I)^{\alpha + \gamma} \\
+   &\leq \exp\left( - \frac{(\alpha+\gamma)}{2}  I \right)
+\end{align*}
+   
+
+\end{proof}
+
+
+
+
+
+\section{Fixed $L$ Case}
+
+Suppose $L$ is fixed. Suppose also that $\lim_{n\rightarrow \infty} P_0 \wedge Q_0 \rightarrow 1$ so that $P_l, Q_l \rightarrow 0$ for $l \neq 0$. 
+
+\begin{proposition}
+Suppose $\frac{nI}{K} \rightarrow \infty$. If weak recovery (consistency) is possible under the oracle setting, then it is possible when $P,Q$ are unknown.
+\end{proposition}
+
+\begin{proof}
+It is clear that weak recovery is possible iff $\frac{n I_{tot}}{K \log K} \rightarrow \infty$. 
+
+\begin{comment}
+Let $C = \{1,...,L\}$, let $P_C = \sum_{l \in C} P_l$ and $Q_C = \sum_{l \in C} Q_l$. We consider an estimator $\hat{\sigma}_C$ that clusters based only on $\mathbf{1}_{A_{ij} \in C}$.
+
+Let $I_C$ be the Renyi-divergence between $Ber(P_C)$ and $Ber(Q_C)$. If $\frac{n I_C}{K \log K} \rightarrow \infty$, then weak recovery is possible with $\hat{\sigma}_C$. So, assume that $\frac{n I_C}{K \log K} \rightarrow c < \infty$. 
+
+\begin{align*}
+I_A &\equiv -2 \log \left( \sqrt{P_C Q_C} + \sqrt{(1-P_C)(1-Q_C)} \right) \\
+    &= - 2 \log ( 1 - \frac{1}{2} \left( (\sqrt{P_C} - \sqrt{Q_C})^2 + (\sqrt{1-P_C} - \sqrt{1-Q_C})^2 \right) ) \\
+  &= (\sqrt{P_C} - \sqrt{Q_C})^2 + (\sqrt{1-P_C} - \sqrt{1-Q_C})^2 + o(1)
+\end{align*}
+
+It must be thus that both of these terms are $O( \frac{K \log K}{n})$. Now, we have
+\end{comment}
+
+\begin{align*}
+I_{tot} &= - 2 \log \left( \sum_{l=1}^L \sqrt{P_l Q_l} + \sqrt{ (1 - \sum_{l=1}^L P_l) ( 1 - \sum_{l=1}^L Q_l) } \right) \\
+   & = - 2 \log \left( 1 - \frac{1}{2} \left( \sum_{l=0}^L (\sqrt{P_l} - \sqrt{Q_l})^2 \right) \right) \\
+  &= (1+o(1))\sum_{l=0}^L (\sqrt{P_l} - \sqrt{Q_l})^2 
+\end{align*}
+
+
+Since $I_{tot} = \omega( \frac{K \log K}{n} )$ by hypothesis, it must be that, for some $l$, $(\sqrt{P_l} - \sqrt{Q_l})^2 = \omega( \frac{K \log K}{n} )$. 
+
+We choose such an $l$ and consider an estimator $\hat{\sigma}_l$ that uses only the information $\mathbf{1}_{A_{ij} = l}$. 
+
+Since the Renyi-divergence $I_l$ of $Ber(P_l)$ and $Ber(Q_l)$ is
+\[
+I_l = (1+o(1)) \left( (\sqrt{P_l} - \sqrt{Q_l})^2 + (\sqrt{1-P_l} - \sqrt{1-Q_l})^2 \right)
+\]
+We have that $\frac{ n I_l}{K \log K} \rightarrow \infty$ and weak consistency is thus achievable with $\hat{\sigma}_l$. 
+
+\end{proof}
+
+Although weak consistency is achievable with the estimator $\hat{\sigma}_l$ that considers only $\mathbf{1}_{A_{ij} = l}$, the estimator converges at $\exp( - \frac{n I_l}{\beta K})$ and therefore does not converge at the same rate. It is easy to see that $I_l \geq I_{tot} \geq \frac{1}{L} I_l (1 - o(1))$. 
+
+We propose a procedure to remove the $\frac{1}{L}$ factor and get oracle rate of convergence:
+
+\begin{enumerate}
+\item Split data into two halves. 
+\item For each color $l=1,...,L$ and for $l=0$, cluster the first half of the data based on $\mathbf{1}_{A_{ij} = l}$ and get $\hat{\sigma}_l$. Use the second half to verify the accuracy, either by likelihood evaluation or by clustering the second half as well and testing consistency.
+\item Cluster all data with the best $l$ and use the rough clustering to estimate $\hat{P}_l$ and $\hat{Q}_l$. 
+\item Plug in the estimated $\hat{P}_l$ and $\hat{Q}_l$ into the maximum likelihood estimator.
+\end{enumerate}
+
+As a first step toward analyzing such a procedure, we ask the following question: suppose $\sigma^*$ is an imperfect clustering of points $(2,...,n)$ such that $d_H(\sigma_0, \sigma^*) = \gamma$. We want to assign a cluster to node $1$ based on $\sigma^*$. We will pretend we can see $P, Q$ exactly and assign node $1$ by maximum likelihood. We will for simplicity also assume two clusters each of size $n/2$ for now. Assume without loss of generality that $\sigma_0(1) = 1$. 
+
+The assignment is
+\[
+\argmax_{k = 1,2} \sum_{j \,:\, \sigma^*(j) = k} \sum_{l=0}^L \log \frac{P_l}{Q_l} \mathbf{1}_{A_{1j}= l}
+\]
+We can think of this as assigning a weight of $\log \frac{P_l}{Q_l}$ to edges with color $l$ and then assigning node $1$ to the cluster that maximizes the weights of the edges $(1,j)$ for $j$ in that cluster. 
+
+What is the probability that point $1$ will be assigned the wrong cluster using $\sigma^*$? There are four categories of points: 
+\begin{enumerate}
+\item $j$ such that $\sigma_0(j) = 1$ and $\sigma^*(j) = 1$. There are $n/2 -\gamma/2$ of these. $A_{1j} \sim P$. 
+\item $j$ such that $\sigma_0(j) = 2$ and $\sigma^*(j) = 1$. There are $\gamma/2$ of these. $A_{1j} \sim Q$. 
+\item  $j$ such that $ \sigma_0(j)= 1$ and $\sigma^*(j) = 2$. There are $\gamma/2$ of these. $A_{1j} \sim P$. 
+\item  $j$ such that $\sigma_0(j) = 2$ and $\sigma^*(j) = 2$. There are $n/2 - \gamma/2 $ of these. $A_{1j} \sim Q$. 
+\end{enumerate} 
+
+Thus, 
+\[
+\sum_{j \,:\, \sigma^*(j) = 1} \sum_{l=0}^L \log \frac{P_l}{Q_l} \mathbf{1}_{A_{1j}= l}
+ \;\leq \sum_{j \,:\, \sigma^*(j) = 2} \sum_{l=0}^L \log \frac{P_l}{Q_l} \mathbf{1}_{A_{1j}= l} 
+\]
+if and only if 
+\begin{align*}
+\sum_{j=1}^{n/2 - \gamma/2} X_i + \sum_{j=1}^{\gamma/2} Y_i &\leq \sum_{j=1}^{n/2 - \gamma/2} Y_j + \sum_{j=1}^{\gamma/2} X_j \\
+\sum_{j=1}^{n/2 - \gamma} X_i  &\leq \sum_{j=1}^{n/2 - \gamma} Y_j
+\end{align*}
+where $X_j = \log \frac{P_l}{Q_l}$ with probability $P_l$ and $Y_j = \log \frac{P_l}{Q_l}$ iwth probability $Q_l$. Note that $\E[X_j] > \E[Y_j]$.
+
+Standard Chernoff argument yield that the probability of error is at most $\exp( - (1 - 2\frac{\gamma}{n}) \frac{n}{2} I)$. This seems to indicate that refinement based on $\sigma^*$ will achieve that oracle rate so long as $\sigma^*$ is consistent, i.e., $\gamma = o(n)$. 
+
+\section{$L \rightarrow \infty$ Case.}
+
+In this case, suppose that
+\[
+\frac{n}{K \log K} \sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2  \rightarrow \infty
+\]
+
+Again, we want to know when we can reduce the multi-color problem to a Bernoulli problem. More precisely, we would like to say that there exists a subset of colors $C \subset \{0,...,l\}$ such that $ \frac{n}{K \log K} I_{tot} \rightarrow \infty$ implies that $\frac{n}{K \log K} I_C \rightarrow \infty$. This would mean that clustering based on the labels 
+\[
+\tilde{A}_{ij} = I_{A_{ij} \in C}
+\]
+is consistent whenever consistency is possible under the oracle setting. 
+
+The current results in this section are:
+\begin{enumerate}
+\item Choosing $C$ as a singleton is inconsistent. 
+\item Choosing $C = \{ l \,:\, P_l > Q_l\}$ is inconsistent in general. It is consistent under further assumptions.
+\end{enumerate}
+
+Let us prove the first bullet point.
+\begin{proposition}
+There exist distributions $P, Q$ such that, for any $l$, we have that 
+$ \frac{n}{K \log K} I_{tot} \rightarrow \infty$ but $\frac{n}{K \log K} I_C \rightarrow c < \infty$ for $C = \{l\}$. 
+\end{proposition}
+
+\begin{proof}
+We define $P, Q$ as such:
+\[
+P_l = \left\{ \begin{array}{cl} 
+        \frac{1}{n}  & \trm{for } l = 1,..., \log n \\
+        0 & \trm{for } l > \log n 
+     \end{array} \right. 
+\qquad
+Q_l = \left\{ \begin{array}{cl}
+        \frac{1}{2n} & \trm{for } l = 1,..., 2\log n\\
+        0 & \trm{for } l > 2\log n 
+        \end{array} \right.
+\]
+with $P_0 = 1 - \frac{\log n}{n}$ and $Q_0 = 1 - \frac{\log n}{n}$. 
+
+\begin{align*}
+I_{tot} &= \left( \sum_{l=1}^\infty (\sqrt{P_l} - \sqrt{Q_l} )^2 \right) (1 + o(1)) 
+  \quad   \trm{(by lemma~\ref{lem:simplify_renyi})} \\
+&\geq \left( 
+    \log n \left( \sqrt{ \frac{1}{n}} - \sqrt{\frac{1}{2n}} \right)^2  \right) (1+o(1)) \\
+&= \frac{\log n}{n} (1 - \sqrt{1/2})^2 (1 + o(1)) 
+\end{align*}
+
+Therefore, for fixed $K$, $\frac{n}{K \log K} I_{tot} \rightarrow \infty$. 
+
+Let us now upper bound $I_C$. Clearly, if $C=\{0\}$, then $I_C = 0$. Therefore, let $C = \{l\}$ for some $l > 0$. First, suppose $l \in \{ 1 ,..., \log n\}$. 
+\begin{align*}
+I_C &= (\sqrt{P_l} - \sqrt{Q_l})^2 (1 + o(1)) \\
+ &= ( \sqrt{1/n} - \sqrt{1/2n} )^2 (1 + o(1)) \\
+ &\leq \frac{1}{n} (1 + o(1)) 
+\end{align*}
+If $ l \in \{\log n+1,..., 2 \log n\}$, then it is clear that $I_C = \frac{1}{2n} (1 + o(1))$. 
+
+Therefore, $\frac{n I_C}{K \log K} \rightarrow c < \infty$ 
+
+
+\end{proof}
+
+Now we move on to the second point.
+
+We first state a useful lemma:
+
+\begin{lemma}
+\label{lem:Ic_characterization}
+Let $C \subset \{0,...,l\}$ be a subset of the colors. Let $P_C = \sum_{l \in C} P_l$ and $Q_C$ be similarly defined.
+
+Let $d_C = P_C - Q_C$ and assume w.l.o.g. $d_C > 0$. Suppose 
+\[
+\frac{d_C}{P_C} \rightarrow 0 \qquad P_C \rightarrow 0
+\]
+Then, we have that
+\[
+I_C = \Theta \left( \frac{d_C^2}{P_C} \right)
+\]
+
+
+\end{lemma}
+
+\begin{proof}
+
+\begin{align*}
+I_C &= (\sqrt{P_C} - \sqrt{Q_C} )^2 (1 + o(1)) \\
+ &= \left( P_C (1 - \sqrt{\frac{Q_C}{P_C}})^2  \right) (1 + o(1)) \\
+&= \left( P_C \left( 1 - \sqrt{ 1 - \frac{P_C - Q_C}{P_C}}\right)^2 
+         \right) (1+o(1)) \\
+&= \left( 
+    P_C \left( 1 - (1 - \frac{1}{2} \frac{d_C}{P_C} (1+o(1)) ) \right)^2 
+    \right) (1+o(1)) \\
+&= P_C \left( \frac{1}{2} \frac{d_C}{P_C} \right)^2 (1 + o(1)) \\
+&= \frac{1}{4} \frac{d_C^2}{P_C} (1 + o(1)) 
+\end{align*}
+
+\end{proof}
+
+Now, we have the following unachievability proposition.
+\begin{proposition}
+There exist distributions $P,Q$ such that $\frac{n}{K \log K} I_{tot} \rightarrow \infty$ but $\frac{n}{K \log K} I_C \rightarrow c < \infty$ for $C = \{ l \,:\, P_l \geq Q_l \}$.
+\end{proposition}
+
+\begin{proof} Let $x, d > 0$ such that $x, d \rightarrow 0$. 
+Let $P, Q$ be defined as the following:
+\begin{align*}
+P_l = \left\{ \begin{array}{cl} 
+  d & \trm{ if $l = 1$} \\
+  (x - d) 2^{-l+1} & \trm{ if $l > 1$} 
+ \end{array} \right. 
+\qquad
+Q_l = \left\{ \begin{array}{cl} 
+  0 & \trm{ if $l=1$ } \\
+  (x - d) 2^{-l+1} & \trm{ if $l > 1$} 
+\end{array} \right.
+\end{align*}
+We therefore have $P_0 = 1 - x$ and $Q_0 = 1 - (x - d)$. 
+
+We have that
+\begin{align*} 
+I_{tot} &= \sum_{l=1}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 (1 + o(1)) \\
+ &= d (1 + o(1)) 
+\end{align*}
+
+We then set $d = \frac{\log n}{n}$ and $x = \frac{\log^2 n}{n}$ so that $I_C = \Theta( \frac{ d^2}{x})$ by Lemma~\ref{lem:Ic_characterization}.
+
+\[
+I_{tot} = \Theta \left( \frac{\log n}{n} \right) \qquad I_C = \Theta \left( \frac{1}{n}\right) 
+\]
+\end{proof}
+
+Finally, we have a condition under which we have achievability (ignoring computational difficulties). The intuition is that we need $P_l$ and $Q_l$ to be on the same scale.
+
+\begin{proposition}
+Let $f(n)$ be some sequence such that $f(n) \rightarrow 0$. Let $a_1, a_2, ...$ be constants such that $\sum_{l=1}^\infty a_l < \infty$ and $b_1, b_2, ...$ be constants such that $\sum_{l=1}^\infty b_l < \infty$.
+
+Let $P_l = a_l f(n)$ and $Q_l = b_l f(n)$ for $l > 0$. Then, we have, so long as $\frac{n}{K \log K} I_{tot} \rightarrow \infty$, that
+\[
+\frac{n}{K\log K} I_C \rightarrow \infty
+\]
+for $C = \{ l \,:\, P_l \geq Q_l \}$. 
+\end{proposition}
+
+\begin{proof}
+First, it is clear that the total variation distance 
+\begin{align*}
+\| P - Q \|_{TV} &= \frac{1}{2} \sum_{l=0}^\infty | P_l - Q_l | \\
+   &= \frac{1}{2} \left( |P_0 - Q_0| + \sum_{l=1}^\infty | a_l f(n) - b_l f(n) | \right) \\
+ &= \frac{1}{2} \left( | 1 - \sum_{l=1}^\infty a_l f(n) - (1 - \sum_{l=1}^\infty b_l f(n)) | + \| a - b \|_1 f(n) \right) \\
+ &= \frac{1}{2} f(n) \left( | \sum_{l=1}^\infty (a_l - b_l) | +  \| a - b \|_1 \right) 
+\end{align*}
+Thus, the total variation, which we denote by $d$, is of the order $d = \Theta(f(n))$. Since $I_{tot} \leq 2d (1 + o(1))$, we have that $I_{tot} = O( f(n))$ as well.
+
+We claim that $I_C = \Theta( f(n))$. The proof would be complete if we can validate this claim. Without loss of generality, let's suppose that $P_0 < Q_0$. 
+
+\begin{align*}
+I_C &= P_C \left( 1 - \sqrt{ \frac{Q_C}{P_C} } \right)^2 (1 + o(1)) 
+\end{align*}
+
+Since $\frac{Q_C}{P_C} = \frac{\sum_{l \in C} b_l}{\sum_{l \in C} a_l} = c < 1$, we have that $I_C = \Theta(P_C) = \Theta(f(n))$.
+
+\end{proof}
+
+\section{Technical Lemmas}
+
+\begin{lemma}
+\label{lem:simplify_renyi}
+Let $P = \{ P_l \}_{l = 0,..., \infty}$ and $Q = \{ Q_l \}_{l=0,...,\infty}$ be two discrete distributions and suppose $P_0, Q_0 \rightarrow 1$. 
+
+Then, we have that $I \rightarrow 0$ and 
+\[
+I = (1 + o(1)) \sum_{l = 1}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 
+\]
+
+\end{lemma}
+
+\begin{proof}
+First, it is clear that if $P_0, Q_0 \rightarrow 1$, then 
+\begin{align*}
+\sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 &= 
+   (\sqrt{P_0} - \sqrt{Q_0})^2 + \sum_{l=1}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 \\
+ &= (\sqrt{P_0} - \sqrt{Q_0})^2 + \sum_{l=1}^\infty P_l + \sum_{l=1}^\infty Q_l - 
+  2 \sum_{l=1}^\infty \sqrt{P_l Q_l} \\
+ &\leq  (\sqrt{P_0} - \sqrt{Q_0})^2 + \sum_{l=1}^\infty P_l + \sum_{l=1}^\infty Q_l \\
+\end{align*}
+
+Therefore, $\lim_{n\rightarrow \infty} \sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 = 0$. 
+
+\begin{align*}
+I &= -2 \log \sum_{l=0}^\infty \sqrt{P_l Q_l} \\
+  &= -2 \log \left( 1 - \frac{1}{2} \sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 \right) \\ 
+  &= (1 + o(1)) \sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 \quad \trm{(since the sum tends to 0)}
+\end{align*}
+
+We will show that $(\sqrt{P_0} - \sqrt{Q_0})^2 = o \left( \sum_{l=1}^\infty (\sqrt{P_l} - \sqrt{Q_l} )^2 \right)$ and the result follows immediately.
+
+Let $P' = 1 - P_0$ and $Q' = 1 - Q_0$. 
+\begin{align*}
+(\sqrt{P_0} - \sqrt{Q_0})^2 &= (\sqrt{1-P'} + \sqrt{1-Q'})^2 \\
+  &= (1-P') \left( 1 - \sqrt{ \frac{1-Q'}{1-P'}} \right)^2 \\
+ &= (1-P') \left( 1 - \sqrt{ 1 - \frac{Q' - P'}{1 - P'} } \right)^2 \\
+ &\leq (1-P') \left( 1 - (1 - \frac{1}{2} \left( \frac{Q' - P'}{1 - P'} \right) (1+o(1)) ) \right)^2 \\
+ &\leq (1 - P') \left( \frac{1}{2} \left( \frac{Q'-P'}{1-P'} \right) (1+o(1)) \right)^2 \\
+ &\leq \frac{1}{4} \left( \frac{Q' - P'}{1 - P'} \right)^2 (1 + o(1)) \leq \frac{1}{4} ( Q' - P')^2 (1 + o(1)) 
+\end{align*}
+
+\begin{align*}
+\sum_{l=1}^\infty (\sqrt{P_l}  - \sqrt{Q_l})^2 &= \sum_{l=1}^\infty P_l + Q_l - 2 \sqrt{P_lQ_l} \\
+ &\geq P' + Q' - 2 \sqrt{ \left( \sum_{l=1}^\infty P_l \right) \left( \sum_{l=1}^\infty Q_l \right) } \\
+ &= P' + Q' - 2\sqrt{P' Q'} \\
+ &= (\sqrt{P'} - \sqrt{Q'})^2 \\
+ &= P' \left( 1 - \sqrt{ \frac{Q'}{P'} } \right)^2 \\ 
+ &= P' \left( 1 - \sqrt{ 1 - \frac{P' - Q'}{P'} } \right)^2 \\
+ &\geq P' \left( 1 - ( 1 - \frac{1}{2} \frac{P' - Q'}{P'} (1 + o(1)) ) \right)^2 \\
+ &\geq P' \left( \frac{1}{2} \frac{P' - Q'}{P'} (1 + o(1)) \right)^2 \\
+ &\geq \frac{1}{4} \left( \frac{(P' - Q')^2}{P'} \right) (1 + o(1)) 
+\end{align*}
+
+Thus, we have shown that 
+\begin{align*}
+(\sqrt{P_0} - \sqrt{Q_0})^2& \leq \frac{1}{4} (Q' - P')^2 (1 + o(1)) \\
+\sum_{l=1}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 & \geq \frac{1}{4} \frac{(P' - Q')^2}{P'} (1 + o(1))
+\end{align*}
+
+Since $P' \rightarrow 0$, the proof is complete.
+
+\end{proof}
+
+\newpage
+\section{Continuous Distributions}
+
+In this section, we suppose that the weights of within-cluster edges are drawn from a density $p$ and that of between-cluster edges are drawn from a density $q$.
+
+In the following analysis, we will suppose that $p,q$ are mixtures. The first components of both $p,q$ are identical, and the second component of $q$ is a mean-shift of that of $p$. 
+\begin{align*}
+p(x) &= \lambda f(x) + (1-\lambda) g(x) \\
+q(x) &= \lambda f(x - \alpha) + (1-\lambda) g(x) 
+\end{align*}
+for some constant $\lambda \in (0,1)$, some density $g(x)$ supported on the interval $[0,1]$, and some density $f(x)$ supported on the interval $[0, 1-\alpha]$. \\
+
+For simplicity, we will suppose that $g(x) = 1$.
+
+\begin{proposition}
+Let $I = -2 \log \int \sqrt{p(x)q(x)} dx$ be the continuous Renyi divergence.
+
+Suppose $\alpha$ is sufficiently small, then, for some constants $c,C$, we have that
+\[
+c \alpha^2 \leq I \leq C \alpha^2
+\]
+\end{proposition}
+
+\begin{proof}
+
+First, denote $H = \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$ as the continuous Hellinger distance and we will first show that $c \alpha^2 \leq H \leq C \alpha^2$.\\
+
+Note that $f(x-\alpha) = f(x) + f'(c_x) \alpha$ for some $c_x$ in between $x-\alpha, x$. Therefore, $q(x) = p(x) - \lambda f'(c_x) \alpha$. 
+
+\begin{align*}
+&\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \\
+=& \int ( \sqrt{p(x)} - \sqrt{p(x) - \lambda f'(c_x) \alpha} )^2 dx \\
+=& \int p(x) \left( 1 - \sqrt{ 1 - \frac{\lambda f'(c_x) \alpha}{p(x)}} \right)^2 dx 
+\end{align*}
+
+Since $f'$ is bounded and $p(x)$ is bounded away from zero, we have that, for some $\eta$ close to 0,
+
+\begin{align*}
+=& \int p(x) \left( 1 - (1 - \frac{1}{2} \frac{\lambda f'(c_x) \alpha}{p(x)} (1 - \eta) ) \right)^2 dx \\
+=& \int p(x) \left( \frac{1}{2} \frac{\lambda f'(c_x) \alpha}{p(x)} \right)^2 (1-\eta) dx\\
+=& \alpha^2 (1-\eta) \int p(x) \left( \frac{1}{2} \frac{\lambda f'(c_x) }{p(x)} \right)^2 dx
+\end{align*}
+
+Now, it remains to bound $I$ in terms of $H$. Since
+\begin{align*}
+I =& -2 \log \int \sqrt{p(x)q(x)} dx \\
+ =& -2 \log \left( 1 - \frac{1}{2} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right) \\
+ =& -2 \log (1 - \frac{1}{2} H) 
+\end{align*}
+
+Thus, for $\alpha$ small enough such that $H \leq 1/2$, we have that $2 H \geq I \geq H$. 
+\end{proof}
+
+
+Let the interval $[0,1]$ be divided into $L$ equally spaced sub-intervals. Let $l$ index each of these sub-intervals and let $B = 1/L$ be the length of each sub-interval.
+
+Let $P_l = \int_{\trm{Bin}_l} p(x) dx$ and $Q_l = \int_{\trm{Bin}_l} q(x)dx$. We define the \emph{discretized Renyi divergence} as $\tilde{I} = -2 \log \sum_{l=1}^L \sqrt{P_l Q_l} $ and $\tilde{H} = \sum_{l=1}^L (\sqrt{P_l} - \sqrt{Q_l})^2$. 
+
+We will show that $\tilde{H} \geq c \alpha^2$ for some constant $c$ and for small enough $\alpha$. We will also show that, for any $\alpha$, $\lim_{L \rightarrow \infty} \tilde{I} = I$.
+
+These facts combined show that $\tilde{I} \geq \tilde{H} \geq c \alpha^2$ and therefore, $\tilde{I} - I = \eta \alpha^2$ where $\lim_{L \rightarrow \infty} \eta = 0$. 
+ 
+\begin{proposition}
+Let $P_l, Q_l, \tilde{I}$ be defined as above. Suppose $|p'(x)|, |q'(x)| \leq M$ for some absolute constant $M$.
+
+Then,
+\[
+\lim_{L \rightarrow \infty} \tilde{I} = I
+\]
+\end{proposition}
+
+\begin{proof}
+
+Let $\trm{Bin}_l = [a_l, b_l]$. 
+\begin{align*}
+P_l &= \int_{\trm{Bin}_l} p(x) dx \\
+  &= \int_{a_l}^{b_l} p(x) dx \\
+ &= \int_{a_l}^{b_l} p(a_l) + p'(c_x) (x - a_l) dx \quad \trm{for $c_x \in [a_l, b_l]$}\\
+ &= B p(a_l) + B^2 \xi_l \quad \trm{where $|\xi_l| \leq M/2$}
+\end{align*}
+
+Likewise, we have that $Q_l = B q(a_l) + B^2 \xi'_l$. 
+
+\begin{align*}
+\tilde{I} &= -2 \log \sum_{l=1}^L \sqrt{ P_l Q_l} \\
+ &= -2 \log \sum_{l=1}^L B \sqrt{ (p(a_l) + B\xi_l)(q(a_l) + B \xi'_l) } \\
+ &= -2 \log \sum_{l=1}^L B \sqrt{ p(a_l) q(a_l) } + \left(B^2 \frac{\xi_l }{p(a_l)} 
+   + B^2 \frac{\xi'_l}{q(a_l)} \right)(1+\eta) 
+\end{align*}
+where $\eta \rightarrow 0$ as $B \rightarrow 0$. $p(a_l), q(a_l)$ are lower bounded and $\xi_l, \xi'_l$ are bounded. Thus, we have that
+
+\begin{align*}
+\lim_{B \rightarrow 0} \tilde{I} &= \lim_{B \rightarrow 0} -2 \log 
+  \left( \sum_{l=1}^L B \sqrt{p(a_l) q(a_l)} + \sum_{l=1}^L B^2 c_l (1 + \eta) \right) \\
+ &= -2 \log \left( \int \sqrt{p(x) q(x)} dx \right) 
+\end{align*} 
+
+\end{proof}
+
+\begin{proposition}
+Let $\tilde{I} = -2 \log \sum_{l=1}^L \sqrt{P_l Q_l}$. Then, for sufficiently small $\alpha$, $\tilde{I} \geq c \alpha^2$ for some absolute constant $c$. 
+\end{proposition}
+
+\begin{proof}
+
+\begin{align*}
+\tilde{H} &= \sum_{l=1}^L (\sqrt{P_l} - \sqrt{Q_l})^2 \\
+   &= \sum_{l=1}^L P_l \left( 1 - \sqrt{Q_l}{P_l} \right)^2 \\
+ &= \sum_{l=1}^L P_l \left( 1 - \sqrt{1 - \frac{P_l - Q_l}{P_l}} \right)^2 
+\end{align*}
+
+We bound the terms $P_l - Q_l$ and $P_l$ separately. 
+\begin{align*}
+P_l - Q_l &= \int_{\trm{Bin}_l} p(x) - q(x) dx \\
+  &= \int_{a_l}^{b_l} \lambda f'(c_x) \alpha dx \\
+  &= \lambda \xi_l \alpha B
+\end{align*}
+where $|\xi_l| \leq M$.
+
+\[
+P_l = \int_{\trm{Bin}_l} p(x) dx \geq B(1-\lambda)
+\]
+
+Thus, for small enough $\alpha$, we have that
+\begin{align*}
+\tilde{H} &= \sum_{l=1}^L P_l \left( c_l \alpha \right)^2 \\
+ &\geq c \alpha^2
+\end{align*}
+for some constant $c$. The claim follows since $\tilde{I} \geq \tilde{H}$. 
+
+\end{proof}
+
+\section{A More General Condition}
+
+
+
+\bibliographystyle{plain}
+\bibliography{note}
+
+\end{document}
