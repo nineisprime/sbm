@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  13 JAN 2016 17:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  26 FEB 2016 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -361,75 +361,90 @@ Underfull \hbox (badness 10000) in paragraph at lines 334--335
 
  []
 
-[4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14]
-Overfull \hbox (0.41783pt too wide) in paragraph at lines 881--881
+[4] [5] [6] [7] [8] [9]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 651.
+
+
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 651.
+ [10]
+[11] [12] [13]
+Overfull \hbox (5.4456pt too wide) in paragraph at lines 902--902
 [] 
  []
 
-[15] [16] [17] [18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 1374--1375
+[14] [15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 1255--1257
 
  []
 
-[20]
-Overfull \hbox (4.0306pt too wide) in paragraph at lines 1434--1436
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 1312--1313
+
+ []
+
+[18] [19] [20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 1487--1488
+
+ []
+
+[22]
+Overfull \hbox (4.0306pt too wide) in paragraph at lines 1547--1549
 []\OT1/cmr/bx/n/10 Proposition 8.1. []\OT1/cmr/m/it/10 (Or-a-cle Set-ting Up-pe
 r Bound for Con-tin-u-ous Dis-tri-bu-tions) As-sume $[] \OMS/cmsy/m/n/10 !
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1480--1481
-
- []
-
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 1488--1489
+[23] [24]
+Underfull \hbox (badness 10000) in paragraph at lines 1659--1660
 
  []
 
-[22] [23] [24]
-Overfull \hbox (40.08043pt too wide) in paragraph at lines 1731--1736
-\OT1/cmr/m/n/10 need to show ad-di-tion-ally that the the con-ver-gence is uni-
-form, that is, $[][] [][] [] =
+
+Underfull \hbox (badness 10000) in paragraph at lines 1667--1668
+
  []
 
-[25] [26] [27] [28] (./note.bbl) [29] (./note.aux) ) 
+[25] [26] [27] [28] [29] [30] [31] [32] [33] (./note.bbl) [34] (./note.aux) ) 
 Here is how much of TeX's memory you used:
- 3797 strings out of 494522
- 50431 string characters out of 6167205
- 133602 words of memory out of 5000000
- 6978 multiletter control sequences out of 15000+600000
+ 3818 strings out of 494522
+ 50859 string characters out of 6167205
+ 133646 words of memory out of 5000000
+ 6996 multiletter control sequences out of 15000+600000
  14132 words of font info for 53 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 38i,19n,37p,611b,252s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014bas
-ic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/201
-4basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive
-/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texl
-ive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/t
-exlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/l
-ocal/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
-sr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7
-.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr12.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014basic/texmf-dist/font
-s/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014basic/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014basic/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2014basic/texmf
--dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2014basic/te
-xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on note.pdf (29 pages, 355026 bytes).
+ 38i,19n,37p,611b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
+</
+usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pf
+b></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
+2.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmbx9.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbxti10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmex10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/publ
+ic/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014basic/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2014basic/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014basic/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014basic/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014basi
+c/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014ba
+sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014
+basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
+2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
+ve/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/te
+xlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
+l/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/l
+ocal/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
+b>
+Output written on note.pdf (34 pages, 371629 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 131 compressed objects within 2 object streams
+ 202 PDF objects out of 1000 (max. 8388607)
+ 142 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

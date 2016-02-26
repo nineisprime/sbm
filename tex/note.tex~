@@ -3,6 +3,17 @@
 \usepackage[top=3.5cm, bottom=3.5cm, left=3.5cm, right=3.5cm]{geometry}
 \begin{document}
 
+\title{Detecting Communities on Colourful and Weighted Graphs}
+\maketitle
+
+\begin{abstract}
+\centering
+\noindent 
+A graph is known, edges and nodes, \\
+communities hide within its folds. \\
+Stochastic blocks the model is, \\
+weighted edges a novel goal.
+\end{abstract}
 
 %%%%%%%%%%
 %%%%%%%%%%
@@ -1254,7 +1265,7 @@ $I^*$ is almost unaffected if we replace $Q_l$ with $\frac{1}{n}$.
 \section{Choosing the initial clustering}
 \label{sec:initial_clustering}
 
-Recall that the stage 1 of our algorithm is as follows:
+Recall that the stage 1 of our algorithm is as follows. Let $\tau$ be an input parameter. 
 
 \begin{enumerate}
 \item For each color $l$:
@@ -1264,45 +1275,53 @@ Recall that the stage 1 of our algorithm is as follows:
    \item Estimate $\sqrt{I_l}$ via 
   $\sqrt{ \hat{I}_l } \equiv \frac{| \hat{P}_l - \hat{Q}_l |}{\sqrt{ \hat{P}_l \vee \hat{Q}_l}}$. 
    \end{enumerate}
-\item Discard from $L$ all colors $l$ such that $\sqrt{\hat{I}_l} \leq \sqrt{ \frac{1}{n}}$.
+\item Discard from $L$ all colors $l$ such that $\sqrt{\hat{I}_l} \leq \tau \sqrt{ \frac{1}{n}}$.
 \item Output $l^*$ for which $\sqrt{\hat{I}}$ is maximized
 \end{enumerate}
 
-We claim, assuming $K$ is fixed and $n$ is large enough, that (1) the chosen color $l^*$ satisfies $I_{l^*} \asymp I_{tot}$ and that (2) all discarded colors $l$'s satisfy $n I_{l} = O(1)$. \\
+Assuming that $ \frac{n I_{tot}}{K} \rightarrow \infty$, we want to say that the $l^*$ we output satisfies $\frac{n I_{l^*}}{K} \rightarrow \infty $ and that the $l$'s we discard satisfy $\limsup_{n \rightarrow \infty} n \frac{I_l}{K} < \infty$. It must be noted that the output of the initialization algorithm depends on $n$; that is, $l^*$ and the discarded colors $l$ depend on $n$. We will omit the dependence in our notation. 
 
-Both of these claims follow from proposition~\ref{prop:initial_guarantee} below. The second claim follows directly from the second statement of proposition~\ref{prop:initial_guarantee}. To see that the first claim is also true, note that there must exist an $l$ such that $I_l \asymp I_{tot}$ by proposition~\ref{prop:consistency_possible} and furthermore, by the first statement of proposition~\ref{prop:initial_guarantee}, $\sqrt{ \hat{I}_{l} } \asymp I_{l}$. 
+
+Both of these claims follow from proposition~\ref{prop:initial_guarantee} below. The second claim follows directly from the second statement of proposition~\ref{prop:initial_guarantee}. To see that the first claim is also true, note that there must exist an $l$ such that $\frac{n I_l}{K}$ by proposition~\ref{prop:consistency_possible} and furthermore, by the first statement of proposition~\ref{prop:initial_guarantee}, $\hat{I}_{l} \asymp I_{l}$. 
 
 \begin{proposition}
 \label{prop:initial_guarantee}
-Let $\sigma$ be a clustering with error rate $\gamma$, i.e. $d_H(\sigma, \sigma_0) = \gamma n$. Let color $l$ be fixed and let $\hat{P}_l, \hat{Q}_l$ be estimates of $P_l$ and $Q_l$ based on $\sigma$. 
+Suppose color $l$ satisfies 
 
-Suppose $\gamma K \log K \rightarrow 0$ and $\Delta_l = \omega\left( \sqrt{
-  \frac{P_l \vee Q_l}{n}} \right)$ (which implies $\sigma^l$ is consistent), then, uniformly for all $\sigma$ with error rate $\gamma$, we have
+$$\Delta_l = \omega \left( \sqrt{ \frac{K (P_l \vee Q_l)}{n}} \right)$$. 
+
+Let $\sigma^l$ be a spectral clustering of the graph based on $\tilde{A}_{ij} = \mathbf{1}(A_{ij}) = l)$ and let $\hat{P}_l, \hat{Q}_l$ be estimates of $P_l, Q_l$ constructed from $\sigma^l$. Then, with probability at least $1 - 2n^{-3+\delta}$ for some $\delta > 0$, there is a sequence $\eta \rightarrow 0$ such that
+
 \[
-\frac{ | P_l - Q_l |}{\sqrt{P_l \vee Q_l}} (\frac{1}{\sqrt{2}} - o(1)) \leq \frac{ | \hat{P}_l - \hat{Q}_l| }{\sqrt{ \hat{P}_l \vee \hat{Q}_l }} \leq  
- \frac{ | P_l - Q_l | }{\sqrt{ P_l \vee Q_l}} (\sqrt{2} + o(1))
+\frac{ | P_l - Q_l |}{\sqrt{P_l \vee Q_l}} (\frac{1}{\sqrt{2}} - \eta) \leq \frac{ | \hat{P}_l - \hat{Q}_l| }{\sqrt{ \hat{P}_l \vee \hat{Q}_l }} \leq  
+ \frac{ | P_l - Q_l | }{\sqrt{ P_l \vee Q_l}} (\sqrt{2} + \eta)
 \]
 
-On the other hand, supposing $K$ is fixed and with no assumption on $\gamma$, if
-$\Delta_l = O \left( \sqrt{ \frac{P_l \vee Q_l}{n}} \right)$ (which implies that $\sigma^l$ is inconsistent), then, uniformly for all $\sigma$ with error rate $\gamma$:
-\[
-\frac{\hat{P}_l - \hat{Q}_l}{\sqrt{\hat{P}_l \vee \hat{Q}_l}} = O\left( \frac{1}{\sqrt{n}} \right)
-\]
+On the other hand, supposing $K$ is fixed and consider a color $l$ such that 
 
+$$\Delta_l = O \left( \sqrt{ \frac{P_l \vee Q_l}{n}} \right)$$ 
+
+(which implies that $\sigma^l$ is inconsistent), then, with probability at least $1 - n^{-3+\delta}$, there exists $\eta \rightarrow 0$ such that 
+\[
+\frac{\hat{P}_l - \hat{Q}_l}{\sqrt{\hat{P}_l \vee \hat{Q}_l}} \leq  C' \frac{1}{\sqrt{n}} (1 + \eta) 
+\]
+where $C' \equiv \sqrt{2} (\limsup_{n \rightarrow} \sqrt{n I_l} + 1)$ is a constant. 
 \end{proposition}
 
 
 
 \begin{proof}
 
+Let color $l$ be fixed and let $\gamma$ be the error rate of the spectral clustering $\sigma^l$. 
+
 From the proof of estimation error of $\hat{P}_l$ (\ref{prop:estimation_consistency})
 \[
 |\hat{P}_l - P_l| \leq \beta^2 \gamma \Delta_l (1+o(1)) + 2 \sqrt{\frac{P_l \vee Q_l}{n} } \sqrt{ C K \gamma \log \frac{1}{\gamma}} + \frac{K \gamma \log \frac{1}{\gamma}}{n}
 \]
-with probability at least $1 - Ln^{-(3+\delta)}$  and likewise for $\hat{Q}_l - Q_l$. 
+with probability at least $1 - n^{-(3+\delta)}$  and likewise for $\hat{Q}_l - Q_l$. 
 
-First, suppose $\gamma K \log K \rightarrow 0$ and 
-$\Delta_l = \omega \left( \sqrt{ \frac{P_l \vee Q_l}{n} } \right)$. Also, assume without loss of generality that $P_l \geq Q_l$.
+First, suppose $\Delta = \omega \left( \sqrt{ \frac{ K(P_l \vee Q_l)}{n}} \right)$. Then, by Theorem~\ref{thm:spectral_rate}, we know that, with probability at least $1 - n^{-4}$, $\gamma K \log K \rightarrow 0$. We also assume without loss of generality that $P_l \geq Q_l$. 
+
 
 In this case, $\sqrt{ \frac{P_l \vee Q_l}{n}} = o( \Delta_l )$. Also, $\Delta_l \geq \frac{1}{n}$ and so we have that $| \hat{P}_l - P_l | = o(\Delta_l)$. Since $\Delta_l \leq P_l$, we also have that $ \frac{1}{2} P_l \leq \hat{P}_l  \leq 2 P_l$. Likewise, we have that $|\hat{Q}_l - Q_l| = o(\Delta_l)$ and $\hat{Q}_l \leq 2 P_l$. 
 
@@ -1345,9 +1364,54 @@ Since $\frac{ P_l \vee Q_l }{n} \rightarrow 0$, we also have that $\hat{P}_l \ge
 \begin{align*}
 \frac{ | \hat{P}_l - \hat{Q}_l |}{\sqrt{\hat{P}_l \vee \hat{Q}_l}} &\leq 
           \frac{| P_l - Q_l | + O \left( \sqrt{ \frac{P_l \vee Q_l}{n}} \right)}{ \sqrt{\frac{1}{2} P_l} } \\
-  &\leq O \left( \sqrt{\frac{1}{n} } \right)
+  &\leq \sqrt{2} \frac{|P_l - Q_l|}{\sqrt{P_l}} + \sqrt{2} \sqrt{ \frac{1}{n}} (1 + \eta) \\
+  &\leq C' \sqrt{ \frac{1}{n} } (1 + \eta)
 \end{align*}
 
+\end{proof}
+
+\begin{theorem}
+Suppose $\frac{ n I_{tot}}{K} \rightarrow \infty$ and let $L'$ be the set of colors such that $\limsup_{n \rightarrow \infty} \sqrt{n I_l} < \infty$. \\
+
+Suppose the initialization algorithm is set with $\tau = \max_{l \in L'} \sqrt{2} 
+( \limsup_{n \rightarrow \infty} n I_l  + 2)$. Then, the following holds with probability at least $1 - 2Ln^{-(3+\delta)}$.
+
+\begin{enumerate}
+\item 
+Let $l^*$ be the color outputted by the initialization algorithm. Then, for all large enough $n$, we have that $l^*$ satisfies 
+\[
+\frac{n I_{l^*} }{K} \rightarrow \infty
+\]
+\item
+A color $l$ is discarded by the initialization algorithm iff $l \in L'$. 
+\end{enumerate}
+
+\end{theorem}
+
+\begin{proof}
+By taking a union bound, we reason that conclusions of Proposition~\ref{prop:initial_guarantee} hold uniformly for all $l$ with probability at least $1 - 2L n^{-(3+\delta)}$.
+
+By proposition~\ref{prop:consistency_possible}, there must exists a color $l$ such that $\frac{n I_l}{K} \rightarrow \infty$. By proposition~\ref{prop:initial_guarantee}, with probability at least $1 - 2 L n^{-(3 + \delta)}$, 
+
+\begin{align*}
+\frac{ |P_{l^*} - Q_{l^*}|}{\sqrt{ P_{l^*} \vee Q_{l^*}}} &\geq 
+\frac{1}{\sqrt{2} + \eta} \frac{|\hat{P}_{l^*} - \hat{Q}_{l^*} | }{\sqrt{ \hat{P}_{l^*} \vee \hat{Q}_{l^*} }} \\
+& \geq
+\frac{1}{\sqrt{2} + \eta} \frac{|\hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}} \\
+ &\geq \frac{|P_l - Q_l|}{\sqrt{P_l \vee Q_l}} \frac{1/\sqrt{2} - \eta}{\sqrt{2} + \eta}  \\
+\end{align*}
+
+where we let $n$ be large enough such that $|\eta| < 1/\sqrt{2}$. Therefore, we see that $ \frac{n I_{l^*} }{K} \rightarrow \infty$. 
+
+Let us turn to the second claim of the theorem. If $l \in L'$, then it is clear by proposition~\ref{prop:initial_guarantee} that $l$ will be discarded.
+
+If $l \notin L'$, then, by proposition~\ref{prop:initial_guarantee}, we have that
+\begin{align*}
+\frac{|\hat{P}_l - \hat{Q}_l|}{\sqrt{\hat{P}_l \vee \hat{Q}_l}} &\geq 
+   (\frac{1}{\sqrt{2}} - \eta) \frac{ | P_l - Q_l|}{\sqrt{P_l \vee Q_l}} 
+\end{align*}
+
+For large enough $n$, $\frac{|P_l - Q_l|}{\sqrt{P_l \vee Q_l}} > \tau \sqrt{ \frac{1}{n}}$ and so $l$ would not be discarded. 
 
 \end{proof}
 
@@ -1385,26 +1449,13 @@ The proof is identical to that of proposition~\ref{prop:weak_recovery_oracle}, r
 Let us go to the general setting. Our goal is to show that under certain conditions, rate-optimal recovery is possible for continuous distributions.
 
 \subsubsection{Assumptions}
+\label{sec:continuous_assumptions}
 
 \begin{enumerate}
 \item[A1] $p(x), q(x)$ are supported on $[0,1]$, and $p(x), q(x) \geq c > 0$. 
 \item[A2] $p(x) - q(x) = \gamma(x) \alpha$ where $|\gamma(x)| \leq M$ for some constant $M$. $\alpha \rightarrow 0$.
 \item[A3] $|p'(x)|, |q'(x)|, |\gamma'(x)| \leq M'$ for some constant $M'$. 
 \end{enumerate}
-
-Let us see an specific example in which these assumptions are satisfied. Suppose that $f(x)$ is a density supported on $[0, 1-\alpha]$ and $g(x)$ is a density, bounded away from 0, and supported on $[0,1]$. We define $p(x), q(x)$ as mixtures.
-\begin{align*}
-p(x) &= \lambda f(x) + (1-\lambda) g(x)\\
-q(x) &= \lambda f(x - \alpha) + (1-\lambda) g(x)
-\end{align*}
-
-Suppose that $|f'(x)|, |g'(x)| \leq M$, then, we have that
-\begin{align*}
-p(x) - q(x) &= \lambda (f(x) - f(x-\alpha)) \\
-  &= \lambda f'(c_x) \alpha \quad \trm{for some $c_x$ in between $x, x-\alpha$}
-\end{align*}
-
-Since $|f'(c_x)| \leq M$, then assumed conditions are satisfied. 
 
 \subsubsection{Continuous and Discretized Renyi Divergence}
 
@@ -1420,7 +1471,7 @@ We have that, with $d = \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \rig
 \[
 I = d \alpha^2 ( 1 + \eta )
 \]
-where, for any $\alpha < \frac{c}{4M}$, $|\eta| \leq \frac{8M}{c} \alpha$. 
+where, for any $\alpha < \frac{c}{4M}$, $|\eta| \leq \frac{12 M}{c} \alpha$. 
 
 \end{proposition}
 
@@ -1434,7 +1485,10 @@ First, denote $H = \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$ as the continuous Hell
 =& \int p(x) \left( 1 - \sqrt{ 1 - \frac{\gamma(x) \alpha}{p(x)}} \right)^2 dx 
 \end{align*}
 
-Since $|\gamma(x)| \leq M$ and $p(x) \geq c$, we have that, for any $|\alpha| \leq \frac{c}{2M}$, $\left| \frac{\gamma(x)}{p(x)} \alpha \right| \leq \frac{1}{2}$, and thus,  there exists some function $\xi(\alpha, x)$ satisfying $|\xi(\alpha, x)| \leq 
+Since $|\gamma(x)| \leq M$ and $p(x) \geq c$, we have that, for any $|\alpha| \leq \frac{c}{2M}$, $\left| \frac{\gamma(x)}{p(x)} \alpha \right| \leq \frac{1}{2}$. Thus, we can take Taylor series expansion of $f(z) = \sqrt{1 - z}$ around 0 and plug in $\frac{\gamma(x) \alpha}{p(x)}$. \\
+
+
+Therefore, there exists some function $\xi(\alpha, x)$ satisfying $|\xi(\alpha, x)| \leq 
 \frac{4M}{c} \alpha$ such that
 
 \begin{align*}
@@ -1444,7 +1498,14 @@ Since $|\gamma(x)| \leq M$ and $p(x) \geq c$, we have that, for any $|\alpha| \l
 =& \alpha^2 \left( \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx \right) (1 + \eta) 
 \end{align*}
 
-where $|\eta| \leq \frac{8M}{c} \alpha$.
+where $\eta = \frac{ \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 ( 2 \xi(x, \alpha) + \xi(x, \alpha)^2 )  dx }
+             { \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx}$. Since $| \xi(\alpha, x) | \leq \frac{4M}{c} \alpha \leq 1$, 
+\begin{align*}
+|\eta| & 
+\leq \frac{1}{ \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx } 
+  \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 \frac{12 M}{c} \alpha dx \\
+&\leq \frac{12 M}{c} \alpha
+\end{align*} 
 
 Now, it remains to bound $I$ in terms of $H$. Since
 \begin{align*}
@@ -1520,7 +1581,14 @@ For $\alpha < \frac{c}{2M}$, we have that $\frac{\gamma_l}{P_l} \alpha < \frac{1
 &= \alpha^2 \left( \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 \right) ( 1 + \eta_L) 
 \end{align*}
 
-where $|\eta_L| \leq \frac{8M}{c}\alpha$.
+where $\eta_L = \frac{ 
+  \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 (2 \eta_l + \eta_l^2)}
+{\sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2} 
+$. And since $|\eta_l| \leq \alpha \frac{4M}{c} < 1$, we have that
+
+\begin{align*}
+|\eta_L| \leq \frac{12 M}{c} \alpha
+\end{align*}
 
 The claim thus follows. 
 
@@ -1550,7 +1618,7 @@ Let $\trm{Bin}_l = [a_l, b_l]$.
 \begin{align*}
 P_l &= \int_{\trm{Bin}_l} p(x) dx \\
   &= \int_{a_l}^{b_l} p(x) dx \\
- &= \int_{a_l}^{b_l} p(a_l) + p'(c_x) (x - a_l) dx \quad \trm{for $c_x \in [a_l, b_l]$}\\
+ &= \int_{a_l}^{b_l} p(a_l) + p'(c_x) (x - a_l) dx \quad \trm{for some $c_x \in [a_l, b_l]$}\\
  &= B p(a_l) + B^2 \xi_l \quad \trm{where $|\xi_l| \leq M'/2$}
 \end{align*}
 
@@ -1562,7 +1630,7 @@ d_L &= \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 \\
      (p(a_l) + B \xi_l) \left( \frac{1}{2} \frac{\gamma(a_l) + B \xi'_l}{p(a_l) + B \xi_l} \right)^2 \right) 
 \end{align*}
 
-Since $\eta_l \rightarrow 0$ as $B \rightarrow 0$. $p(a_l) \geq c$ and $|\xi_l|, |\xi'_l| \leq M'$, we have
+Since $p(a_l) \geq c > 0$ is bounded away from 0 and $|\xi_l|, |\xi'_l| \leq M'$ is bounded away from $\infty$, we have that
 
 \begin{align*}
  &= \sum_{l=1}^L B p(a_l) \left( \frac{1}{2} \frac{\gamma(a_l)}{p(a_l)} \right)^2 (1 + O(B))
@@ -1634,32 +1702,45 @@ These propositions together imply the following:
 \label{thm:relative_convergence_discrete_continuous_renyi}
 Suppose assumptions A1-A3 are satisfied. Let $\tilde{I}_L$ be the discretized Renyi divergence discretized at level $L$.
 
-Let $n \rightarrow 0$, then, we have that, for \textbf{any sequences} $L_n \rightarrow \infty, \alpha_n \rightarrow 0$,
+Let $n \rightarrow \infty$, then, we have that, for \textbf{any sequences} $L_n \rightarrow \infty, \alpha_n \rightarrow 0$,
 
 \[
- \left| \frac{\tilde{I}_L}{I} - 1 \right| \rightarrow 0
+\lim_{n \rightarrow \infty} \left| \frac{\tilde{I}_L}{I} - 1 \right| \rightarrow 0
 \]
 
 \end{theorem}
 \end{shaded}
 
 \begin{proof}
+
+
 By proposition~\ref{prop:continuous_renyi_order} and proposition~\ref{prop:discrete_renyi_order}, we have that, for all $\alpha < \frac{c}{4M}$,
 
 \begin{align*}
 | \tilde{I}_L - I | 
  & \leq \left| d_L \alpha^2 ( 1 + \eta_L) - d \alpha^2 ( 1 + \eta) \right| \\
   &\leq d\alpha^2 \left| \frac{d_L}{d} (1 + \eta_L) - (1+\eta) \right|  \\
- &\leq I \left| \frac{d_L}{d} \frac{(1 + \eta_L)}{(1+\eta)} - 1 \right|
+ &\leq I \left| \frac{d_L}{d} \frac{(1 + \eta_L)}{(1+\eta)} - 1 \right| \\
+& \Rightarrow \\
+\left| \frac{\tilde{I}_L}{I} - 1 \right| &\leq 
+\left | \frac{d_L}{d} \frac{(1+\eta_L)}{1 + \eta} - 1 \right|
 \end{align*}
 
-By proposition~\ref{prop:continuous_renyi_order} and \ref{prop:discrete_renyi_order}, $\lim_{\alpha \rightarrow 0} \sup_L \left| \frac{1 + \eta_L}{1+\eta} - 1 \right|$. And by proposition~\ref{prop:convergence_discrete_continuous_renyi}, $\lim_{L \rightarrow \infty} \frac{d_L}{d} = 1$. Since $d_L, d$ do not depend on $\alpha$, the convergence is uniform and the claim follows. 
+where $|\eta|, |\eta_L| \leq \frac{12M}{c} \alpha$ for all $L$ and $d_L, d$ do not depend on $\alpha$.
+
+It is clear then that $\lim_{\alpha \rightarrow 0} \left| \frac{\tilde{I}_L}{I} - 1 \right| = \left| \frac{d_L}{d} - 1 \right|$ and that $\lim_{L \rightarrow \infty} \lim_{\alpha \rightarrow 0} 
+\left| \frac{\tilde{I}_L}{I} - 1 \right| = 0$.  
+We need to show additionally that the the convergence is uniform, that is, 
+$\lim_{\alpha \rightarrow 0} \sup_L 
+\left| \left| \frac{\tilde{I}_L}{I} - 1 \right| - \left|  \frac{d_L}{d} - 1  \right| \right| = 0$.
+
+This is true since $\lim_{\alpha \rightarrow 0} \sup_L \eta_L = 0$ by proposition~\ref{prop:discrete_renyi_order}. The claim follows immediately.
 \end{proof}
 
 \subsubsection{Recovery Procedure}
 
 \begin{enumerate}
-\item For each edge $(i,j)$, set $\bar{A}_{ij} = \mathbf{I}(A_{ij} < \tau)$ for some $\tau \in (0, 1)$. Use the $\bar{A}_{ij}$ labels for the initial rough clustering.
+\item For each edge $(i,j)$, set $\tilde{A}_{ij} = \mathbf{I}(A_{ij} < \tau)$ for some $\tau \in (0, 1)$. Use the $\tilde{A}_{ij}$ labels for the initial rough clustering.
 \item Bin the interval $[0,1]$ into $L$ bins and estimate $P_l, Q_l$.
 \item Refine clustering with MLE based on $\hat{P}_l, \hat{Q}_l$.
 \end{enumerate}
@@ -1671,6 +1752,30 @@ The initial clustering is consistent if we assume that $\left| \int_0^{\tau} \ga
 \]
 
 The discretization step is fine so long as $L \rightarrow \infty$. 
+
+\subsection{Generalization}
+
+The assumptions listed in section~\ref{sec:continuous_assumptions} can be generalized in several ways. In the first way, $\gamma$ can be a function of $\alpha$ under weak assumptions.
+\begin{enumerate}
+\item[B1] $p(x), q(x)$ are supported on $[0,1]$, and $p(x), q(x) \geq c > 0$. 
+\item[B2] $p(x) - q(x) = \gamma(x, \alpha) \alpha$ where $|\gamma(x, \alpha)| \leq M$ for some constant $M$. $\alpha \rightarrow 0$.
+\item[B3] For all $\alpha$, $0 < c_1 \leq \int \frac{\gamma(x, \alpha)^2}{p(x)} dx \leq c_2 < \infty$. 
+\item[B4] $|p'(x)|, |q'(x)|, |\partial_x \gamma(x,\alpha)| \leq M'$ for some constant $M'$. 
+\end{enumerate}
+
+Let us see a specific example in which these generalizations are relevant. Suppose that $f(x)$ is a density supported on $[0, 1-\alpha]$ and $g(x)$ is a density, bounded away from 0, and supported on $[0,1]$. We define $p(x), q(x)$ as mixtures.
+\begin{align*}
+p(x) &= \lambda f(x) + (1-\lambda) g(x)\\
+q(x) &= \lambda f(x - \alpha) + (1-\lambda) g(x)
+\end{align*}
+
+Suppose that $|f'(x)|, |g'(x)| \leq M$, then, we have that
+\begin{align*}
+p(x) - q(x) &= \lambda (f(x) - f(x-\alpha)) \\
+  &= \lambda f'(c_{x, \alpha}) \alpha \quad \trm{for some $c_{x, \alpha}$ in between $x, x-\alpha$}
+\end{align*}
+
+Since $|f'(c_{x, \alpha} )| \leq M$, condition $B2$ is satisfied. Condition $B3$ amounts to requiring that $\int \frac{(f'(c_{x, \alpha}))^2}{p(x)} dx $ be bounded away from 0 and $\infty$ for all $\alpha$. 
 
 
 \newpage
@@ -1739,8 +1844,29 @@ Since $P' \rightarrow 0$, the proof is complete.
 
 \end{proof}
 
+\section{Reference Results}
 
+\subsection{Existing Results from Literature}
 
+Let $\Theta_0(n, k, p, q, \beta)$ be the parameter space of homogeneous stochastic block model with $p$ as the within-cluster probability and $q$ as the between-cluster probability. The following theorem follows from Theorem 3 and Proposition 1 of \cite{gao2015achieving}. 
+
+\begin{theorem}
+\label{thm:spectral_rate}
+Assume $p \leq C_1 q$ and that $p, q = \Omega( \frac{1}{n} )$ and suppose that $n \geq 2 \beta k$. Suppose there is some $c \in (0,1)$ such that 
+
+$$ \frac{k^3 p}{(p-q)^2 n^2} \leq c$$. 
+
+Suppose we apply Unnormalized-Spectral-Clustering with trim constant $\tau = C_2 \bar{d}$ and a sufficiently small post-processing constant $\mu > 0$. Then, for any constant $C'$, there exists some $C > 0$ dependent only on $C', C_1, C_2, \mu$ such that
+
+\[
+l(\hat{\sigma}, \sigma_0) \leq C \frac{\beta^2 k^2 p}{(p-q)^2 n }
+\]
+
+with probability at least $1 - n^{-C'}$. 
+
+\end{theorem}
+
+We note that $\frac{(p-q)^2}{p} = I$. Restated, this theorem says that if $p \asymp q$ and if $ \frac{k}{nI} \rightarrow 0$, then, the error rate $\gamma$ of spectral clustering goes to zero with probability $1 - n^{-C'}$ for any constant $C' > 0$. 
 
 \bibliographystyle{plain}
 \bibliography{note}

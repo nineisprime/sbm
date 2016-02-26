@@ -590,7 +590,7 @@ Substituting in the previous bound we had of $t$:
        \frac{C_\delta \beta k \gamma \log \frac{1}{\gamma}}{n} 
 \end{align*}
 
-Under the assumption that $\frac{ n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, we have that $\Delta_l \geq \sqrt{ \frac{P_l \vee Q_l}{n}}$. Under the same assumption, it must be that $P_l \vee Q_l \geq \frac{1}{n}$. If we further apply the assumption that $\gamma K \log K \rightarrow 0$, we have that, with probability $1 - L n^{-(3+\delta)}$, for some $\eta = o(1)$, uniformly for all colors $l$ satisfying $\frac{n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, 
+Under the assumption that $\frac{ n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, we have that $\Delta_l \geq \sqrt{ \frac{P_l \vee Q_l}{n}}$. Under the same assumption, it must be that $P_l \vee Q_l \geq \frac{1}{n}$ (because $P_l \vee Q_l \geq \Delta_l$). If we further apply the assumption that $\gamma K \log K \rightarrow 0$, we have that, with probability $1 - L n^{-(3+\delta)}$, for some $\eta = o(1)$, uniformly for all colors $l$ satisfying $\frac{n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, 
 
 \begin{align*}
 | \hat{P}_l - \E \hat{P}_l | = \eta \Delta_l
@@ -641,6 +641,55 @@ Therefore, we have that
 \end{align}
 with probability at least $1 - L n^{-(3+\delta)}$ uniformly for all $\sigma$ (satisfying $d_H(\sigma, \sigma_0) = \gamma n$) and for all colors $l$ satisfying our two assumptions.
 
+The following proposition generalizes proposition \ref{prop:estimation_consistency} and will be useful later on.
+
+\begin{proposition}
+\label{prop:estimation_consistency_generalization}
+We consider the same setting as that of proposition~\ref{prop:estimation_consistency} and let $\hat{P}_l, \hat{Q}_l$ be defined equivalently. Suppose that $P_l \vee Q_l \geq \frac{1}{n}$ and let $C_{thresh}$ be an absolute constant.
+
+\begin{itemize}
+\item Case 1. Suppose $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \Delta_l \\
+ | \hat{Q}_l - Q_l | &\leq \eta \Delta_l 
+\end{align*}
+\item Case 2. Suppose $\frac{n \Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}} \\
+ | \hat{Q}_l - Q_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}}
+\end{align*}
+\end{itemize}
+
+uniformly in $l$ with probability at least $1 - L n^{-(3 + \delta)}$. 
+$\eta$ is a sequence such that $\eta \rightarrow 0$. 
+\end{proposition}
+
+\begin{proof}
+The proof follows that of proposition~\ref{prop:estimation_consistency}. We will work with $|\hat{P}_l - P_l$, the proof for $|\hat{Q}_l - Q_l|$ is analogous. 
+
+From the proof, it is clear that regardless of whether we have case 1 or case 2, we get that 
+\begin{align*}
+| \E \hat{P}_l - P_l | &\leq \eta \Delta_l \\
+| \hat{P}_l - \E \hat{P}_l | &\leq 
+   2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{ C_\delta \beta k \gamma \log \frac{1}{\gamma}} + \frac{ C_\delta \eta k \gamma \log \frac{1}{\gamma}}{n}
+\end{align*}
+where $C_\delta$ is a constant. 
+
+In both cases, we have that $\frac{1}{n} \leq \sqrt{ \frac{P_l \vee Q_l}{n}}$. 
+
+In Case 1, $\Delta_l \geq C_{thresh} \sqrt{ \frac{P_l \vee Q_l}{n}} $ and thus, 
+\[
+| \hat{P}_l - P_l| \leq \eta \Delta_l
+\]
+
+In Case 2, $\Delta_l \leq C_{thresh} \sqrt{ \frac{P_l \vee Q_l}{n}}$ and thus,
+\[
+| \hat{P}_l - P_l| \leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}}
+\]
+
+
+\end{proof}
+
 \newpage
 \section{Controlling probability of misclassification}
 \label{sec:misclassify}
@@ -664,8 +713,6 @@ We assign $u$ based on the criterion:
 \argmax_k \sum_{v\, \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
 \]
 
-Define $m_k' = \{ v \,:\, \sigma_u(v) = k,\, \sigma_0(v) = k \}$, $m_1' = \{ v \,:\, \sigma_u(v) = 1 ,\, \sigma_0(v) = 1\}$ as the points correctly clustered by $\sigma_u$. 
-
 \begin{shaded}
 \begin{proposition}
 Suppose that $\sigma_u$ is a clustering of all nodes except for $u$ with error rate $\gamma$, that is, $d_H(\sigma_u, \sigma_0) = \gamma n$. Suppose that statements of proposition~\ref{prop:estimation_consistency} holds. 
@@ -681,20 +728,29 @@ Then, we have that, with probability at least $1 - \exp \left( - (1 - o(1)) \fra
 \subsection{Proof}
 
 Suppose without the loss of generality that $\sigma_0(u) = 1$.  We want to then control the probability that for some cluster $k$, 
-\begin{align*}
+\begin{align}
 \sum_{v\,:\, \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
 &\geq 
  \sum_{v\,:\, \sigma_u(v)=1} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
-  \quad \trm{(iff)} \\
+  \quad \trm{(iff)}  \nonumber \\
 \sum_{v \,:\, \sigma_u(v) = k} \bar{A}_{uv} - \sum_{v\,:\, \sigma_u(v) = 1} \bar{A}_{uv} 
-&\geq 0 \quad \trm{(a.e. upper bounded by)} \\
+\label{eqn:bad_event1}
+&\geq 0 
+\end{align}
+where $\bar{A}_{uv} \equiv \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l)$.
+
+Define $m_1 = |\{ v \,:\, \sigma_u(v) = 1 \}|$ and $m_k = | \{ v \,:\, \sigma_u(v) = k \}|$ as the size of clusters $m_1, m_k$ under $\sigma_u$. Define $m_k' = \{ v \,:\, \sigma_u(v) = k,\, \sigma_0(v) = k \}$, $m_1' = \{ v \,:\, \sigma_u(v) = 1 ,\, \sigma_0(v) = 1\}$ as the points correctly clustered by $\sigma_u$. 
+
+With these definitions, the probability of the bad event Equation~\ref{eqn:bad_event1} is upper bounded by the probability of the following:
+
+\begin{align*}
 \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m'_k} \tilde{X}_i \right) - 
 \left( \sum_{i=1}^{m_1'} \tilde{X}_i + \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) &\geq 0  \quad \trm{(iff)} \\
 \exp( t \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m_k'} \tilde{X}_i - 
      \sum_{i=1}^{m_1'}  \tilde{X}_i - \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) ) &\geq 1 
 \end{align*}
 
-where $\bar{A}_{uv} \equiv \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l)$ and $\tilde{X}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $P_l$ and $\tilde{Y}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $Q_l$. 
+ where $\tilde{X}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $P_l$ and $\tilde{Y}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $Q_l$. 
 
 
 
@@ -705,8 +761,10 @@ where $\bar{A}_{uv} \equiv \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_
 \exp( t \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m_k'} \tilde{X}_i - 
      \sum_{i=1}^{m_1'}  \tilde{X}_i - \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) )
  \right) \\ 
-&\leq \left( \E \exp( t \tilde{Y}_i ) \right)^{m_k'} \exp(t \tilde{X}_i )^{m_1 - m_1'}  
-    \left( \E \exp( - t \tilde{X}_i) \right)^{m_1'} \exp( -t \tilde{Y}_i )^{m_k - m_k'} \\
+&\leq \left( \E \exp( t \tilde{Y}_i ) \right)^{m_k'} 
+      \left( \E \exp(t \tilde{X}_i ) \right)^{m_k - m_k'}  
+    \left( \E \exp( - t \tilde{X}_i) \right)^{m_1'} 
+    \left( \E \exp( -t \tilde{Y}_i ) \right)^{m_1 - m_1'} \\
 &\leq \left( \sum_l e^{t \log \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k'}  
       \left( \sum_l e^{t \log \frac{\hat{P}_l}{\hat{Q}_l}} P_l \right)^{m_k - m_k'} 
       \left( \sum_l e^{- t \log \frac{\hat{P}_l}{\hat{Q_l}} } P_l \right)^{m_1'}
@@ -724,51 +782,14 @@ We will set $t = \frac{1}{2}$, in which case, we have:
  \left( \frac{ \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l}
              { \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } P_l} \right)^{m_1 - m_1'}  
    \label{eqn:excess_error_term} \\
- & \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_k' - (m_1 - m_1')} 
-    \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1' - (m_k - m_k')}
+ & \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_k' - (m_k - m_k')} 
+    \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1' - (m_1 - m_1')}
    \label{eqn:Ihat_error_term} 
 \end{align} 
 
 We will bound term~\ref{eqn:excess_error_term} and \ref{eqn:Ihat_error_term} separately. 
 
 \textbf{Bound for Term~\ref{eqn:excess_error_term}.} 
-
-First, note that 
-\begin{align*}
- \frac{P_l}{Q_l} - 1 &= \frac{P_l - Q_l}{Q_l}  
-\end{align*}
-
-We will show that $\frac{\hat{P}}{\hat{Q}}$ behaves similarly. 
-\begin{align*}
-\frac{\hat{P}_l}{\hat{Q}_l} - 1 &= 
-     \frac{ \hat{P}_l - P_l + P_l }{ \hat{Q}_l - Q_l + Q_l} -1  \\
-  &=  \frac{  \frac{\hat{P}_l - P_l}{Q_l} + \frac{P_l}{Q_l}}
-       { \frac{\hat{Q}_l - Q_l}{Q_l} + 1} - 1 \\
- &= \left( \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} \right)
-    \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1+o(1)) \right) -1  \\
- &= \frac{P_l-Q_l}{Q_l} + o\left( \frac{\Delta_l}{Q_l} \right) \quad \highlight{\trm{(assuming $|\hat{P}_l - P_l| = o (\Delta_l)$)}}
-\end{align*}
-
-Therefore, 
-\begin{align*}
-\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1 &= 
-   \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} + o\left( \frac{\Delta_l}{Q_l} \right)}  - 1\\
-  & \left\{ \begin{array}{cc}
-      \leq \frac{P_l - Q_l}{Q_l} (1+o(1)) & \trm{(if $P_l \geq Q_l$)} \\
-      \geq \frac{P_l - Q_l}{Q_l} (1+o(1)) & \trm{(if $P_l < Q_l$)} 
-     \end{array} \right.
-\\
-\end{align*}
-
-Symmetry yields that 
-
-\begin{align*}
-\sqrt{ \frac{\hat{Q}_l}{\hat{P}_l} } - 1  &
-   \left\{ \begin{array}{cc}
-      \leq \frac{Q_l - P_l}{P_l} (1+o(1)) & \trm{(if $Q_l \geq P_l$)} \\
-      \geq \frac{Q_l - P_l}{P_l} (1+o(1)) & \trm{(if $Q_l < P_l$)} 
-     \end{array} \right. \\
-\end{align*}
 
 Now, we can bound term~\ref{eqn:excess_error_term}:
 \begin{align*}
@@ -860,30 +881,30 @@ Let us consider the numerator.
 \left( \sum_l \sqrt{ \frac{\hat{Q}_l}{\hat{P}_l}} P_l \right) \\
 &= \left( \sum_l \sqrt{ P_l Q_l} \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l}} \right) 
      \left( \sum_l \sqrt{P_l Q_l} \sqrt{ \frac{P_l}{\hat{P}_l} \frac{\hat{Q}_l}{ Q_l}} \right) \\
-&= \sum_l P_l Q_l + \sum_{l, l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} + 
-   \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right) \\
+&= \sum_l P_l Q_l + 2\sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} + 
+   \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \\
 &= \left( \sum_l \sqrt{P_l Q_l} \right)^2 + \sum_{l < l'} 
-                  \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right) 
+                  \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) 
 \end{align*}
 
-where we define $T = \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
-      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}}  $. It will be later shown that $T \rightarrow 1$ and thus, continuing equation~\ref{eqn:Ihat_Istar},
+where we define $T_l = \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}}  $. It will be later shown that $T_l \rightarrow 1$ and thus, continuing equation~\ref{eqn:Ihat_Istar},
 
 \begin{align}
 \hat{I} - I^* &= - \log \left( 1 + \frac{ \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right)}
+    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)}
     { \left( \sum_l \sqrt{ P_l Q_l} \right)^2 }  \right) \nonumber \\
      &  \geq  - \log \left( 1 + 4 \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}}  
-    \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right)  \right) 
+    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)  \right) 
   \quad \trm{(assuming that $\sum_l \sqrt{P_l Q_l} \geq 1/2$)} \nonumber \\
    & \geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right) \label{eqn:Ihat_Istar2}
+    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \label{eqn:Ihat_Istar2}
 \end{align}
 
-We proceed by first bounding $|T - 1|$ and then taking the second order approximation of $\left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right)$ around $1$. 
+We proceed by first bounding $|T_l - 1|$ and then taking the second order approximation of $\left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)$ around $1$. 
 
 \begin{align*}
-|T - 1| &= \left| \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+|T_l - 1| &= \left| \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
       \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}} - 1 \right| \\
  &= \left| \left( 1 - \frac{P_l - \hat{P}_l}{P_l} \right)
     \left( 1 - \frac{\hat{Q}_l - Q_l}{\hat{Q}_l} \right)
@@ -899,20 +920,20 @@ We proceed by first bounding $|T - 1|$ and then taking the second order approxim
 
 Then, we have that
 \begin{align*}
-|T - 1| \leq \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}} \right) 
+|T_l - 1| \leq \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}} \right) 
 \end{align*}
 
-The Taylor approximation of $\sqrt{T} + \frac{1}{\sqrt{T}} - 2$ around $T=1$ is:
+The Taylor approximation of $\sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2$ around $T_l=1$ is:
 \begin{align*}
-\sqrt{T} + \frac{1}{\sqrt{T}} -2  &\leq 
-  \frac{1}{4} (T - 1)^2 + O (T-1)^3 \\
+\sqrt{T_l} + \frac{1}{\sqrt{T_l}} -2  &\leq 
+  \frac{1}{4} (T_l - 1)^2 + O (T_l-1)^3 \\
  &\leq \frac{1}{4} \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}} \right)^2 
 \end{align*}
 
 Continuing on from equation~\ref{eqn:Ihat_Istar2}, we have that
 \begin{align*}
 \hat{I} - I^* &\geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T} + \frac{1}{\sqrt{T}} - 2 \right) \\
+    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \\
   &\geq - \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
     \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'} }{P_{l'} \vee Q_{l'}} 
      \right)^2 \\
@@ -1220,46 +1241,138 @@ Similarly,
 \end{proof}
 \end{comment}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% DEPRECATED
 
-\begin{comment}
-\newpage
-\subsection{Addressing the colors where $P_l \gg Q_l$}
+\subsection{Lemmas}
 
-The bounds on the estimation error ~\ref{eqn:Pl_bias} and ~\ref{eqn:Pl_variance} are still valid. However, we can no longer show that
-\[
-\sqrt{P_l Q_l} \kappa_l = o (\sqrt{P_l} - \sqrt{Q_l})^2
-\]
-This is because
+Here we collect various lemmas used in the proof.
+
+\begin{lemma}
+\label{lem:sqrt_ratio_pl_ql_minus_1}
+Fix a color $l$ and assume that $P_l \asymp Q_l$. Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies 
 \begin{align*}
-\sqrt{P_l Q_l} \kappa_l &\geq \sqrt{P_l Q_l} \frac{ |\hat{Q}_l - Q_l| }{Q_l} \\
-  &\geq \sqrt{ \frac{P_l}{Q_l} } | \hat{Q}_l - Q_l |
+| \hat{P}_l - P_l | &= \eta \Delta_l  \\
+| \hat{Q}_l - Q_l | &= \eta \Delta_l  
+\end{align*}
+where $\eta \rightarrow 0$. \\
+
+Then, we have that 
+\[
+\sqrt{ \frac{\hat{P}_l }{\hat{Q}_l} } - 1 \left\{ \begin{array}{cc} 
+                    \leq \frac{P_l - Q_l}{Q_l} (1 + \eta') & (\trm{if }  P_l \geq Q_l) \\
+                    \geq \frac{P_l - Q_l}{Q_l} (1 + \eta') & (\trm{if } P_l < Q_l) 
+           \end{array} \right.
+\]
+for some $\eta' = o(1)$. 
+\end{lemma}
+
+
+\begin{proof}
+
+
+First, note that 
+\begin{align*}
+ \frac{P_l}{Q_l} - 1 &= \frac{P_l - Q_l}{Q_l}  
 \end{align*}
 
-Since $\frac{P_l}{Q_l} \rightarrow \infty$, there is little we can say about the above expression.
+We will show that $\frac{\hat{P}}{\hat{Q}}$ behaves similarly. 
 
-We will divide our analysis into two cases. First, we will assume that $Q_l \geq \frac{1}{n}$. Second, we will assume that $Q_l \leq \frac{1}{n}$.
+As a preliminary step, we note that
+\[
+\frac{\hat{Q}_l - Q_l}{Q_l} = \eta \frac{\Delta_l}{Q_l} = \eta' \rightarrow 0
+\]
+where we used the assumption that $P_l \asymp Q_l$.
 
-\subsubsection{First Case}
+\begin{align*}
+\frac{\hat{P}_l}{\hat{Q}_l} - 1 &= 
+     \frac{ \hat{P}_l - P_l + P_l }{ \hat{Q}_l - Q_l + Q_l} -1  \\
+  &=  \frac{  \frac{\hat{P}_l - P_l}{Q_l} + \frac{P_l}{Q_l}}
+       { \frac{\hat{Q}_l - Q_l}{Q_l} + 1} - 1 \\
+ &= \left( \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} \right)
+    \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta')  \right) -1  \\
+ &= \frac{P_l-Q_l}{Q_l} + \eta' \frac{\Delta_l}{Q_l} 
+\end{align*}
 
-We assume in this section that $Q_l \geq \frac{1}{n}$.
 
-We will perform a better analysis on the estimation error.
 
-\subsubsection{Second Case}
+Therefore, 
+\begin{align*}
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1 &= 
+   \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} + \eta' \frac{\Delta_l}{Q_l}}  - 1\\
+  &= \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} } 
+    \left( \sqrt{ 1 + \eta' \frac{\Delta_l}{P_l}} \right) - 1 \\
+  &= \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} } (1 + \eta' \frac{\Delta_l}{P_l} ) - 1  \\
+  &= \sqrt{ 1 + \frac{P_l - Q_l}{Q_l}} - 1 + \sqrt{ \frac{P_l}{Q_l}} \eta' \frac{\Delta_l}{P_l} \\ 
+  & \left\{ \begin{array}{cc}
+      \leq \frac{P_l - Q_l}{Q_l} (1+ \eta') & \trm{(if $P_l \geq Q_l$)} \\
+      \geq \frac{P_l - Q_l}{Q_l} (1+ \eta') & \trm{(if $P_l < Q_l$)} 
+     \end{array} \right.
+\\
+\end{align*}
 
-We assume that $Q_l \leq \frac{1}{n}$.
+The second and the third equality holds for all small enough $\eta'$. The last inequality follows because $P_l \asymp Q_l$. \\
 
-$I^*$ is almost unaffected if we replace $Q_l$ with $\frac{1}{n}$. 
 
-\subsection{Handling Weak Colors}
-\end{comment}
+Symmetry yields that 
 
-%%%%% END deprecation
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+\sqrt{ \frac{\hat{Q}_l}{\hat{P}_l} } - 1  &
+   \left\{ \begin{array}{cc}
+      \leq \frac{Q_l - P_l}{P_l} (1 + \eta') & \trm{(if $Q_l \geq P_l$)} \\
+      \geq \frac{Q_l - P_l}{P_l} (1 + \eta') & \trm{(if $Q_l < P_l$)} 
+     \end{array} \right. \\
+\end{align*}
+
+
+\end{proof}
+
+
+The following lemma bounds $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l$. 
+\begin{lemma}
+\label{lem:sqrt_ratio_times_ql}
+
+Fix a color $l$ and suppose $P_l \asymp Q_l$. Suppose also that
+\begin{align*}
+|\hat{P}_l - P_l| &= \eta \Delta_l \\
+|\hat{Q}_l - Q_l| &= \eta \Delta_l
+\end{align*}
+where $\eta \rightarrow 0$. 
+
+Then, we have that for all small enough $\eta$, 
+\[
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \geq 
+  \frac{1}{8} \sqrt{P_l Q_l}
+\]
+\end{lemma}
+
+\begin{proof}
+
+First, we note that $\frac{ \hat{Q}_l - Q_l}{Q_l} = \eta \frac{\Delta_l}{Q_l} \rightarrow 0$. 
+
+\begin{align*}
+& \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \\
+&= \sqrt{ \hat{P}_l \hat{Q}_l} \frac{Q_l}{\hat{Q}_l} \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} \frac{1}{ \frac{Q_l - \hat{Q}_l}{Q_l} + 1 } \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} 
+  \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta') \right)  \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} (1 - \frac{\Delta_l}{Q_l} \eta (1 + \eta') 
+\end{align*}
+
+where in the second to last equality, we used the fact that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta' \rightarrow 0$. 
+
+Clearly then, for small enough $\eta, \eta'$, we continue the bound as 
+\begin{align*}
+&\geq \frac{1}{2} \sqrt{ \hat{P}_l \hat{Q}_l} 
+\end{align*}
+
+Also, for small enough $\eta$, we have that $\hat{P}_l \geq \frac{1}{2} P_l$ and $\hat{Q}_l \geq \frac{1}{2} Q_l$ and thus, we have the final bound
+\[
+\frac{1}{8} \sqrt{ P_l Q_l}
+\]
+as desired. 
+
+\end{proof}
+
+
 
 \newpage
 \section{Choosing the initial clustering}
@@ -1452,10 +1565,76 @@ Let us go to the general setting. Our goal is to show that under certain conditi
 \label{sec:continuous_assumptions}
 
 \begin{enumerate}
-\item[A1] $p(x), q(x)$ are supported on $[0,1]$, and $p(x), q(x) \geq c > 0$. 
-\item[A2] $p(x) - q(x) = \gamma(x) \alpha$ where $|\gamma(x)| \leq M$ for some constant $M$. $\alpha \rightarrow 0$.
+\item[A1] $p(x), q(x)$ are supported on $[0,1]$, and $p(x) \geq c > 0$. 
+\item[A2] Let $\gamma(x) = \frac{p(x) - q(x)}{\| p - q \|_2}$. Suppose that $|\gamma(x)| \leq M$ for some constant $M$. 
 \item[A3] $|p'(x)|, |q'(x)|, |\gamma'(x)| \leq M'$ for some constant $M'$. 
 \end{enumerate}
+
+
+Let us see a specific example in which these generalizations are relevant. 
+
+\begin{example}
+
+Suppose that $f(x)$ is a density supported on $[0, 1-\alpha]$ and $g(x)$ is a density, bounded away from 0, and supported on $[0,1]$. We define $p(x), q(x)$ as mixtures.
+
+\begin{align*}
+p(x) &= \lambda f(x) + (1-\lambda) g(x)\\
+q(x) &= \lambda f(x - \alpha) + (1-\lambda) g(x)
+\end{align*}
+
+where the mixing weight $1 > \lambda > 0$ is a constant. Since $g(x)$ is bounded away from 0, it is clear that assumption A1 is satisfied. 
+
+We suppose that $f$ is twice-differentiable, $g$ is differentiable, and that $|f'(x)|, |g'(x)|, |f''(x)| \leq M$ for some constant $M > 0$. We suppose also that $\int f'(x)^2 dx > 0$.
+
+\begin{align*}
+p(x) - q(x) &= \lambda (f(x) - f(x-\alpha)) 
+\end{align*}
+
+Also, we have, by Taylor theorem, that
+\begin{align*}
+f(x - \alpha) &= f(x) + f'(x) \alpha + \frac{f''(x_1)}{2} \alpha^2 \quad \trm{for some $x_1$ in between $x, x-\alpha$} \\
+\frac{f(x) - f(x-\alpha)}{\alpha} &= f'(x) + \frac{1}{2} f''(x_1) \alpha
+\end{align*}
+
+Therefore,
+\begin{align*}
+\int (p(x) - q(x))^2 dx &= \lambda^2 \alpha^2 \int 
+   \left( \frac{f(x) - f(x - \alpha)}{\alpha} \right)^2 dx \\
+  &= \lambda^2 \alpha^2 \int (f'(x) + \frac{1}{2} f''(x_1) \alpha)^2 dx \\
+ &= \lambda^2 \alpha^2 \left( \int f'(x)^2 dx  + \int f'(x) f''(x_1) \alpha + f''(x_1)^2 \alpha^2 dx \right) 
+\end{align*}
+
+Since $|f'(x)|, |f''(x)| \leq M$, we conclude that, for some constant $C$, we have that
+\[
+\int (p(x) - q(x))^2 dx = C \alpha^2 + O(\alpha^3) 
+\]
+
+For all small enough $\alpha$, it is thus clear that
+\[
+\gamma(x) = \frac{p(x) - q(x)}{\| p - q \|_2} = C \cdot \frac{p(x) - q(x)}{\alpha} + O(\sqrt{\alpha})
+\]
+for some constant $C$ independent of $x, \alpha$. To bound $|\gamma(x)|$ and $|\gamma'(x)|$, it is thus sufficient to analyze $\tilde{\gamma}(x) = \frac{p(x) - q(x)}{\alpha}$. 
+
+\begin{align*}
+\left| \frac{ p(x) - q(x)}{\alpha} \right| &= \lambda \left| \frac{f(x) - f(x-\alpha)}{\alpha} \right| \\
+ &= \left| f'(x) + \frac{1}{2} f''(x_1) \alpha \right| \\
+ &\leq 2M  \quad \trm{for small enough $\alpha$}
+\end{align*}
+
+Thus, assumption A2 has been verified. 
+
+\begin{align*}
+\frac{ \tilde{\gamma}(x) - \tilde{\gamma}(x - c) }{c} &= 
+ \frac{\lambda}{c} \left(   \frac{f(x) - f(x-\alpha)}{\alpha} - \frac{f(x-c) - f(x-c - \alpha)}{\alpha}  \right) \\
+  &= \frac{\lambda}{\alpha} \left( \frac{f(x) - f(x-c)}{c} - 
+                  \frac{ f(x-\alpha) - f(x - \alpha - c)}{c} \right) \\
+ &\trm{ take the limit $c \rightarrow 0$} \\
+\tilde{\gamma}'(x) &= \frac{\lambda}{\alpha} (f'(x) - f'(x-\alpha) ) 
+\end{align*}
+
+Thus, it is clear that $ | \tilde{\gamma}'(x) | \leq \lambda M$ and we have verified assumption A3. 
+
+\end{example}
 
 \subsubsection{Continuous and Discretized Renyi Divergence}
 
@@ -1595,7 +1774,7 @@ The claim thus follows.
 \end{proof}
 
 
-Next, we will show that $\lim_{L \rightarrow \infty} d_L = d$. 
+Next, we will show that $\lim_{L \rightarrow \infty} \sup_\alpha \left| \frac{d_L}{d} - 1 \right| = 0$. 
 
 \begin{proposition}
 \label{prop:convergence_discrete_continuous_renyi}
@@ -1604,7 +1783,7 @@ Let $d = \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx$ and $
 
 Suppose assumptions A1, A3 hold. Then, we have that
 \[
-\lim_{L \rightarrow \infty} d_L = d
+\lim_{L \rightarrow \infty} \sup_\alpha \left| \frac{d_L}{d} - 1 \right| = 0
 \]
 
 \end{proposition}
@@ -1622,7 +1801,7 @@ P_l &= \int_{\trm{Bin}_l} p(x) dx \\
  &= B p(a_l) + B^2 \xi_l \quad \trm{where $|\xi_l| \leq M'/2$}
 \end{align*}
 
-Likewise, we have that $\gamma_l = B \gamma(a_l) + B^2 \xi'_l$ for some $\xi'_l$. 
+Likewise, we have that $\gamma_l = B \gamma(a_l) + B^2 \xi'_l$ for some $\xi'_l$ such that $|\xi'_l | \leq M'/2$. 
 
 \begin{align*}
 d_L &= \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 \\
@@ -1630,20 +1809,57 @@ d_L &= \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 \\
      (p(a_l) + B \xi_l) \left( \frac{1}{2} \frac{\gamma(a_l) + B \xi'_l}{p(a_l) + B \xi_l} \right)^2 \right) 
 \end{align*}
 
-Since $p(a_l) \geq c > 0$ is bounded away from 0 and $|\xi_l|, |\xi'_l| \leq M'$ is bounded away from $\infty$, we have that
+We will simplify this expression step by step, using the fact that $|\xi_l|, |\xi'_l| \leq M'/2$ and that $|\gamma(a_l)| \leq M$ and $|p(a_l)| \geq c$. 
 
 \begin{align*}
- &= \sum_{l=1}^L B p(a_l) \left( \frac{1}{2} \frac{\gamma(a_l)}{p(a_l)} \right)^2 (1 + O(B))
+d_L = \sum_{l=1}^L B
+     p(a_l)  \left( \frac{1}{2} \frac{\gamma(a_l) + B \xi'_l}{p(a_l) + B \xi_l} \right)^2 + \sum_{l=1}^L B^2 \xi_l  \left( \frac{1}{2} \frac{\gamma(a_l) + B \xi'_l}{p(a_l) + B \xi_l} \right)^2 
 \end{align*}
 
-Thus, nothing that $\sum_{l=1}^L B = 1$, we have that
+The second term is of magnitude at most $B M' \frac{1}{4} \left( \frac{M + B (M'/2)}{c - B (M'/2)} \right)^2$. This is clearly $c_{M, M', c} B$ for some constant $c_{M, M', c}$ independent of $n$. 
 
+We now turn to the first term.
 \begin{align*}
-\lim_{B \rightarrow 0} d_L &= \lim_{B \rightarrow 0} \sum_{l=1}^L B p(a_l) 
- \left( \frac{1}{2} \frac{\gamma(a_l)}{p(a_l)} \right)^2 \\
- &= \int p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx
+& \sum_{l=1}^L B
+   p(a_l)  \left( \frac{1}{2} \frac{\gamma(a_l) + B \xi'_l}{p(a_l) + B \xi_l} \right)^2 \\
+&= \sum_{l=1}^L B p(a_l) \left( \frac{1}{4} \frac{\gamma(a_l) + B \xi_l'}{p(a_l)} \right)^2
+   \left( \frac{1}{ 1 + B \frac{\xi_l}{p(a_l)} } \right)^2 \\
+&\leq \sum_{l=1}^L B p(a_l) \left( \frac{1}{4} 
+    \frac{ \gamma(a_l)^2 + B \xi'_l \gamma(a_l) + (B \xi'_l)^2}{p(a_l)^2} \right) ( 1 + \xi''_l) 
 \end{align*} 
-Since $ \frac{\gamma^2(x)}{p(x)}$ is Riemann integrable. 
+
+where $\xi''_l$ satisfies $| \xi''_l | \leq \frac{3}{8} B M'/c$ for all $B \leq c / M'$. From here, it is straightforward to verify that the first term is 
+\[
+\sum_{l=1}^L Bp(a_l) \left( \frac{1}{2} \frac{\gamma(a_l)}{p(a_l)} \right)^2 + \trm{remainder}
+\]
+where the remainder term is bounded by magnitude by $c_{M, M', c}B$ for some constant $c_{M, M', c}$ independent of $n$. 
+
+Define $d_R = \sum_{l=1}^L B p(a_l) \left( \frac{1}{2} \frac{\gamma(a_l)}{p(a_l)} \right)^2 $ where $R$ stands for Riemann sum. What we have just shown is that
+
+\[
+| d_R - d_L | \leq c_{M, M', c} B 
+\]
+
+Now, we look at $| d_R - d |$:
+\begin{align*}
+|d_R - d| &= \frac{1}{4} \left| \int \frac{\gamma(x)^2}{p(x)} dx - \sum_l B \frac{\gamma(a_l)^2}{p(a_l)} \right| \\
+ &\leq \sup_x \left| \frac{ d \frac{\gamma(x)^2}{p(x)} }{dx} \right| B^2 \\
+ &\leq \sup_x \left| \frac{ 2 \gamma'(x) \gamma(x) p(x) - p'(x) \gamma(x)^2 }{p(x)^2} \right| B^2 \\
+ &\leq \frac{2 M^2 M' }{c^2} B^2 
+\end{align*}
+
+Thus, we have that
+\begin{align*}
+\left|\frac{d_L}{d} - 1 \right| &= \frac{| d_L - d |}{d} \\
+  &\leq \frac{1}{d} \left( |d_L - d_R| + |d_R - d| \right) \\
+  &\leq \frac{1}{d} c_{M, M', c} B 
+\end{align*}
+
+Since $\int \gamma(x)^2 dx = 1$, we have that $d = \frac{1}{4} \int \frac{\gamma(x)^2}{p(x)} dx \leq \frac{1}{4c} \int \gamma(x)^2 dx = \frac{1}{4c}$. Thus
+
+\[
+\lim_{L \rightarrow \infty} \sup_n  \left| \frac{d_L}{d} - 1 \right| = 0
+\]
  
 \end{proof}
 
@@ -1674,7 +1890,7 @@ P_l &= \int_{\trm{Bin}_l} p(x) dx \\
  &= B p(a_l) + B^2 \xi_l \quad \trm{where $|\xi_l| \leq M'/2$}
 \end{align*}
 
-Likewise, we have that $Q_l = B q(a_l) + B^2 \xi'_l$ for some $\xi'_l$. 
+Likewise, we have that $Q_l = B q(a_l) + B^2 \xi'_l$ for some $\xi'_l$ such that $|\xi'_l|\leq M'/2$. 
 
 \begin{align*}
 \tilde{I} &= -2 \log \sum_{l=1}^L \sqrt{ P_l Q_l} \\
@@ -1702,17 +1918,16 @@ These propositions together imply the following:
 \label{thm:relative_convergence_discrete_continuous_renyi}
 Suppose assumptions A1-A3 are satisfied. Let $\tilde{I}_L$ be the discretized Renyi divergence discretized at level $L$.
 
-Let $n \rightarrow 0$, then, we have that, for \textbf{any sequences} $L_n \rightarrow \infty, \alpha_n \rightarrow 0$,
+Let $n \rightarrow \infty$, then, we have that, for \textbf{any sequences} $L_n \rightarrow \infty, \alpha_n \rightarrow 0$,
 
 \[
- \left| \frac{\tilde{I}_L}{I} - 1 \right| \rightarrow 0
+\lim_{n \rightarrow \infty} \left| \frac{\tilde{I}_L}{I} - 1 \right| \rightarrow 0
 \]
 
 \end{theorem}
 \end{shaded}
 
 \begin{proof}
-
 
 By proposition~\ref{prop:continuous_renyi_order} and proposition~\ref{prop:discrete_renyi_order}, we have that, for all $\alpha < \frac{c}{4M}$,
 
@@ -1726,15 +1941,33 @@ By proposition~\ref{prop:continuous_renyi_order} and proposition~\ref{prop:discr
 \left | \frac{d_L}{d} \frac{(1+\eta_L)}{1 + \eta} - 1 \right|
 \end{align*}
 
-where $|\eta|, |\eta_L| \leq \frac{12M}{c} \alpha$ for all $L$ and $d_L, d$ do not depend on $\alpha$.
+where $|\eta|, |\eta_L| \leq \frac{12M}{c} \alpha$ for all $L$. Thus, it is clear that 
+\[
+\lim_{\alpha_n \rightarrow 0} \sup_L \left| \frac{1+\eta_L}{1+\eta} - 1 \right| = 0
+\]
 
-It is clear then that $\lim_{\alpha \rightarrow 0} \left| \frac{\tilde{I}_L}{I} - 1 \right| = \left| \frac{d_L}{d} - 1 \right|$ and that $\lim_{L \rightarrow \infty} \lim_{\alpha \rightarrow 0} 
-\left| \frac{\tilde{I}_L}{I} - 1 \right| = 0$.  
-We need to show additionally that the the convergence is uniform, that is, 
-$\lim_{\alpha \rightarrow 0} \sup_L 
-\left| \left| \frac{\tilde{I}_L}{I} - 1 \right| - \left|  \frac{d_L}{d} - 1  \right| \right| = 0$.
+Furthermore, it has been shown ... that
+\[
+\lim_{L_n \rightarrow \infty} \sup_\alpha \left| \frac{d_L}{d} - 1 \right| = 0
+\]
 
-This is true since $\lim_{\alpha \rightarrow 0} \sup_L \eta_L = 0$ by proposition~\ref{prop:discrete_renyi_order}. The claim follows immediately.
+Let $\epsilon > 0$ be arbitrarily fixed. 
+Choose $\alpha$ such that $\sup_L \left| \frac{1+\eta_L}{1+\eta} - 1 \right| \leq \epsilon/3$ and choose $L$ such that $\sup_\alpha \left| \frac{d_L}{d} -1 \right| \leq \epsilon/3$. 
+
+Choose $n_0$ such that $\alpha_n < \alpha$ and $L_n < L$ for all $n > n_0$. 
+
+Then, we have that, for all $n > n_0$:
+\begin{align*}
+& \left| \frac{d_L}{d} \frac{1+\eta_L}{1+\eta} - 1 \right | \\
+&= \left| \frac{d_L}{d} \frac{1 + \eta_L}{1 + \eta} - \frac{d_L}{d} + \frac{d_L}{d} - 1 \right| \\
+&= \left| \frac{d_L}{d} \left( \frac{1+\eta_L}{1+\eta} - 1 \right) + \left( \frac{d_L}{d} - 1 \right) \right| \\
+&= \left| \left( \frac{1+\eta_L}{1 + \eta} - 1 \right) + \left( \frac{d_L}{d} -1 \right) \left( \frac{1+\eta_L}{1+\eta} - 1 \right) + \left( \frac{d_L}{d} - 1 \right) \right| \\
+&\leq  \left| \frac{1+\eta_L}{1 + \eta} - 1 \right| + \left| \left( \frac{d_L}{d} -1 \right) \left( \frac{1+\eta_L}{1+\eta} - 1 \right) \right| + \left| \frac{d_L}{d} - 1  \right| \\
+&\leq \epsilon
+\end{align*}
+
+The claim thus follows. 
+
 \end{proof}
 
 \subsubsection{Recovery Procedure}
@@ -1753,29 +1986,6 @@ The initial clustering is consistent if we assume that $\left| \int_0^{\tau} \ga
 
 The discretization step is fine so long as $L \rightarrow \infty$. 
 
-\subsection{Generalization}
-
-The assumptions listed in section~\ref{sec:continuous_assumptions} can be generalized in several ways. In the first way, $\gamma$ can be a function of $\alpha$ under weak assumptions.
-\begin{enumerate}
-\item[B1] $p(x), q(x)$ are supported on $[0,1]$, and $p(x), q(x) \geq c > 0$. 
-\item[B2] $p(x) - q(x) = \gamma(x, \alpha) \alpha$ where $|\gamma(x, \alpha)| \leq M$ for some constant $M$. $\alpha \rightarrow 0$.
-\item[B3] For all $\alpha$, $0 < c_1 \leq \int \frac{\gamma(x, \alpha)^2}{p(x)} dx \leq c_2 < \infty$. 
-\item[B4] $|p'(x)|, |q'(x)|, |\partial_x \gamma(x,\alpha)| \leq M'$ for some constant $M'$. 
-\end{enumerate}
-
-Let us see a specific example in which these generalizations are relevant. Suppose that $f(x)$ is a density supported on $[0, 1-\alpha]$ and $g(x)$ is a density, bounded away from 0, and supported on $[0,1]$. We define $p(x), q(x)$ as mixtures.
-\begin{align*}
-p(x) &= \lambda f(x) + (1-\lambda) g(x)\\
-q(x) &= \lambda f(x - \alpha) + (1-\lambda) g(x)
-\end{align*}
-
-Suppose that $|f'(x)|, |g'(x)| \leq M$, then, we have that
-\begin{align*}
-p(x) - q(x) &= \lambda (f(x) - f(x-\alpha)) \\
-  &= \lambda f'(c_{x, \alpha}) \alpha \quad \trm{for some $c_{x, \alpha}$ in between $x, x-\alpha$}
-\end{align*}
-
-Since $|f'(c_{x, \alpha} )| \leq M$, condition $B2$ is satisfied. Condition $B3$ amounts to requiring that $\int \frac{(f'(c_{x, \alpha}))^2}{p(x)} dx $ be bounded away from 0 and $\infty$ for all $\alpha$. 
 
 
 \newpage
