@@ -15,10 +15,12 @@ Stochastic blocks the model is, \\
 weighted edges a novel goal.
 \end{abstract}
 
+\tableofcontents
+
 %%%%%%%%%%
 %%%%%%%%%%
 %%%%
-%%%% Deprecated
+%%%% DEPRECATED
 
 \begin{comment}
 \section{General Discrete Likelihood}
@@ -215,7 +217,8 @@ Assume $\frac{n I_{tot}}{K \log K} \rightarrow \infty$. The maximum likelihood e
    \exp \left( - (1 + o(1)) \frac{nI_{tot}}{2} \right ), \, & K=2, \\
    \exp \left( - (1 + o(1)) \frac{nI_{tot}}{\beta K} \right ), \,& K\geq 3
   \end{array} \right. 
-\]   
+\]
+
 \end{proposition}
 
 \begin{proof}
@@ -337,7 +340,7 @@ We propose the following algorithm to recover the clusters in the general settin
 \begin{enumerate}
 \item For each color $l$:
   \begin{enumerate}
-   \item Perform spectral clustering on $\tilde{A}_{ij} \equiv \mathbf{1}(A_{ij} = l)$ to get $\sigma^l$. 
+   \item Perform spectral clustering on $\tilde{A}_{ij} \equiv \mathbf{1}(A_{ij} = l)$ to get $\sigma^l$.
    \item Estimate $\hat{P}_l, \hat{Q}_l$ via counts from $\sigma^l$. 
    \item Estimate $\sqrt{I_l}$ via 
   $\sqrt{ \hat{I}_l } \equiv \frac{| \hat{P}_l - \hat{Q}_l |}{\sqrt{ \hat{P}_l \vee \hat{Q}_l}}$. 
@@ -529,7 +532,7 @@ Using our stronger assumption on $\gamma$ (equation~\ref{eqn:gamma_assumption}),
 
 Having handled the bias, we now bound the deviation.
 
-Let $\tilde{A}_{ij} = \mathbf{1}(A_{ij} = l)$. Then, by Bernstein's inequality,
+Let $ \tilde{A}_{ij} = \mathbf{1}(A_{ij} = l)$. Then, by Bernstein's inequality,
 \[
 P\left( \left| \sum_{i,j\,:\, \sigma(i) = \sigma(j)} (\tilde{A}_{ij} - \E \tilde{A}_{ij} ) \right|  > t 
  \right) \leq 2 \exp\left( 
@@ -715,7 +718,9 @@ We assign $u$ based on the criterion:
 
 \begin{shaded}
 \begin{proposition}
-Suppose that $\sigma_u$ is a clustering of all nodes except for $u$ with error rate $\gamma$, that is, $d_H(\sigma_u, \sigma_0) = \gamma n$. Suppose that statements of proposition~\ref{prop:estimation_consistency} holds. 
+Suppose that $\sigma_u$ is a clustering of all nodes except for $u$ with error rate $\gamma$, that is, $d_H(\sigma_u, \sigma_0) = \gamma n$. Let $C_{thresh}$ be an absolute constant and suppose that statements of proposition~\ref{prop:estimation_consistency_generalization} holds. 
+
+Suppose that $\frac{n I^*}{L} \rightarrow \infty$ and that for all $l$, $c_1 \leq \frac{P_l}{Q_l} \leq c_2$ for some absolute positive constants $c_1, c_2$. Suppose also that $P_l, Q_l \leq 1 - \epsilon$ for some fixed arbitrarily small $0 < \epsilon < 1$. Suppose that $\sum_l \sqrt{P_l Q_l} \geq 1/2$. 
 
 Then, we have that, with probability at least $1 - \exp \left( - (1 - o(1)) \frac{n}{K} I^* \right)$, 
 \[
@@ -725,9 +730,34 @@ Then, we have that, with probability at least $1 - \exp \left( - (1 - o(1)) \fra
 \end{proposition}
 \end{shaded}
 
+
+
 \subsection{Proof}
 
-Suppose without the loss of generality that $\sigma_0(u) = 1$.  We want to then control the probability that for some cluster $k$, 
+Throughout the proof, we let $\eta, eta'$ denote a sequence that converges to 0 and let $C$ denote a constant. Their value could change from line to line. \\
+
+First, define $L_1 = \{ l \,:\, n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh} \}$. Then we claim that $C_{\epsilon, c_1, c_2} \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} = I^*( 1 - \eta )$. To see this, observe first that
+
+\begin{align*}
+I^* &= -2 \log \sum_l \sqrt{P_l Q_l} \\
+  &= C_\epsilon \sum_l (\sqrt{P_l} - \sqrt{Q_l} )^2 \\
+  &= C_\epsilon \sum_l \frac{\Delta_l^2}{(\sqrt{P_l} + \sqrt{Q_l})^2} \\
+  &= C_{\epsilon, c_1, c_2} \sum_l \frac{\Delta_l^2}{P_l \vee Q_l} 
+\end{align*}
+
+Therefore, we have that
+\begin{align*}
+C_{\epsilon, c_1, c_2} \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} &= I^* - 
+ C_{\epsilon, c_1, c_2} \sum_{l \notin L_1} \frac{\Delta_l^2}{P_l \vee Q_l} \\
+ &\geq I^* - C_{\epsilon, c_1, c_2} \sum_{l \notin L_1} \frac{C_{thresh}}{n} \\
+ &\geq I^* - C_{\epsilon, c_1, c_2} \frac{ L C_{thresh}}{n} \\
+ &\geq I^* - \eta I^* 
+\end{align*}
+
+The second inequality follows from the definition of $L_1$. The third inequality follows because $\frac{n I^*}{L} \rightarrow \infty$ by assumption. \\
+
+
+Now we proceed onto the main proof. Suppose without the loss of generality that $\sigma_0(u) = 1$.  We want to then control the probability that for some cluster $k$, 
 \begin{align}
 \sum_{v\,:\, \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
 &\geq 
@@ -782,12 +812,15 @@ We will set $t = \frac{1}{2}$, in which case, we have:
  \left( \frac{ \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l}
              { \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } P_l} \right)^{m_1 - m_1'}  
    \label{eqn:excess_error_term} \\
- & \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_k' - (m_k - m_k')} 
-    \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1' - (m_1 - m_1')}
+ & \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_k} 
+    \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1}
    \label{eqn:Ihat_error_term} 
 \end{align} 
 
-We will bound term~\ref{eqn:excess_error_term} and \ref{eqn:Ihat_error_term} separately. 
+We will bound term~\ref{eqn:excess_error_term} and \ref{eqn:Ihat_error_term} separately. Loosely speaking, we will show that term~\ref{eqn:excess_error_term} is bounded in magnitude by $\exp( o(I^*) \frac{n}{k} )$ and that term~\ref{eqn:Ihat_error_term} is bounded by $\exp( - \frac{n}{k} (1 + o(1) I^*)$. 
+
+
+
 
 \textbf{Bound for Term~\ref{eqn:excess_error_term}.} 
 
@@ -795,13 +828,23 @@ Now, we can bound term~\ref{eqn:excess_error_term}:
 \begin{align*}
 \left| 1 -  \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l}
                 {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l}  \right|
- &= \frac{ \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} (P_l - Q_l) }
-     { \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l } \\
-&= \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} }(P_l - Q_l) \\
-&= \sum_{l} \left( \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right) (P_l - Q_l)  \\
-&\leq \sum_l \frac{\Delta^2_l}{Q_l}(1+o(1)) = O( I^* ) \quad 
-   \highlight{\trm{(assuming that $P_l \asymp Q_l$)}}
+ &= \left| \frac{ \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} (P_l - Q_l) }
+     { \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l } \right| \\
+&\leq \frac{8}{\sum_l \sqrt{P_l Q_l}} 
+     \left| \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} }(P_l - Q_l) \right| \\
+&\leq 16 \left|  \sum_{l} \left( \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right) (P_l - Q_l)  \right| \\
+&\leq 16 \left| 
+     \sum_{l \in L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} - 1 \right)(P_l - Q_l) 
+     \right| + \sum_{l \notin L_1} \left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1 \right| \Delta_l \\
+&\leq 16 \sum_{l \in L_1} \frac{\Delta^2_l}{Q_l}(1+ \eta') + 
+      \sum_{i \notin L_1} 2 C_{thresh} \frac{\Delta_l}{\sqrt{n (P_l \vee Q_l)}} \\
+&\leq C_{\epsilon, c_1, c_2} I^* (1 + \eta') + 2 C_{thresh}^2 \frac{L}{n} \\
+&\leq C_{\epsilon, c_1, c_2} I^* (1 + \eta')
 \end{align*}
+
+
+Where the second inequality follows from lemma~\ref{lem:sqrt_ratio_times_ql},
+second to last inequality follows under the assumption that $\sum_l \sqrt{P_l Q_l} \geq \frac{1}{2}$, and the last inequality follows from Lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1}. 
 
 Identical analysis shows that
 \[
@@ -810,6 +853,7 @@ Identical analysis shows that
 = O(I^*) 
 \]
 
+Now, we note that $\exp( | 1 - x | ) \geq |x|$. 
 Therefore, term~\ref{eqn:excess_error_term} can be bounded as
 \begin{align*}
 &  \left( \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l}
@@ -823,22 +867,21 @@ Therefore, term~\ref{eqn:excess_error_term} can be bounded as
 
 \textbf{Bound for Term~\ref{eqn:Ihat_error_term}.}
 
-First, note that $ (m'_k - (m_1 - m_1')) - (m_1' - (m_k - m_k')) = m_k - m_1$.
 
 Define 
 $\hat{I} = - \log \left( \sum_l \frac{\hat{P}_l}{\hat{Q}_l} Q_l \right) \left( \sum_l \frac{\hat{Q}_l}{\hat{P}_l} P_l \right) $. 
 With this definition, 
 
 \begin{align*}
-& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k' - (m_1 - m_1')} 
-       \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1' - (m_k - m_k')} \\
-&= \exp( - \hat{I} )^{\frac{(m'_k - (m_1 - m_1')) + (m_1' - (m_k - m_k'))}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k} 
+       \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1} \\
+&= \exp( - \hat{I} )^{\frac{m_k + m_1}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
  \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} 
 \end{align*}
 
 We claim that the following three statements are true. 
 \begin{enumerate}
-\item[Claim 1] $m_1' - (m_k - m_k') \geq n_1 - 2 \gamma n$ and likewise for $m_k' - (m_1 - m_1')$
+\item[Claim 1] $m_k \geq n_1 - 2 \gamma n$ and likewise for $m_1$.
 \item[Claim 2] $\hat{I} - I^* \geq - o(1) I^*$
 \item[Claim 3] $\left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
  \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} = \exp(\frac{n}{k}  o(I^*)  $
@@ -848,9 +891,9 @@ Let us first suppose that these statements are true and see that term~\ref{eqn:I
 
 
 \begin{align*}
-& \exp( - \hat{I} )^{\frac{(m'_k - (m_1 - m_1')) + (m_1' - (m_k - m_k'))}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+& \exp( - \hat{I} )^{\frac{m_1 + m_k}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
  \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}}  \\
-&\leq  \exp( - (I^* + (\hat{I} - I^*) )^{\frac{(m'_k - (m_1 - m_1')) + (m_1' - (m_k - m_k'))}{2}}  
+&\leq  \exp( - (I^* + (\hat{I} - I^*) )^{\frac{m_1 + m_k}{2}}  
  \left( \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l}
              {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l} \right)^{\frac{m_1 - m_k}{2}}  
   \\
@@ -864,7 +907,7 @@ Let us first suppose that these statements are true and see that term~\ref{eqn:I
 
 The last inequality holds because $\gamma = o\left( \frac{1}{k \log k} \right)$. We will prove each of the three claims in the remainder of the proof.
 
-\textbf{Claim 1:} This is straightforward. $\sigma_u$ has at most $\gamma n$ errors and therefore, $m_1' \geq n_1 - \gamma n$ and $m_k - m_k' \leq \gamma n$. 
+\textbf{Claim 1:} This is straightforward. $\sigma_u$ has at most $\gamma n$ errors and therefore, $m_1' \geq n_1 - \gamma n$ and $m_1 - m_1' \leq \gamma n$. 
 
 \textbf{Claim 2:} We show that the estimation error of $\hat{P}_l, \hat{Q}_l$ does not make $\hat{I}$ too small.
 
@@ -882,29 +925,29 @@ Let us consider the numerator.
 &= \left( \sum_l \sqrt{ P_l Q_l} \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l}} \right) 
      \left( \sum_l \sqrt{P_l Q_l} \sqrt{ \frac{P_l}{\hat{P}_l} \frac{\hat{Q}_l}{ Q_l}} \right) \\
 &= \sum_l P_l Q_l + 2\sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} + 
-   \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \\
+   \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
 &= \left( \sum_l \sqrt{P_l Q_l} \right)^2 + \sum_{l < l'} 
-                  \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) 
+                  \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) 
 \end{align*}
 
-where we define $T_l = \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
-      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}}  $. It will be later shown that $T_l \rightarrow 1$ and thus, continuing equation~\ref{eqn:Ihat_Istar},
+where we define $T_{l,l'} = \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}}  $. It will be later shown that $T_{l,l'} \rightarrow 1$ and thus, continuing equation~\ref{eqn:Ihat_Istar},
 
 \begin{align}
 \hat{I} - I^* &= - \log \left( 1 + \frac{ \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)}
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)}
     { \left( \sum_l \sqrt{ P_l Q_l} \right)^2 }  \right) \nonumber \\
      &  \geq  - \log \left( 1 + 4 \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}}  
-    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)  \right) 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)  \right) 
   \quad \trm{(assuming that $\sum_l \sqrt{P_l Q_l} \geq 1/2$)} \nonumber \\
    & \geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \label{eqn:Ihat_Istar2}
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \label{eqn:Ihat_Istar2}
 \end{align}
 
-We proceed by first bounding $|T_l - 1|$ and then taking the second order approximation of $\left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right)$ around $1$. 
+We proceed by first bounding $|T_{l,l'} - 1|$ and then taking the second order approximation of $\left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)$ around $1$. 
 
 \begin{align*}
-|T_l - 1| &= \left| \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+|T_{l,l'} - 1| &= \left| \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
       \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}} - 1 \right| \\
  &= \left| \left( 1 - \frac{P_l - \hat{P}_l}{P_l} \right)
     \left( 1 - \frac{\hat{Q}_l - Q_l}{\hat{Q}_l} \right)
@@ -912,42 +955,53 @@ We proceed by first bounding $|T_l - 1|$ and then taking the second order approx
    \left( 1 -  \frac{Q_{l'}- \hat{Q}_{l'}}{Q_{l'}} \right) -1 \right| \\
 &\leq \left( \frac{|P_l - \hat{P}_l|}{P_l} +  \frac{|\hat{Q}_l - Q_l|}{\hat{Q}_l}
            +   \frac{| \hat{P}_{l'} - P_{l'}|}{\hat{P}_{l'}} +
+               \frac{| Q_{l'} - \hat{Q}_{l'} | }{Q_{l'}} \right) \\
+& \leq 2\left( \frac{|P_l - \hat{P}_l|}{P_l} +  2\frac{|\hat{Q}_l - Q_l|}{Q_l}
+           +   \frac{| \hat{P}_{l'} - P_{l'}|}{P_{l'}} +
                \frac{| Q_{l'} - \hat{Q}_{l'} | }{Q_{l'}} \right) 
 \end{align*}
-\highlight{We use the assumption that $P_l \asymp Q_l$ and that $| \hat{P}_l - P_l | = \eta \Delta_l$ for some $\eta = o(1)$. }
+where the last inequality follows from lemma~\ref{lem:bound_ratio_P_Pl}.
 
-\highlight{We will also assume that $\frac{1}{2} P_l \leq \hat{P}_l \leq 2 P_l$. }
+Since we only work with pairs $(l, l')$ such that $l' > l$ and we can choose whatever ordering we would like. Suppose that the $l$'s are in decreasing order of $\frac{|\hat{P}_l - P_l|}{P_l} + \frac{|\hat{Q}_l - Q_l|}{Q_l}$ and therefore, we have that, for all pairs $l < l'$, 
+\[
+| T_{l,l'} - 1 | \leq 2 
+    \left( \frac{|\hat{P}_l - P_l|}{P_l} + \frac{|\hat{Q}_l - Q_l|}{Q_l} \right)
+\]
 
-Then, we have that
+By proposition~\ref{prop:estimation_consistency_generalization}, we have that, for $l \in L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{\Delta_l}{P_l \vee Q_l}$ and for $l \notin L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{1}{\sqrt{n (P_l \vee Q_l)}}$ and likewise for the $\frac{|\hat{Q}_l - Q_l|}{Q_l}$ term. We plug these bounds into the previous derivation and get that:
 \begin{align*}
-|T_l - 1| \leq \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}} \right) 
+|T_{l,l'} - 1|  &\leq \eta  \frac{\Delta_l}{P_l \vee Q_l}  \quad \trm{for $l \in L_1$}\\
+|T_{l,l'} - 1 | &\leq \eta \frac{1}{\sqrt{ n (P_l \vee Q_l)}} \quad \trm{for $l \notin L_1$}
 \end{align*}
+We have used the assumption that $P_l \asymp Q_l$ and folded constants into the sequence $\eta$. 
 
-The Taylor approximation of $\sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2$ around $T_l=1$ is:
+
+The Taylor approximation of $\sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2$ around $T_{l,l'}=1$ is:
 \begin{align*}
-\sqrt{T_l} + \frac{1}{\sqrt{T_l}} -2  &\leq 
-  \frac{1}{4} (T_l - 1)^2 + O (T_l-1)^3 \\
- &\leq \frac{1}{4} \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}} \right)^2 
+\sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} -2  &\leq 
+  \frac{1}{4} (T_{l,l'} - 1)^2 + O (T_{l,l'}-1)^3 
 \end{align*}
 
 Continuing on from equation~\ref{eqn:Ihat_Istar2}, we have that
 \begin{align*}
 \hat{I} - I^* &\geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \left( \sqrt{T_l} + \frac{1}{\sqrt{T_l}} - 2 \right) \\
-  &\geq - \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-    \eta \left( 3 \frac{\Delta_l}{P_l \vee Q_l} + 3 \frac{\Delta_{l'} }{P_{l'} \vee Q_{l'}} 
-     \right)^2 \\
- &\geq - \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
-           36 \eta \left( \frac{\Delta_l}{ P_l \vee Q_l} \right)^2 
-    \quad \trm{(assuming $\frac{\Delta_l}{P_l \vee Q_l} \geq 
-                 \frac{\Delta_{l'}}{P_{l'} \vee Q_{l'}}$ )} \\
- &\geq - \sum_l \sum_{l'} 36 \eta \sqrt{P_{l'}Q_{l'}} \frac{\Delta_l^2}{P_l \vee Q_l} \\
- &\geq - \eta \left( \sum_l \frac{\Delta_l^2}{P_l \vee Q_l} \right)
-         \left( \sum_{l'} 36 \sqrt{P_{l'}Q_{l'}} \right) \\
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
+&\geq - 4 \sum_{l \in L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) 
+     - 4 \sum_{l \notin L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
+  &\geq - \sum_{l \in L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+             \eta \left( \frac{\Delta_l}{P_l \vee Q_l}  \right)^2 
+        - \sum_{l \notin L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+             \eta \frac{1}{n (P_l \vee Q_l)} \\
+ &\geq - \eta \left( \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} \right)
+         \left( \sum_{l'}  \sqrt{P_{l'}Q_{l'}} \right) 
+       - \eta \left( \sum_{l \notin L_1} \frac{1}{n} \right) 
+          \left( \sum_{l'} \sqrt{P_{l'} Q_{l'} } \right) \\
  &\geq - o(I^*)
 \end{align*}
 
-The last inequality follows because $\sum_{l'} \sqrt{P_{l'} Q_{l'}} \leq 1$. This proves claim 2.
+The last inequality follows because $\sum_{l'} \sqrt{P_{l'} Q_{l'}} \leq 1$ and because $\sum_{l \notin L_1} \frac{1}{n} \leq \frac{L}{n} = o(I^*)$. This proves claim 2.
 
 \textbf{Claim 3.} 
 
@@ -965,7 +1019,7 @@ The last inequality follows because $\sum_{l'} \sqrt{P_{l'} Q_{l'}} \leq 1$. Thi
          {\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} \hat{P_l} } \right)^{\frac{m_1 - m_k}{2}} 
 \end{align*}
 
-Assume that $m_k \geq m_1$. The reverse case can be analyzed in identical manners. Then,
+Assume that $m_k \geq m_1$. The reverse case can be analyzed in the identical manner. Then,
 \begin{align*}
 &= \left( 1 + 
    \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} (Q_l - \hat{Q}_l)}
@@ -976,24 +1030,24 @@ Assume that $m_k \geq m_1$. The reverse case can be analyzed in identical manner
    \\
 \end{align*}
 
-The term $\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} \hat{Q}_l = \sum_l \sqrt{\hat{P}_l \hat{Q}_l} = \Theta( \sqrt{\hat{P}_0 \hat{Q}_0} ) =  \Theta(1)$ since $|\hat{P}_0 - P_0| = o( \sum_{l\neq 0} |P_l - Q_l|) \rightarrow 0$ and $P_0 \rightarrow 1$. Likewise, 
-$\sum_l \sqrt{ \frac{\hat{Q}_l}{\hat{P}_l}} P_l 
-  = \Theta \left( \sqrt{ \frac{\hat{Q}_0}{\hat{P}_0}} P_0 \right) =
-  \Theta(1)$. 
+By lemma~\ref{lem:sqrt_ratio_times_ql}, the denominators are of constant order. That is, 
+$\sum_l \sqrt{ \frac{ \hat{P}_l }{ \hat{Q}_l } \hat{Q}_l } = C$ and 
+$\sum_l \sqrt{ \frac{\hat{Q}_l}{P_l} } P_l = C$. 
 
-To bound the numerator term, we first note that 
-\[
-\left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right| \leq \frac{\Delta_l}{Q_l}
-\]
+To bound the numerator term, we apply lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1}. 
 
-Therefore, we have that
 \begin{align*}
 \left| \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} (Q_l - \hat{Q}_l) \right|  &= 
   \left|  \sum_l \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) 
  \right| \\
- &\leq o\left( \sum_l \frac{\Delta^2_l}{Q_l} \right) \\
-& \leq o( I^*) 
+& \leq \left| \sum_{l \in L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) \right| +  %next term
+  \left| \sum_{l \notin L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) \right| \\
+& \leq \sum_{l \in L_1} \eta \frac{\Delta_l^2}{Q_l} + \sum_{l \notin L_1} \eta \frac{1}{n} \\
+& \leq \eta I^* + \eta \frac{L}{n}  \\
+& \leq \eta I^*  
 \end{align*}
+
+The second inequality follows from lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1} and the definition of $L_1$. 
 
 \begin{align*}
 & \left( 1 + 
@@ -1242,18 +1296,45 @@ Similarly,
 \end{comment}
 
 
+
+
+
 \subsection{Lemmas}
 
 Here we collect various lemmas used in the proof.
 
+We often use the bound that $\frac{1}{2} P \leq \hat{P}_l \leq 2 P_l$. The following lemma justifies this.
+
+\begin{lemma}
+\label{lem:bound_ratio_P_Pl}
+Let $\eta$ be a sequence that tends to zero. Suppose that $P_l \asymp Q_l$ and that $P_l, Q_l \geq \frac{C}{n}$ for some absolute constant $C$.\\
+
+Suppose either that $|\hat{P}_l - P_l| = \eta \Delta_l$ or that $| \hat{P}_l - P_l | = \eta \sqrt{ \frac{P_l \vee Q_l}{n} }$. 
+
+Then, for all small enough $\eta$, we have that
+\[
+\frac{1}{2} P \leq \hat{P}_l \leq 2 P_l
+\]
+
+\end{lemma}
+
+\begin{proof}
+Under the first condition, one need only observe that there exists an absolute constant $C$ for which $\Delta_l \leq C P_l$. Under the second condition, we use the assumption that $P_l \geq \frac{C}{n}$ for some absolute constant $C$. 
+
+\end{proof}
+
+The following lemma bounds the quantity $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1$ for either the case that $\Delta_l \geq C_{thresh} \sqrt{ \frac{P_l \vee Q_l}{n} }$ or else. 
+
 \begin{lemma}
 \label{lem:sqrt_ratio_pl_ql_minus_1}
-Fix a color $l$ and assume that $P_l \asymp Q_l$. Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies 
+Fix a color $l$ and assume that $P_l \asymp Q_l$ and that $P_l, Q_l \geq c_3 \frac{1}{n}$ for some absolute constant $c_3$. Let $\eta, \eta' = o(1)$. 
+\begin{enumerate}
+\item 
+Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$ and therefore
 \begin{align*}
 | \hat{P}_l - P_l | &= \eta \Delta_l  \\
 | \hat{Q}_l - Q_l | &= \eta \Delta_l  
 \end{align*}
-where $\eta \rightarrow 0$. \\
 
 Then, we have that 
 \[
@@ -1262,7 +1343,20 @@ Then, we have that
                     \geq \frac{P_l - Q_l}{Q_l} (1 + \eta') & (\trm{if } P_l < Q_l) 
            \end{array} \right.
 \]
-for some $\eta' = o(1)$. 
+
+\item
+Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$ and therefore
+\begin{align*}
+| \hat{P}_l - P_l | &= \eta \sqrt{ \frac{P_l \vee Q_l}{n} } \\
+| \hat{Q}_l - Q_l | &= \eta \sqrt{ \frac{P_l \vee Q_l}{n} }
+\end{align*}
+Then, we have that
+\[
+\left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right| \leq
+ 2 C_{thresh} \frac{1}{\sqrt{n  (P_l \vee Q_l) } }
+\]
+
+\end{enumerate}
 \end{lemma}
 
 
@@ -1322,6 +1416,32 @@ Symmetry yields that
      \end{array} \right. \\
 \end{align*}
 
+This proves the first case. The proof of the second case is almost identical. 
+
+First, under the assumption that $P_l, Q_l \geq c_3 \frac{1}{n}$, it is clear that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta \sqrt{ \frac{1}{ n Q_l} } = \eta' \rightarrow 0$. 
+
+Therefore, it still follows that
+\begin{align*}
+\frac{\hat{P}_l}{\hat{Q}_l} - 1 &= 
+     \left( \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} \right)
+     \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} ( 1 + \eta') \right) - 1 \\
+ &= \frac{P_l - Q_l}{Q_l} + \eta' \sqrt{ \frac{1}{ n (P_l \vee Q_l)} } 
+\end{align*}
+
+and it is clear that $\eta'$ must satisfy the condition that $\frac{P_l - Q_l}{Q_l} + \eta'\sqrt{ \frac{1}{n (P_l \vee Q_l)} } + 1 > 0$. 
+
+
+
+\begin{align*}
+\left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right| &= 
+ \left|  \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} + \eta' \frac{1}{\sqrt{n (P_l \vee Q_l)} }}
+   -1  \right| \\
+  &\leq \left| \frac{P_l - Q_l}{Q_l} + \eta' \frac{1}{\sqrt{ n (P_l \vee Q_l)}}        \right| \\
+ &\leq 2 C_{thresh} \frac{1}{\sqrt{n (P_l \vee Q_l)} } 
+\end{align*}
+
+The first inequality follows because $ \sqrt{1 + x} - 1 \leq x$ for $x \geq 0$ and $\sqrt{ 1 + x} - 1 \geq x$ for $-1 < x < 0$. 
+The second inequality follows because $\left| \frac{P_l - Q_l}{Q_l} \right| \leq C_{thresh} \frac{1}{\sqrt{n (P_l \vee Q_l)}} $. 
 
 \end{proof}
 
@@ -1331,22 +1451,23 @@ The following lemma bounds $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l$.
 \label{lem:sqrt_ratio_times_ql}
 
 Fix a color $l$ and suppose $P_l \asymp Q_l$. Suppose also that
-\begin{align*}
-|\hat{P}_l - P_l| &= \eta \Delta_l \\
-|\hat{Q}_l - Q_l| &= \eta \Delta_l
-\end{align*}
+\[
+\frac{|\hat{Q}_l - Q_l|}{Q_l} = \eta \quad 
+\frac{|\hat{P}_l - P_l|}{P_l} = \eta
+\]
 where $\eta \rightarrow 0$. 
 
 Then, we have that for all small enough $\eta$, 
 \[
-\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \geq 
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \geq \frac{1}{2} \sqrt{\hat{P}_l \hat{Q}_l} \geq
   \frac{1}{8} \sqrt{P_l Q_l}
 \]
 \end{lemma}
 
+First, we note that the condition that $\frac{|\hat{Q}_l - Q_l|}{Q_l} \rightarrow 0$ is satisfied for $l$ such that $\Delta_l \geq C_{thresh}\sqrt{\frac{P_l \vee Q_l}{n}}$ as well as for $l$ such that $\Delta_l \leq C_{thresh} \sqrt{\frac{P_l \vee Q_l}{n}}$ if we also add the condition that $P_l, Q_l = \frac{C}{n}$ for some constant $C$. This is because, in the latter case, it is known that $\frac{|\hat{P}_l - P_l| }{P_l} \leq \eta \sqrt{\frac{1}{n (P_l \vee Q_l)}}$. 
+
 \begin{proof}
 
-First, we note that $\frac{ \hat{Q}_l - Q_l}{Q_l} = \eta \frac{\Delta_l}{Q_l} \rightarrow 0$. 
 
 \begin{align*}
 & \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \\
@@ -1354,12 +1475,12 @@ First, we note that $\frac{ \hat{Q}_l - Q_l}{Q_l} = \eta \frac{\Delta_l}{Q_l} \r
 &= \sqrt{\hat{P}_l \hat{Q}_l} \frac{1}{ \frac{Q_l - \hat{Q}_l}{Q_l} + 1 } \\
 &= \sqrt{\hat{P}_l \hat{Q}_l} 
   \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta') \right)  \\
-&= \sqrt{\hat{P}_l \hat{Q}_l} (1 - \frac{\Delta_l}{Q_l} \eta (1 + \eta') 
+&= \sqrt{\hat{P}_l \hat{Q}_l} (1 - \eta)
 \end{align*}
 
 where in the second to last equality, we used the fact that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta' \rightarrow 0$. 
 
-Clearly then, for small enough $\eta, \eta'$, we continue the bound as 
+Clearly then, for small enough $\eta$, we continue the bound as 
 \begin{align*}
 &\geq \frac{1}{2} \sqrt{ \hat{P}_l \hat{Q}_l} 
 \end{align*}
@@ -1991,9 +2112,27 @@ The discretization step is fine so long as $L \rightarrow \infty$.
 \newpage
 \section{Technical Lemmas}
 
+The following two lemmas give an alternative form to the Renyi-divergence. 
+
+\begin{lemma}
+\label{lem:simplify_renyi2}
+Let $P = \{ P_l \}_{l = 0,..., \infty}$ and $Q = \{ Q_l \}_{l=0,...,\infty}$ be two discrete distributions and suppose $\sum_{l=0}^\infty (\sqrt{P_l} - \sqrt{Q_l} )^2 \rightarrow 0$. 
+
+Let $I = - 2 \log \sum_l \sqrt{ P_l Q_l}$.
+
+Then, we have that $I \rightarrow 0$ and 
+\[
+I = (1 + o(1)) \sum_{l = 1}^\infty (\sqrt{P_l} - \sqrt{Q_l})^2 
+\]
+\end{lemma}
+
+
+
 \begin{lemma}
 \label{lem:simplify_renyi}
-Let $P = \{ P_l \}_{l = 0,..., \infty}$ and $Q = \{ Q_l \}_{l=0,...,\infty}$ be two discrete distributions and suppose $P_0, Q_0 \rightarrow 1$. Let $I = - 2 \log \sum_l \sqrt{ P_l Q_l}$.
+Let $P = \{ P_l \}_{l = 0,..., \infty}$ and $Q = \{ Q_l \}_{l=0,...,\infty}$ be two discrete distributions and suppose $P_0, Q_0 \rightarrow 1$. 
+
+Let $I = - 2 \log \sum_l \sqrt{ P_l Q_l}$.
 
 Then, we have that $I \rightarrow 0$ and 
 \[
