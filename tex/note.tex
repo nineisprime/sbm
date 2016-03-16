@@ -17,175 +17,6 @@ weighted edges a novel goal.
 
 \tableofcontents
 
-%%%%%%%%%%
-%%%%%%%%%%
-%%%%
-%%%% DEPRECATED
-
-\begin{comment}
-\section{General Discrete Likelihood}
-
-Let the parameter space be the following:
-
-\[
-\Theta(\sigma, n, K, P, Q) = \{
-   \sigma: [n] \rightarrow K, \, P, Q \textrm{ distributions} \}
-\]
-
-The graph adjacency matrix is generated as such:
-\[
-\begin{array}{cc}
-A_{ij} \sim P & \trm{if } \sigma(i) = \sigma(j) \\
-A_{ij} \sim Q & \trm{if } \sigma(i) \neq \sigma(j) 
-\end{array}
-\]
-
-Suppose $P, Q$ are known, the likelihood function becomes:
-\[
-L(\sigma) = \sum_{i<j} \log P(A_{ij}) \mathbf{1}_{\sigma(i) = \sigma(j)} + 
-  \sum_{i<j} \log Q(A_{ij}) \mathbf{1}_{\sigma(i) \neq \sigma(j)}
-\]
-Since $1 - \mathbf{1}_{sigma(i) \neq \sigma(j)} = \mathbf{1}_{\sigma(i) = \sigma(j)}$, we have that
-\begin{align*}
-L(\sigma) = \sum_{i<j} \log \frac{P(A_{ij})}{Q(A_{ij})} \mathbf{1}_{\sigma(i) = \sigma(j)} + \sum_{i<j} \log Q(A_{ij})
-\end{align*}
-We can safely discard the second term since it is a constant for any $\sigma$. We turn to the case where $P,Q$ are general discrete distributions with domain size $L$. It is straightforward to see that
-\[
-\begin{array}{cc}
-\log P(A_{ij}) = & \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log P_l \\
-\log Q(A_{ij}) = & \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log Q_l
-\end{array}
-\]
-The same summation form similarly holds for $\log \frac{P(A_{ij})}{Q(A_{ij})}$. 
-
-Thus, the likelihood function is
-\begin{shaded}
-\begin{align}
-L(\sigma) = \sum_{i<j} \mathbf{1}_{\sigma(i) = \sigma(j)} \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l} \label{eqn:likelihood}
-\end{align}
-\end{shaded}
-
-Taking a brief detour, we note that if $0$ is in the domain of $P,Q$, such as the case with Bernoulli distributions, we can rewrite the likelihood function as
-\[
-L(\sigma) = \sum_{i<j} \mathbf{1}_{\sigma(i) = \sigma(j)} \sum_{l\neq 0} \mathbf{1}_{A_{ij} =l} \log \frac{P_k Q_0}{Q_k P_0} + \sum_{i<j} \mathbf{1}_{\sigma(i) = \sigma(j)} \log \frac{P_0}{Q_0}
-\]
-Assuming that $P_0 < Q_0$, the second term can be interpreted as the term that wants to put every node into a single cluster. This rewrite simply uses the fact that $1 - \mathbf{1}_{A_{ij} = 0} = \sum_{l\neq 0} \mathbf{1}_{A_{ij} = l}$. \\
-
-\subsection{Oracle Setting Misclassification Bound}
-Now we go back to using expression~\ref{eqn:likelihood}. We ask the question, in the oracle setting, what is the probability of the MLE making a mistake? Let $\sigma_0$ be the true cluster assignment and $\sigma'$ be a different one, the differences between the two likelihoods are:
-
-\begin{align*}
-L(\sigma_0) - L(\sigma') = &
-   \sum_{i<j} \mathbf{1}_{\sigma_0(i) = \sigma_0(j) \wedge \sigma'(i) \neq \sigma'(j)} \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l} \\
-    &- \sum_{i<j} \mathbf{1}_{\sigma_0(i) \neq \sigma_0(j) \wedge \sigma'(i) = \sigma'(j)} \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l} 
-\end{align*}
-
-Every pair of $(i,j)$ in the first and the second terms are independent. For each $(i,j)$ in the first term, $X = \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l}$ is a random variable drawn from a discrete distribution:
-\begin{equation}
-X = \log \frac{P_l}{Q_l} \trm{ w.p. } P_l \label{eqn:edge_discrete_rv}
-\end{equation}
-For each $(i,j)$ in the second term, $Y = \sum_{l=1}^L \mathbf{1}_{A_{ij} = l} \log \frac{P_l}{Q_l}$ is a random variable drawn from:
-\begin{equation}
-Y = \log \frac{P_l}{Q_l} \trm{ w.p. } Q_l \label{eqn:edge_discrete_rv2}
-\end{equation}
-
-
-Let $\alpha = |\{ (i,j) \,:\, \sigma_0(i) = \sigma_0(j) \wedge \sigma'(i) \neq \sigma'(j) \}|$ and $\gamma = | \{(i,j) \,:\, \sigma_0(i) \neq \sigma_0(j) \wedge \sigma'(i) = \sigma'(j) \}|$. We have that 
-
-$$L(\sigma_0) - L(\sigma') < 0 \trm{ iff } \sum_{i=1}^\alpha X_i - \sum_{i=1}^\gamma Y_i < 0$$
-
-Thus, for an assignment $\sigma'$ such that $d_H(\sigma', \sigma_0) \leq \alpha + \gamma$, we can bound the probability of MLE mistakingly selecting $\sigma'$ by bounding the probability that $\sum_{i=1}^\alpha X_i \leq \sum_{i=1}^\gamma Y_i$. 
-
-\subsubsection{Upper Bound}
-
-We upper bound the probability of error that $$ \sum_{i=1}^\alpha X_i < \sum_{i=1}^\gamma Y_i $$ where $X_i$ and $Y_i$'s are defined as in equations~\ref{eqn:edge_discrete_rv}, ~\ref{eqn:edge_discrete_rv2}. 
-
-\begin{align*}
- \sum_{i=1}^\gamma Y_i - \sum_{i=1}^\alpha X_i &> 0  \quad (\Leftrightarrow) \\
-e^{- t \sum_{i=1}^\alpha X_i} e^{t \sum_{i=1}^\gamma Y_i} &> 1
-\end{align*}
-where $t$ is an arbitrary real number since $X_i$ and $Y_i$ are both bounded. 
-
-\begin{align*}
-P( \sum_{i=1}^\gamma Y_i - \sum_{i=1}^\alpha X_i > 0 ) &\leq 
-  \E \left( e^{- t \sum_{i=1}^\alpha X_i} e^{t \sum_{i=1}^\gamma Y_i} \right) \\
- & \leq  \E \left( e^{ - t X_1 \alpha} e^{ t Y_1 \gamma} \right ) \\
- &\leq \left( \E e^{ - t X_i} \E e^{t Y_1} \right)^{(1-w)\alpha + w \gamma} 
-       \frac{ \left( \E e^{t Y_1} \right)^{(1-w)(\gamma - \alpha)} }
-            { \left( \E e^{-t X_1} \right)^{w (\gamma - \alpha)} }
-\end{align*}
-
-We will show that when $t=1/2$ and $w=1/2$, the fraction term equals $1$ and the first term equals $\exp\left( - (1/2 \alpha + 1/2 \gamma) I \right)$. 
-
-Note that 
-\begin{align*}
-\E e^{ -t X_1} &= \sum_l P_l e^{ - t \log \frac{P_l}{Q_l}} \\
-   &= \sum_l P_l \left( \frac{Q_l}{P_l} \right)^t \\ 
-   &= \sum_l \sqrt{P_l Q_l} \quad \trm{(if $t=1/2$)}
-\end{align*}
-
-\begin{align*}
-\E e^{ t Y_1} &= \sum_l Q_l e^{ t \log \frac{P_l}{Q_l} } \\
-   &= \sum_l Q_l \left( \frac{P_l}{Q_l} \right)^t \\
-   &= \sum_l \sqrt{P_l Q_l} \quad \trm{if $t=1/2$}
-\end{align*}
-
-From Lemma~\ref{lem:affinity_renyi}, we arrive at the conclusion that 
-\[
-P( \sum_{i=1}^\gamma Y_i - \sum_{i=1}^\alpha X_i > 0) \leq 
-    \exp\left( - \frac{(\alpha+\gamma)}{2}  I \right)
-\]
-   
-
-\subsubsection{Neyman-Pearson Lower Bound}
-
-We observe two random vectors $(X_1,...,X_n)$ and $(Y_1,...,Y_n)$. Consider a simple hypothesis:
-
-\[
-H_0: X_i \sim P,\, Y_i \sim Q \qquad H_1: X_i \sim Q,\, Y_i \sim P
-\]
-
-The likelihood ratio test is 
-\begin{align*}
-\sum_{i=1}^n \log q(X_i) + \log p(Y_i) - \log p(X_i) - \log q(Y_i) &\geq 0 \\
-\sum_{i=1}^n \log \frac{p(X_i)}{q(X_i)} - \log \frac{p(Y_i)}{q(Y_i)} &\leq 0 \\
-\sum_{i=1}^n \log \frac{p(X_i)}{q(X_i)} &\leq \log \frac{p(Y_i)}{q(Y_i)} \\ 
-\end{align*}
-
-The probability of error is:
-\begin{align*}
-P^n_0(A) + 1 - P^n_1(A) &= 1 - (P^n_1(A) - P^n_0(A)) \\
-               &= 1 - TV(P_0^n, P_1^n) \\
-            &= \sum_{K^n} \min(P_0^n, P_1^n) \\
-            &\geq \frac{1}{2} A(P_0, P_1)^{2n} = \frac{1}{2} \left(
-               \sum_{x,y} \sqrt{P_0(x,y) P_1(x,y)} \right)^{2n} \\
-            &=  \frac{1}{2} \left( \sum_{x,y} \sqrt{p(x)q(y) q(x)p(y)}  \right)^{2n}\\
-            &= \frac{1}{2} \left( \sum_x \sqrt{ p(x) q(x)} \right)^{4n}\\
-            &= \frac{1}{2} \exp( - n 2 D_{1/2}(P \| Q)) 
-\end{align*}
-
-The last step is used often and should be a lemma in its own right.
-
-\begin{lemma}
-\label{lem:affinity_renyi}
-$$ D_{1/2}(P \| Q) = - 2 \log \sum_x \sqrt{p(x)q(x)}$$ 
-and so 
-$$ \exp(- D_{1/2}(P \| Q) ) = \left(\sum_x \sqrt{p(x)q(x)} \right)^2$$.
-\end{lemma}
-
-
-Under $H_1$, $A^c$ is the event that $\sum_{i=1}^n \log \frac{p(X_i)}{q(X_i)} \geq \log \frac{p(Y_i)}{q(Y_i)}$ where $X_i \sim Q$ and $Y_i \sim P$. Therefore, $P_0(A) = P_1(A^c)$ and $P_0(A) \geq \frac{1}{4} \exp( - n 2 D_{1/2} (P \| Q))$.
-
-A question arises on whether we can get rid of the 2 in the exponential. 
-
-\end{comment}
-%%%% End deprecation
-%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-
-
 
 \newpage
 \section{Preliminary}
@@ -358,17 +189,21 @@ We propose the following algorithm to recover the clusters in the general settin
    \item Assign $\hat{\sigma}(u) = \arg\max_k \sum_{v \,:\, \sigma_u(v) = k} \sum_l 
                   \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) $. 
    \end{enumerate}
-\item Run consensus. Output $\hat{\sigma}$. 
 
-\begin{shaded}
+\item Run consensus. 
+
+\item Output $\hat{\sigma}$. 
+
+\end{enumerate}
+
 \begin{proposition}
 \label{prop:rate_optimal}
-Suppose $K$ is fixed and that $n \frac{I_{tot}}{K} \rightarrow \infty$. Suppose that $P_l \asymp Q_l$ for all $l$. Then the above procedure has error rate satisfying
+Suppose $K$ is fixed and that $n \frac{I_{tot}}{L K} \rightarrow \infty$ where $L$ is the number of colors. Suppose that $P_l \asymp Q_l$ for all $l$. Then the above procedure has error rate satisfying
 \[
 \lim_{n \rightarrow \infty}  \sup_{\sigma_0, \{P_l, Q_l\}} P \left( l(\hat{\sigma}, \sigma_0) \geq \exp\left( - (1 - \eta) \frac{ n I_{tot}}{\beta K} \right) \right) = 0
 \]
 \end{proposition}
-\end{shaded}
+
 
 In particular, this shows that the threshold behavior (for the symmetric $K=2$ case and finite colors $L$) that \cite{jog2015information} demonstrates hold even if the $P_l, Q_l$'s are not known. 
 
@@ -382,62 +217,40 @@ The rest of the write-up constitute the proof of proposition~\ref{prop:rate_opti
 Let $\sigma_0$ be the true clustering and $\hat{\sigma}$ be a clustering algorithm.
 
 
-\begin{shaded}
 \begin{proposition}
 \label{prop:estimation_consistency}
-Let $\sigma = \hat{\sigma}(G)$ be a clustering of the graph with error rate $\gamma$. That is, $d_H(\sigma, \sigma_0) = \gamma n$. Let $\Delta_l = | P_l - Q_l |$. Suppose 
-\begin{align}
-\gamma K \log K \rightarrow 0. 
-\end{align}
+Let $\sigma = \hat{\sigma}(G)$ be a clustering of the graph with error rate $\gamma$. That is, $d_H(\sigma, \sigma_0) = \gamma n$. Let $\Delta_l = | P_l - Q_l |$. Suppose $\gamma K \log K \rightarrow 0$ and that $P_l \vee Q_l \geq \frac{c}{n}$ for all $l$ for some constant $c$. 
+
+
 Let $\hat{P}_l = \frac{\sum_{u,v \,:\, \sigma(u)=\sigma(v)} \mathbf{1}(A_{uv} = l) }
                       {\sum_{u,v \,:\, \sigma(u) = \sigma(v)} 1}$ and
     $\hat{Q}_l = \frac{\sum_{u,v \,:\, \sigma(u) \neq \sigma(v)} \mathbf{1}(A_{uv} = l) }
                       {\sum_{u,v \,:\, \sigma(u) \neq \sigma(v)} 1}$ be the MLE of $P_l$ and $Q_l$ based on $\sigma$. 
-Then, uniformly for all $l$ satisfying $ n \frac{\Delta_l^2}{(P_l \vee Q_l)} \rightarrow \infty$ (i.e., consistency), we have that
-\begin{align}
-| \hat{P}_l - P_l | &= \eta \Delta_l \\
-| \hat{Q}_l - Q_l | &= \eta \Delta_l
-\end{align}
-with probability at least $1 - Ln^{-(3+\delta)}$ and for some $\eta = o(1)$ 
-\end{proposition}
-\end{shaded}
 
-\begin{proposition}
-\label{prop:strong_estimation_consistency}
-Suppose
-\begin{align}
-\gamma K \log K &= o \left( \frac{\Delta_l}{P_l \vee Q_l} \right)  
-   \label{eqn:rate_assumption}\\
-\frac{n \Delta_l^3}{ (P_l \vee Q_l)^2 } &\rightarrow 0
-    \label{eqn:gamma_assumption}
-\end{align}
-or, alternatively, suppose that
-\begin{align}
-\gamma K \log K &= o \left( \frac{\Delta_l}{P_l \vee Q_l} \right)^2 
-    \label{eqn:stronger_gamma_assumption}
-\end{align}
+Let $C_{thresh}$ be an absolute constant and let $\delta$ be a positive, fixed, and arbitrarily small real number. Then there exists a sequence $\eta \rightarrow 0$ such that, for all $l \in L$:
 
-Then, we have that, uniformly for all $l$ satisfying the above assumptions,  
-\begin{align}
-| \hat{P}_l - P_l | &= \eta \frac{\Delta_l^2}{P_l \vee Q_l}  \\
-| \hat{Q}_l - Q_l | &= \eta \frac{\Delta_l^2}{P_l \vee Q_l} 
-\end{align}
-with probability at least $1- Ln^{-(3+\delta)}$ and for some $\eta = o(1)$. 
+\begin{itemize}
+\item[Case 1] If $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \Delta_l \\
+ | \hat{Q}_l - Q_l | &\leq \eta \Delta_l 
+\end{align*}
+\item[Case 2] If $\frac{n \Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}} \\
+ | \hat{Q}_l - Q_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}}
+\end{align*}
+\end{itemize}
+
+with probability at least $1 - L n^{-(3 + \delta)}$. 
 \end{proposition}
 
-Note that \ref{eqn:stronger_gamma_assumption} implies \ref{eqn:gamma_assumption} since
-\[
-\frac{ (\sqrt{P_l} - \sqrt{Q_l})^2}{\Delta_l} \leq 
- \frac{ \Delta_l}{P_l \vee Q_l} \leq 1
-\]
+We note that the sequence $\eta$ is a function of $\gamma K \log K$ and that it does not depend on the color $l$. In other words, $| \hat{P}_l - P_l |$ and $|\hat{Q}_l - Q_l|$ converge uniformly for all colors; this is important when $L$ is allowed to increase with $n$. 
 
-
-Special attention has to be paid to $P_0, Q_0$. In this case, we will apply our assumptions on $1-P_0, 1-Q_0$ because $(\sqrt{P_0} - \sqrt{Q_0})^2 = o(\sqrt{1-P_0} + \sqrt{1-Q_0})^2$. 
-Clearly, any analysis on the MLE's of $1-P_0, 1-Q_0$ automatically applies to the MLE's of $P_0, Q_0$. 
 
 \subsection{Proof} 
 
-We want to use a rough clustering $\sigma$ to estimate the parameters. $\sigma$ itself is a random variable dependent on the edge variables but we will analyze a fixed $\sigma$ and then take the union bound.
+We use a rough clustering $\sigma$ to estimate the parameters. $\sigma$ itself is a random variable dependent on the edge variables but we will analyze a fixed $\sigma$ and then take the union bound.
 
 Let $\sigma_0$ be the true clustering and $\sigma$ be a rough one. 
 Suppose that $d_H(\sigma, \sigma_0) = \gamma n$.
@@ -457,25 +270,22 @@ There are at most $\binom{n}{\gamma n}$ possible assignment $\sigma$'s that sati
 \subsubsection{Bias of $\hat{P}_l$}
 
 
-Our estimator of $P_L$ is 
+Our estimator of $P_l$ is 
 \[
 \hat{P_l} = \frac{ \sum_{i,j \,:\, \sigma(i) = \sigma(j)} \mathbf{1}(A_{ij} = l) }{
                    \sum_{i,j \,:\, \sigma(i) = \sigma(j)} }
 \]
 
-Because $\sigma$ is an imperfect clustering, $\hat{P}_l$ will be biased. 
-\[
-\E \hat{P_l} = 
+Because $\sigma$ is an imperfect clustering, $\hat{P}_l$ will be biased. In fact, $\E \hat{P}_l$ is a convex combination of $P_l, Q_l$. 
+\begin{align}
+\E \hat{P_l} &= 
    \frac{ \sum_{i,j \,:\, \sigma(i) = \sigma(j)} \mathbf{1}(\sigma_0(i) = \sigma_0(j) ) P_l + 
                \mathbf{1}(\sigma_0(i) \neq \sigma_0(j)) Q_l }{
-                   \sum_{i,j \,:\, \sigma(i) = \sigma(j)} }
-\]
-
-Thus, we have that, for any $\gamma$,
-\begin{align}
-P_l \wedge Q_l &\leq \E \hat{P}_l \leq P_l \vee Q_l \label{eqn:bias_simple_bound} \\
-P_l \wedge Q_l &\leq \E \hat{Q}_l \leq P_l \vee Q_l \nonumber
+                   \sum_{i,j \,:\, \sigma(i) = \sigma(j)} 1 } \\
+  &= (1 - \lambda) P_l + \lambda Q_l  \label{eqn:bias_simple_bound}
 \end{align}
+for $\lambda = \frac{\sum_{i,j \,:\, \sigma(i) = \sigma(j)} 
+     \mathbf{1}(\sigma_0(i) \neq \sigma_0(j)) }{\sum_{i,j \,:\, \sigma(i) = \sigma(j)} 1}$.
 
 We will assume that $P_l \geq Q_l$ first. Then, $\E \hat{P}_l \leq P_l$. 
 
@@ -494,39 +304,29 @@ We define $\hat{n}_k = \sum_i \mathbf{1}(\sigma(i) = k)$. We can bound the ratio
 \frac{\max_k \hat{n}_k}{\min_k \hat{n}_k} &\leq
    \frac{ \frac{\beta n}{k} + \gamma n}{\frac{n}{\beta k} - \gamma n} \\
   &\leq \frac{\beta^2 + k \gamma \beta}{1 - k \gamma \beta} \\
- &\leq (\beta^2 + k\gamma \beta) (1 + o(1)) \quad \trm{
-         (assuming $\gamma \rightarrow 0$)}
+ &\leq (\beta^2 + k\gamma \beta) (1 + \eta') 
 \end{align*}
 
-
-Therefore, 
+where $|\eta'| < 2 | k \gamma \beta|$ and thus, $\eta' \rightarrow 0$. It is also clear that $\eta'$ does not depend on $l$. 
+We then have that
 \[
-P_l - \beta^2 \gamma (P_l - Q_l) (1 + o(1))  \leq \E \hat{P}_l \leq P_l
+P_l - \beta^2 \gamma (P_l - Q_l) (1 + \eta')  \leq \E \hat{P}_l \leq P_l
 \]
 
 In the event that $Q_l \geq P_l$, it is straightforward to check that
 \[
-P_l \leq \E \hat{P}_l \leq P_l + \beta^2 \gamma (Q_l - P_l)(1+o(1))
+P_l \leq \E \hat{P}_l \leq P_l + \beta^2 \gamma (Q_l - P_l)(1+ \eta')
 \]
 
-In any case, we have the following bound:
-\[
-| \E \hat{P}_l - P_l |\leq \beta^2 \gamma \Delta_l (1 + o(1)) 
-\]
+
+In both cases, we have the following bound:
+\begin{align*}
+| \E \hat{P}_l - P_l | &\leq \beta^2 \gamma \Delta_l (1 + \eta')  \\
+   &\leq \eta \Delta_l \\
+\end{align*}
+where $\eta \rightarrow 0$ since $\gamma \rightarrow 0$. 
+
 where $\Delta_l  = |Q_l - P_l|$. 
-
-Under the assumption that $\gamma K \log K \rightarrow 0$, we immediately have that 
-\begin{align}
-| \E \hat{P}_l - P_l | = o( \Delta_l ).
-\end{align} 
-
-Using our stronger assumption on $\gamma$ (equation~\ref{eqn:gamma_assumption}), we have that
-
-\begin{align}
-| \E \hat{P}_l - P_l | = o\left( \frac{\Delta_l^2}{P_l \vee Q_l} \right) 
-\label{eqn:Pl_bias}
-\end{align}
-
 
 \subsubsection{Variance of $\hat{P}_l$}
 
@@ -556,7 +356,7 @@ P\left( \left| \sum_{i,j\,:\, \sigma(i) = \sigma(j)} (\tilde{A}_{ij} - \E \tilde
 \right)
 \]
 
-We want to bound the probability by $\exp( - C_1 \gamma n \log \frac{1}{\gamma} - (3+\delta) \log n )$. Assuming that $\gamma \geq \frac{1}{n}$, we have that $\gamma \log \gamma^{-1} \geq \frac{1}{n} \log n$. 
+We want to bound the probability by $\exp( - C_1 \gamma n \log \frac{1}{\gamma} - (3+\delta) \log n )$. Assuming that $\gamma \geq \frac{1}{n}$, we have that $\gamma \log \gamma^{-1} \geq \frac{1}{n} \log n$ and thus $C_1 \gamma n \log \frac{1}{\gamma} + (3 + \delta) \log n \leq C_\delta \gamma n \log \frac{1}{\gamma}$. 
 
 We choose $t$ such that
 \begin{align*}
@@ -587,98 +387,29 @@ Substituting in the previous bound we had of $t$:
           \frac{C_\delta \gamma n \log \frac{1}{\gamma}}
              {\sum_k \hat{n}_k (\hat{n}_k - 1)} \\
  &\leq 2 \frac{ \sqrt{P_l\vee Q_l} \sqrt{ C_\delta \gamma \log \frac{1}{\gamma}} }
-           {\sqrt{ \min_k \hat{n}_k}} + 
-       \frac{C_\delta \gamma \log \frac{1}{\delta}}{\min_k \hat{n}_k} \\
+           {\sqrt{ \min_k (\hat{n}_k - 1)}} + 
+       \frac{C_\delta \gamma \log \frac{1}{\delta}}{\min_k (\hat{n}_k - 1)} \\
  &\leq 2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{C_\delta \beta k \gamma \log \frac{1}{\gamma}} + 
        \frac{C_\delta \beta k \gamma \log \frac{1}{\gamma}}{n} 
 \end{align*}
+For the second to last inequality, we used the fact that $\sum_k (\hat{n}_k - 1) \frac{\hat{n}_k}{n} \geq \min_k (\hat{n}_k - 1)$ because $\frac{\hat{n}_k}{n}$ sums to 1. 
 
-Under the assumption that $\frac{ n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, we have that $\Delta_l \geq \sqrt{ \frac{P_l \vee Q_l}{n}}$. Under the same assumption, it must be that $P_l \vee Q_l \geq \frac{1}{n}$ (because $P_l \vee Q_l \geq \Delta_l$). If we further apply the assumption that $\gamma K \log K \rightarrow 0$, we have that, with probability $1 - L n^{-(3+\delta)}$, for some $\eta = o(1)$, uniformly for all colors $l$ satisfying $\frac{n \Delta_l^2}{P_l \vee Q_l} \rightarrow \infty$, 
-
-\begin{align*}
-| \hat{P}_l - \E \hat{P}_l | = \eta \Delta_l
-\end{align*}
-
-Now we apply the stronger assumptions of proposition~\ref{prop:strong_estimation_consistency} to get the stronger result. 
-
-We note that $k \gamma \log \frac{1}{\gamma} = o\left( \frac{(\sqrt{P}_l - \sqrt{Q}_l)^2}{\Delta_l} \right)$ under assumption~\ref{eqn:gamma_assumption}. 
-
-The first term is
-\begin{align*}
-& 2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{ C_\delta \beta k \gamma \log \frac{1}{\gamma}} \\
-&\leq 2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{ \frac{\Delta_l}{ P_l \vee Q_l }} \quad
-\trm{
-(by assumption~\ref{eqn:gamma_assumption})
- } \\
-&\leq 2 \sqrt{ \frac{\Delta_l}{n} } \\
-& = o\left( \frac{\Delta_l^2}{P_l \vee Q_l} \right) \quad \trm{
-   (assuming that $\frac{(P_l \vee Q_l)^2}{n \Delta_l^3} \rightarrow 0$, 
-     (\ref{eqn:rate_assumption})) 
-    } \\
-&= o \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2 
-\end{align*}
-
-We can repeat the above derivation using assumption~\ref{eqn:stronger_gamma_assumption} only instead of using both ~\ref{eqn:gamma_assumption} and \ref{eqn:rate_assumption}.
-\begin{align*}
-& 2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{ C_\delta \beta k \gamma \log \frac{1}{\gamma}} \\
-&\leq 2 \sqrt{ \frac{P_l \vee Q_l}{n} }  \frac{\Delta_l}{ P_l \vee Q_l } \quad
-\trm{ 
-(by assumption~\ref{eqn:stronger_gamma_assumption})
- } \\
-&\leq 2 \frac{\Delta_l}{\sqrt{ n P_l \vee Q_l}} \\
-&= o \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2 \quad \trm{(since 
-$\frac{1}{\sqrt{n}} = o\left( \frac{\Delta_l}{\sqrt{P_l \vee Q_l}} \right)$)}
-\end{align*}
-
-
-Likewise, we have, for the second term
-\begin{align*}
-  \frac{C_\delta \beta k \gamma \log \frac{1}{\gamma}}{n}  &\leq
- \frac{\Delta_l}{n (P_l \vee Q_l)} = o \left( \frac{\Delta_l^2}{P_l \vee Q_l} \right)
-\end{align*}
-
-Therefore, we have that
+To further simplify the expression, we note that $C_\delta \beta k \gamma \log \frac{1}{\gamma} \rightarrow 0$ and does not depend on the color $l$. Furthermore, we have that $P_l \vee Q_l \geq \frac{c}{n}$ and thus, $\sqrt{ \frac{P_l \vee Q_l}{n} } \geq \frac{c}{n}$. Using these observations, we conclude that
 \begin{align}
-| \hat{P}_l - \E \hat{P}_l | = o \left( \sqrt{P}_l - \sqrt{Q_l} \right)^2
-\label{eqn:Pl_variance}
+| \hat{P}_l - \E \hat{P}_l | \leq \sqrt{ \frac{P_l \vee Q_l}{n} } \eta \label{eqn:variance_bound}
 \end{align}
-with probability at least $1 - L n^{-(3+\delta)}$ uniformly for all $\sigma$ (satisfying $d_H(\sigma, \sigma_0) = \gamma n$) and for all colors $l$ satisfying our two assumptions.
 
-The following proposition generalizes proposition \ref{prop:estimation_consistency} and will be useful later on.
+with probability at least $\exp( -C_1 \gamma n \log \frac{1}{\gamma} - (3 + \delta) \log n)$. $\eta \rightarrow 0$ and does not depend on the color $l$ (though it does depend on $\delta$). Taking the union bound across all clusterings with error $\gamma$ and across all colors, we have that the probability of (\ref{eqn:variance_bound}) holding simultaneously for all colors $l$ is at least $L n^{-(3+\delta)}$. 
 
-\begin{proposition}
-\label{prop:estimation_consistency_generalization}
-We consider the same setting as that of proposition~\ref{prop:estimation_consistency} and let $\hat{P}_l, \hat{Q}_l$ be defined equivalently. Suppose that $P_l \vee Q_l \geq \frac{1}{n}$ and let $C_{thresh}$ be an absolute constant.
+\subsubsection{Combining Bias and Variance}
 
-\begin{itemize}
-\item Case 1. Suppose $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$, then
-\begin{align*}
- | \hat{P}_l - P_l | &\leq \eta \Delta_l \\
- | \hat{Q}_l - Q_l | &\leq \eta \Delta_l 
-\end{align*}
-\item Case 2. Suppose $\frac{n \Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$, then
-\begin{align*}
- | \hat{P}_l - P_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}} \\
- | \hat{Q}_l - Q_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}}
-\end{align*}
-\end{itemize}
+From the bias and variance analysis, we have that 
 
-uniformly in $l$ with probability at least $1 - L n^{-(3 + \delta)}$. 
-$\eta$ is a sequence such that $\eta \rightarrow 0$. 
-\end{proposition}
-
-\begin{proof}
-The proof follows that of proposition~\ref{prop:estimation_consistency}. We will work with $|\hat{P}_l - P_l$, the proof for $|\hat{Q}_l - Q_l|$ is analogous. 
-
-From the proof, it is clear that regardless of whether we have case 1 or case 2, we get that 
 \begin{align*}
 | \E \hat{P}_l - P_l | &\leq \eta \Delta_l \\
 | \hat{P}_l - \E \hat{P}_l | &\leq 
-   2 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{ C_\delta \beta k \gamma \log \frac{1}{\gamma}} + \frac{ C_\delta \eta k \gamma \log \frac{1}{\gamma}}{n}
+   \sqrt{ \frac{P_l \vee Q_l}{n} } \eta
 \end{align*}
-where $C_\delta$ is a constant. 
-
-In both cases, we have that $\frac{1}{n} \leq \sqrt{ \frac{P_l \vee Q_l}{n}}$. 
 
 In Case 1, $\Delta_l \geq C_{thresh} \sqrt{ \frac{P_l \vee Q_l}{n}} $ and thus, 
 \[
@@ -691,22 +422,13 @@ In Case 2, $\Delta_l \leq C_{thresh} \sqrt{ \frac{P_l \vee Q_l}{n}}$ and thus,
 \]
 
 
-\end{proof}
+
+
 
 \newpage
 \section{Controlling probability of misclassification}
 \label{sec:misclassify}
-
 Now that we have control over $\hat{P}_l$, we study the effect of plugging in these estimates into the refinement stage.
-
-\begin{shaded}
-In this section, we will first make the simplifying assumption that all colors $l$ satisfy assumptions~\ref{eqn:rate_assumption} and \ref{eqn:gamma_assumption} and furthermore, 
-\begin{align}
-P_l \asymp Q_l \label{eqn:Pl_Ql_equiv}
-\end{align}
-\end{shaded}
-
-
 
 Let $\sigma_u$ be a clustering for all the nodes except $u$. Suppose that $d_H(\sigma_u, \sigma_0) = \gamma n$. 
 
@@ -716,11 +438,10 @@ We assign $u$ based on the criterion:
 \argmax_k \sum_{v\, \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
 \]
 
-\begin{shaded}
 \begin{proposition}
-Suppose that $\sigma_u$ is a clustering of all nodes except for $u$ with error rate $\gamma$, that is, $d_H(\sigma_u, \sigma_0) = \gamma n$. Let $C_{thresh}$ be an absolute constant and suppose that statements of proposition~\ref{prop:estimation_consistency_generalization} holds. 
+Suppose that $\sigma_u$ is a clustering of all nodes except for $u$ with error rate $\gamma$, that is, $d_H(\sigma_u, \sigma_0) = \gamma n$. Let $C_{thresh}$ be an absolute constant and suppose that statements of proposition~\ref{prop:estimation_consistency} holds. 
 
-Suppose that $\frac{n I^*}{L} \rightarrow \infty$ and that for all $l$, $c_1 \leq \frac{P_l}{Q_l} \leq c_2$ for some absolute positive constants $c_1, c_2$. Suppose also that $P_l, Q_l \leq 1 - \epsilon$ for some fixed arbitrarily small $0 < \epsilon < 1$. Suppose that $\sum_l \sqrt{P_l Q_l} \geq 1/2$. 
+Suppose that $\frac{n I^*}{L} \rightarrow \infty$ and that for all $l$, $P_l \asymp Q_l$.  Suppose also that $P_l, Q_l \leq 1 - \epsilon$ for some fixed arbitrarily small $0 < \epsilon < 1$. 
 
 Then, we have that, with probability at least $1 - \exp \left( - (1 - o(1)) \frac{n}{K} I^* \right)$, 
 \[
@@ -728,13 +449,13 @@ Then, we have that, with probability at least $1 - \exp \left( - (1 - o(1)) \fra
 \]
 
 \end{proposition}
-\end{shaded}
+
 
 
 
 \subsection{Proof}
 
-Throughout the proof, we let $\eta, eta'$ denote a sequence that converges to 0 and let $C$ denote a constant. Their value could change from line to line. \\
+Throughout the proof, we let $\eta, \eta'$ denote a sequence that converges to 0 and let $C$ denote a constant. Their value could change from line to line. \\
 
 First, define $L_1 = \{ l \,:\, n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh} \}$. Then we claim that $C_{\epsilon, c_1, c_2} \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} = I^*( 1 - \eta )$. To see this, observe first that
 
@@ -818,8 +539,6 @@ We will set $t = \frac{1}{2}$, in which case, we have:
 \end{align} 
 
 We will bound term~\ref{eqn:excess_error_term} and \ref{eqn:Ihat_error_term} separately. Loosely speaking, we will show that term~\ref{eqn:excess_error_term} is bounded in magnitude by $\exp( o(I^*) \frac{n}{k} )$ and that term~\ref{eqn:Ihat_error_term} is bounded by $\exp( - \frac{n}{k} (1 + o(1) I^*)$. 
-
-
 
 
 \textbf{Bound for Term~\ref{eqn:excess_error_term}.} 
@@ -968,7 +687,7 @@ Since we only work with pairs $(l, l')$ such that $l' > l$ and we can choose wha
     \left( \frac{|\hat{P}_l - P_l|}{P_l} + \frac{|\hat{Q}_l - Q_l|}{Q_l} \right)
 \]
 
-By proposition~\ref{prop:estimation_consistency_generalization}, we have that, for $l \in L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{\Delta_l}{P_l \vee Q_l}$ and for $l \notin L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{1}{\sqrt{n (P_l \vee Q_l)}}$ and likewise for the $\frac{|\hat{Q}_l - Q_l|}{Q_l}$ term. We plug these bounds into the previous derivation and get that:
+By proposition~\ref{prop:estimation_consistency}, we have that, for $l \in L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{\Delta_l}{P_l \vee Q_l}$ and for $l \notin L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{1}{\sqrt{n (P_l \vee Q_l)}}$ and likewise for the $\frac{|\hat{Q}_l - Q_l|}{Q_l}$ term. We plug these bounds into the previous derivation and get that:
 \begin{align*}
 |T_{l,l'} - 1|  &\leq \eta  \frac{\Delta_l}{P_l \vee Q_l}  \quad \trm{for $l \in L_1$}\\
 |T_{l,l'} - 1 | &\leq \eta \frac{1}{\sqrt{ n (P_l \vee Q_l)}} \quad \trm{for $l \notin L_1$}
@@ -1066,238 +785,6 @@ This proves claim 3.
 Multiplying the bounds for term~\ref{eqn:Ihat_error_term} and \ref{eqn:excess_error_term} completes the proof. 
 
 
-%%% DEPRECATED %%%%%%%%%%%
-%%%%%%%%%%%%%
-%%%%%%%%%%
-%%%%%%%%%%
-
-\begin{comment}
-We will focus on the term $\left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)$ right now.
-
-\begin{align*}
- \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l &= 
-   \sum_l \sqrt{ P_l Q_l } \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} } \\
- &= \sum_l \sqrt{P_l Q_l} \sqrt{ \left( 1 - \frac{P_l - \hat{P}_l}{P_l} \right)
-                \left( 1 - \frac{\hat{Q}_l - Q_l}{ \hat{Q}_l } \right) } \\
-   &\leq \sum_l \sqrt{P_l Q_l} ( 1 + \kappa_l ) \quad  \left( \trm{$\kappa_l \equiv 
-               2 \left| \frac{\hat{P}_l - P_l}{P_l} \right| \vee \left| \frac{\hat{Q}_l - Q_l}{\hat{Q}_l} \right|$} \right)
-\end{align*}
-
-Let $\hat{I}= - 2 \log \sum_l \sqrt{ P_l Q_l } \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} }$. 
-\begin{align}
-\hat{I} - I^* &= -2 \log \frac{  \sum_l \sqrt{ P_l Q_l } \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} } }{ \sum_l \sqrt{P_l Q_l} } \\
-  &\geq -2 \log \left( 1 + \frac{\sum_l \sqrt{P_l Q_l} \kappa_l }{\sum_l \sqrt{P_l Q_l} }
-    \right) \quad \trm{(by previous calculation)}\\
-   &\geq - 2 \frac{\sum_l \sqrt{P_l Q_l} \kappa_l }{\sum_l \sqrt{P_l Q_l} } \\
-   &\geq - 4 \sum_l \sqrt{P_l Q_l} \kappa_l \quad \trm{(assuming $\sqrt{P_0Q_0} \geq \frac{1}{2}$)} \label{eqn:Ihat_bound}
-\end{align} 
-
-Working through the $\sum_l \sqrt{ \frac{\hat{Q}_l}{\hat{P}_l} } P_l$ term, we get a similar bound:
-\begin{align*}
-\hat{I}' & \equiv \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \\
-        &= \sum_l \sqrt{ P_l Q_l} \sqrt{ \frac{\hat{Q_l}}{Q_l} \frac{P_l}{\hat{P}_l}} 
-\end{align*}
-
-\begin{align}
-\hat{I}' - I^* &= -2 \log \frac{ \sum_l \sqrt{ P_l Q_l} \sqrt{ \frac{\hat{Q_l}}{Q_l} \frac{P_l}{\hat{P}_l}} }
-  { \sum_l \sqrt{P_l Q_l}}  \\
-  &\geq -2 \log \left( 1 + \frac{ \sum_l \sqrt{P_l Q_l} \kappa_l' }{\sum_l \sqrt{P_l Q_l}} \right) \\
-  &\geq -2 \frac{\sum_l \sqrt{P_l Q_l} \kappa'_l }{\sum_l \sqrt{P_l Q_l} } 
-   \quad \left( \kappa \equiv 2 \left| \frac{\hat{P}_l - P_l}{\hat{P}_l} \right| \vee 
-               \left| \frac{\hat{Q}_l - Q_l}{Q_l} \right| \right) \\
- &\geq -4 \sum_l \sqrt{P_l Q_l} \kappa'_l \quad 
-   \left( \trm{ assuming $\sqrt{P_0 Q_0} > 1/2$} \right) \label{eqn:Ihatprime_bound}
-\end{align}
-
-Let us abuse notation for a second and let 
-\[
-\kappa_l = 2 \left| \frac{ \hat{P}_l - P_l}{P_l} \right| \vee 
-    \left| \frac{ \hat{P}_l - P_l}{\hat{P}_l} \right| \vee
-   \left| \frac{ \hat{Q}_l - Q_l}{\hat{Q}_l} \right| \vee 
-\left| \frac{ \hat{Q}_l - Q_l}{Q_l} \right| 
-\]
-
-Assume for now that $\sqrt{P_lQ_l} \kappa_l = o \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2$. (We will prove this later)
-
-Then, returning to equations~\ref{eqn:Ihat_bound} and~\ref{eqn:Ihatprime_bound}, we have that
-\begin{align*}
-\hat{I} - I^* &\geq -4 \sum_l \sqrt{P_l Q_l} \kappa_l \\
-   &\geq - o(1) \cdot \sum_l \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2 \\
-   &\geq - o(1) \cdot I^*
-\end{align*}
-
-The same conclusion holds in the same fashion for $\hat{I}'$. 
-
-We left off bounding the error of misclassification at equation~\ref{eqn:Ihat_error_term}. Let us return to it. 
-
-\begin{align*}
-& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k'} 
-       \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1' - (m_k - m_k')} \\
-&\leq \left( \exp( - \frac{1}{2} \hat{I} ) \right)^{m_k'} 
-    \left( \exp( - \frac{1}{2} \hat{I}') \right)^{m'_1 - (m_k - m_k')}  \\
-&\leq \left( \exp( - \frac{1}{2} (1-o(1)) I^* )^{m_k'} \right) 
-      \left( \exp( - \frac{1}{2} (1-o(1)) I^* )^{m'_1 - (m_k - m_k') } \right)  \\
-&\leq  \exp\left( - \left( \frac{m_k' + m'_1 - (m_k - m_k')}{2}\right)  (1-o(1)) I^* \right) 
-\end{align*}
-
-Since we assume that $\sigma$ has error $\gamma n$, we can bound $m_k', m_1'$ and $m_k - m_k'$ as follows:
-\[
-m_k' \geq n_k - \gamma n \quad 
-m_1' \geq n_1 - \gamma n \quad
-m_k - m_k' \leq \gamma n
-\]
-
-\begin{align*}
-m_k' + m_1' - (m_k - m_k') &\geq n_k + n_1 - 3 \gamma n \\
-  &\geq 2 \frac{n}{\beta k} - 3 \gamma n \\
-  &\geq 2 \frac{n}{\beta k} (1 - o(1)) \quad \trm{(assume $\gamma k \rightarrow 0$)}
-\end{align*}
-
-Therefore, we have that the error probability is bounded by 
-\begin{shaded}
-\begin{align*}
-& P\left( \sum_{v,\, \sigma_u(v) = k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) \geq \sum_{v,\, \sigma_u(v) = 1} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) \right) \\
-&\leq \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m'_k}
-       \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{m_1' - (m_k - m_k')}\\
-& \leq \exp\left( - (1- o(1)) \frac{n}{\beta k} I^* \right) 
-\end{align*}
-\end{shaded}
-
-on event $\mathcal{E}_u$. Because event $\mathcal{E}_u$ essentially ``removes'' the randomness in $\hat{P}_l$ and $\hat{Q}_l$, the same bound holds uniformly for all clusters $k$. \\
-
-We now have to prove that $\sqrt{P_l Q_l} \kappa_l = o\left( \sqrt{P_l} - \sqrt{Q_l} \right)^2$.
-
-Under assumption~\ref{eqn:Pl_Ql_equiv}, this bound holds easily for 
-$\left| \frac{\hat{P}_l - P_l}{P_l} \right|$ and 
-$\left| \frac{\hat{Q}_l - Q_l}{Q_l} \right|$ by bounds~\ref{eqn:Pl_bias} and \ref{eqn:Pl_variance}.
-
-We thus turn our attention to $\left| \frac{\hat{P}_l - P_l}{\hat{P}_l} \right|$. The analysis for $\left| \frac{\hat{Q}_l - Q_l}{\hat{Q}_l} \right|$ is identical. 
-
-\[
-\frac{\hat{P}_l - P_l}{\hat{P}_l} = \frac{\hat{P}_l - P_l}{P_l} \frac{P_l}{\hat{P}_l} 
-\]
-
-Since we knows that
-\begin{align*}
-1 - \frac{\hat{P}_l - P_l}{P_l} &\leq \frac{\hat{P}_l}{P_l} \leq 1 + 
-  \frac{\hat{P}_l - P_l}{P_l} \\
-\frac{1}{ 1 + \frac{\hat{P}_l - P_l}{P_l}} &\leq \frac{P_l}{\hat{P}_l} \leq 
-   \frac{1}{1 - \frac{\hat{P}_l - P_l}{P_l}} 
-\end{align*}
-
-Since $\frac{\hat{P}_l - P_l}{P_l} \rightarrow 0$, we have that
-\begin{align*}
-1 - \frac{ \hat{P}_l - P_l}{P_l} (1+o(1)) \leq \frac{P_l}{\hat{P}_l} \leq
-  1 + \frac{ \hat{P}_l - P_l}{P_1} (1-o(1))
-\end{align*}
-
-Putting this back, we have that
-\begin{align*}
-\left| \frac{\hat{P}_l - P_l}{\hat{P}_l} \right| \leq 
-\left| \frac{\hat{P}_l - P_l}{P_l} \right| (1+o(1))
-\end{align*}
-
-This completes the analysis. 
-
-\end{comment}
-%%% End deprecated Section 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{comment}
-\subsection{Further Discussion on Assumptions~\ref{eqn:gamma_assumption}, \ref{eqn:rate_assumption}}
-
-We start with the assumption that consistency is possible under the oracle setting:
-\[
-\frac{n I^*}{K \log K} = \frac{n}{K\log K} \sum_{l\neq 0} (\sqrt{P_l} - \sqrt{Q_l})^2 \rightarrow 0
-\]
-
-Let $\tilde{L}$ be the set of colors $l$ such that
-\[
-\tilde{L} = \left\{ l \,:\, \frac{(\sqrt{P_l} - \sqrt{Q_l})^2 }{ I^* } \rightarrow c > 0 \right\}
-\]
-
-Since the set of colors $L$ is finite, $\tilde{L}$ must be non-empty. Furthermore, for any two colors $l, l' \in \tilde{L}$, we have that $(\sqrt{P}_l - \sqrt{Q}_l)^2 \asymp (\sqrt{P_{l'}} - \sqrt{Q_{l'}})^2$. 
-
-\begin{shaded}
-We will assume that the error $\gamma$ of the rough clustering satisfies
-\begin{align}
-\gamma = O\left( \exp\left( - \frac{n I_{\tilde{l}}}{K \log K}\right) \right) \quad
-   \trm{for some $\tilde{l} \in \tilde{L}$} \label{eqn:gamma_rate}
-\end{align}
-\end{shaded}
-
-\begin{proposition}
-Suppose \ref{eqn:gamma_rate} is true. Let $l \in \tilde{L}$ be fixed, possibly different from the one in \ref{eqn:gamma_rate}, and suppose that for some positive integer $r$,
-\begin{align}
-\frac{ (K \log K)^{r+1} (P_l \vee Q_l)^{r+1}}{n^r \Delta_l^{2r+1}} \rightarrow 0
-\label{eqn:weak_rate_assumption}
-\end{align}
-then, ~\ref{eqn:gamma_assumption} holds, that is,
-\[
-K \log K \gamma = o\left( \frac{(\sqrt{P_l} - \sqrt{Q_l})^2}{\Delta_l} \right)
-\]
-
-Also, if for some positive integer $r$, we have that
-\begin{align}
-\frac{ (K \log K)^{r+2} (P_l \vee Q_l)^{r+2}}{n^r \Delta_l^{2r+2}} \rightarrow 0
-\label{eqn:weak_rate_assumption2}
-\end{align},
-
-then, ~\ref{eqn:stronger_gamma_assumption} holds, that is
-\[
-K \log K \gamma = o\left( \frac{(\sqrt{P_l} - \sqrt{Q_l})^2}{\Delta_l} \right)^2
-\]
-
-\end{proposition}
-
-It is helpful to compare \ref{eqn:rate_assumption}, \ref{eqn:weak_rate_assumption}, \ref{eqn:weak_rate_assumption2}, and the basic consistency assumption of $\frac{(K \log K) ( P_l \vee Q_l)}{n \Delta_l^2} \rightarrow 0$. For clarity, we will formulate them as conditions on $n$.
-\begin{align*}
-n &= \omega \left( \frac{(K\log K) (P_l \vee Q_l)}{\Delta_l^2} \right) 
-  \quad \trm{(consistency)} \\
-n &= \omega \left( \frac{ (K\log K)^{\frac{r+1}{r}}  (P_l \vee Q_l)^{\frac{r+1}{r}}  }{\Delta_l^{\frac{2r+1}{r}} } \right) 
-  \quad \trm{(\ref{eqn:weak_rate_assumption})} \\
-n &= \omega \left( \frac{ (K\log K)^{\frac{r+2}{r}}  (P_l \vee Q_l)^{\frac{r+2}{r}}  }{\Delta_l^{\frac{2r+2}{r}} } \right) 
-  \quad \trm{(\ref{eqn:weak_rate_assumption2})} \\
-n &= \omega \left( \frac{ (P_l \vee Q_l)^2 }{\Delta_l^3 } \right)
-  \quad \trm{(\ref{eqn:rate_assumption})}
-\end{align*}
-
-So we see that, for a fixed $K$,  \ref{eqn:rate_assumption} is \ref{eqn:weak_rate_assumption} with $r=1$ or \ref{eqn:weak_rate_assumption2} with $r=2$, and \ref{eqn:weak_rate_assumption}, \ref{eqn:weak_rate_assumption2} are not much stronger than the consistency condition since we can set $r$ to be large. 
-
-\begin{proof}
-
-Suppose that $\gamma = O\left( \exp \left( - \frac{n I_{\tilde{l}}}{K \log K} \right) \right)$. Let $r$ be such that either \ref{eqn:weak_rate_assumption} or \ref{eqn:weak_rate_assumption2} are satisfied. 
-
-We have then that
-\begin{align*}
-\gamma &= o \left( \frac{K \log K}{n I_{\tilde{l}} } \right)^r \\
-   &= o \left( \frac{K \log K}{n I_l} \right)^r \quad 
-     \trm{(since $l \in \tilde{L}$)} \\
- &= o\left( \frac{ (K \log K)^r (P_l \vee Q_l)^r}{n^r \Delta_l^{2r}} \right) 
-\end{align*}
-where the last equation comes from the fact that $I_l = \Theta\left( \frac{\Delta_l^2}{P_l \vee Q_l} \right)$. 
-
-Therefore, we have that
-\begin{align*}
-(K \log K) \gamma \frac{P_l \vee Q_l}{\Delta_l} &= 
-   o \left( \frac{ (K \log K)^{r+1} (P_l \vee Q_l)^{r+1}}{ n^r \Delta_l^{2r + 1}} \right) \\
-  &\rightarrow 0 \quad \trm{(using assumption~\ref{eqn:weak_rate_assumption})}
-\end{align*}
-
-Similarly, 
-\begin{align*}
-(K \log K)^2 \gamma \left(\frac{P_l \vee Q_l}{\Delta_l} \right)^2 &= 
-   o \left( \frac{ (K \log K)^{r+2} (P_l \vee Q_l)^{r+2}}{ n^r \Delta_l^{2r + 2}} \right) \\
-  &\rightarrow 0 \quad \trm{(under assumption~\ref{eqn:weak_rate_assumption2})}
-\end{align*}
-
-\end{proof}
-\end{comment}
-
-
-
-
 
 \subsection{Lemmas}
 
@@ -1307,9 +794,7 @@ We often use the bound that $\frac{1}{2} P \leq \hat{P}_l \leq 2 P_l$. The follo
 
 \begin{lemma}
 \label{lem:bound_ratio_P_Pl}
-Let $\eta$ be a sequence that tends to zero. Suppose that $P_l \asymp Q_l$ and that $P_l, Q_l \geq \frac{C}{n}$ for some absolute constant $C$.\\
-
-Suppose either that $|\hat{P}_l - P_l| = \eta \Delta_l$ or that $| \hat{P}_l - P_l | = \eta \sqrt{ \frac{P_l \vee Q_l}{n} }$. 
+Let $\eta$ be a sequence that tends to zero. Let $l$ be any color and suppose that $P_l \asymp Q_l$ and that $P_l, Q_l \geq \frac{c}{n}$ for some absolute constant $c$. Suppose either that $|\hat{P}_l - P_l| = \eta \Delta_l$ or that $| \hat{P}_l - P_l | = \eta \sqrt{ \frac{P_l \vee Q_l}{n} }$. 
 
 Then, for all small enough $\eta$, we have that
 \[
@@ -1327,7 +812,7 @@ The following lemma bounds the quantity $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1
 
 \begin{lemma}
 \label{lem:sqrt_ratio_pl_ql_minus_1}
-Fix a color $l$ and assume that $P_l \asymp Q_l$ and that $P_l, Q_l \geq c_3 \frac{1}{n}$ for some absolute constant $c_3$. Let $\eta, \eta' = o(1)$. 
+Let $\eta$ be a sequence that tends to 0. Fix a color $l$ and assume that $P_l \asymp Q_l$ and that $P_l, Q_l \geq \frac{c}{n}$ for some absolute constant $c$. 
 \begin{enumerate}
 \item 
 Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$ and therefore
@@ -1343,6 +828,7 @@ Then, we have that
                     \geq \frac{P_l - Q_l}{Q_l} (1 + \eta') & (\trm{if } P_l < Q_l) 
            \end{array} \right.
 \]
+where $\eta' \rightarrow 0$ and does not depend on the color $l$. 
 
 \item
 Suppose $\hat{P}_l$ and $\hat{Q}_l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$ and therefore
@@ -1418,7 +904,7 @@ Symmetry yields that
 
 This proves the first case. The proof of the second case is almost identical. 
 
-First, under the assumption that $P_l, Q_l \geq c_3 \frac{1}{n}$, it is clear that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta \sqrt{ \frac{1}{ n Q_l} } = \eta' \rightarrow 0$. 
+First, under the assumption that $P_l, Q_l \geq \frac{c}{n}$, it is clear that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta \sqrt{ \frac{1}{ n Q_l} } = \eta' \rightarrow 0$. 
 
 Therefore, it still follows that
 \begin{align*}
@@ -1450,12 +936,11 @@ The following lemma bounds $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l$.
 \begin{lemma}
 \label{lem:sqrt_ratio_times_ql}
 
-Fix a color $l$ and suppose $P_l \asymp Q_l$. Suppose also that
+Let $\eta$ be a sequence that tends to 0. Fix a color $l$ and suppose $P_l \asymp Q_l$. Suppose also that
 \[
 \frac{|\hat{Q}_l - Q_l|}{Q_l} = \eta \quad 
 \frac{|\hat{P}_l - P_l|}{P_l} = \eta
 \]
-where $\eta \rightarrow 0$. 
 
 Then, we have that for all small enough $\eta$, 
 \[
@@ -1509,7 +994,7 @@ Recall that the stage 1 of our algorithm is as follows. Let $\tau$ be an input p
    \item Estimate $\sqrt{I_l}$ via 
   $\sqrt{ \hat{I}_l } \equiv \frac{| \hat{P}_l - \hat{Q}_l |}{\sqrt{ \hat{P}_l \vee \hat{Q}_l}}$. 
    \end{enumerate}
-\item Discard from $L$ all colors $l$ such that $\sqrt{\hat{I}_l} \leq \tau \sqrt{ \frac{1}{n}}$.
+\item Discard from $L$ all colors $l$ such that $\sqrt{\hat{I}_l} \leq \tau \sqrt{ \frac{K}{n}}$.
 \item Output $l^*$ for which $\sqrt{\hat{I}}$ is maximized
 \end{enumerate}
 
@@ -1985,54 +1470,6 @@ Since $\int \gamma(x)^2 dx = 1$, we have that $d = \frac{1}{4} \int \frac{\gamma
 \end{proof}
 
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\begin{comment}
-Next, we will show that $\lim_{B \rightarrow 0} \tilde{I} = I$. 
-\begin{proposition}
-\label{prop:convergence_discrete_continuous_renyi}
-Let $P_l, Q_l, \tilde{I}$ be defined as above and suppose assumption A1 and A3 are satisfied with constants $M', c$. 
-
-Then,
-\[
-\lim_{B \rightarrow 0} \tilde{I} = I
-\]
-\end{proposition}
-
-Note that $B \rightarrow 0$ is equivalent to $L \rightarrow \infty$ since $B = 1/L$. 
-
-\begin{proof}
-
-Let $\trm{Bin}_l = [a_l, b_l]$. 
-\begin{align*}
-P_l &= \int_{\trm{Bin}_l} p(x) dx \\
-  &= \int_{a_l}^{b_l} p(x) dx \\
- &= \int_{a_l}^{b_l} p(a_l) + p'(c_x) (x - a_l) dx \quad \trm{for $c_x \in [a_l, b_l]$}\\
- &= B p(a_l) + B^2 \xi_l \quad \trm{where $|\xi_l| \leq M'/2$}
-\end{align*}
-
-Likewise, we have that $Q_l = B q(a_l) + B^2 \xi'_l$ for some $\xi'_l$ such that $|\xi'_l|\leq M'/2$. 
-
-\begin{align*}
-\tilde{I} &= -2 \log \sum_{l=1}^L \sqrt{ P_l Q_l} \\
- &= -2 \log \sum_{l=1}^L B \sqrt{ (p(a_l) + B\xi_l)(q(a_l) + B \xi'_l) } \\
- &= -2 \log \sum_{l=1}^L \left( B \sqrt{ p(a_l) q(a_l) } + \left(B^2 \frac{\xi_l }{p(a_l)} 
-   + B^2 \frac{\xi'_l}{q(a_l)} \right)(1+\eta_l) \right)
-\end{align*}
-where $\eta_l \rightarrow 0$ as $B \rightarrow 0$. $p(a_l), q(a_l) \geq c$ and $|\xi_l|, |\xi'_l| \leq M'$. Let $c_l = \left( \frac{\xi_l}{p(a_l)} + \frac{\xi'_l}{q(a_l)} \right)$ and it is clear that $|c_l| \leq \frac{M}{c}$. 
-
-Thus, nothing that $\sum_{l=1}^L B = 1$, we have that
-
-\begin{align*}
-\lim_{B \rightarrow 0} \tilde{I} &= \lim_{B \rightarrow 0} -2 \log 
-  \left( \sum_{l=1}^L B \sqrt{p(a_l) q(a_l)} + \sum_{l=1}^L B^2 c_l (1 + \eta_l) \right) \\
- &= -2 \log \left( \int \sqrt{p(x) q(x)} dx \right) 
-\end{align*} 
-\end{proof}
-\end{comment}
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-
 These propositions together imply the following:
 \begin{shaded}
 \begin{theorem}
@@ -2106,6 +1543,7 @@ The initial clustering is consistent if we assume that $\left| \int_0^{\tau} \ga
 \]
 
 The discretization step is fine so long as $L \rightarrow \infty$. 
+
 
 
 
