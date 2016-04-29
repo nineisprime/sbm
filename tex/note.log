@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  15 MAR 2016 16:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  29 APR 2016 14:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -330,182 +330,180 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 7.
+LaTeX Font Info:    Try loading font information for U+msa on input line 8.
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 7.
+LaTeX Font Info:    Try loading font information for U+msb on input line 8.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+(./note.toc [1
 
-LaTeX Warning: No \author given.
-
-(./note.toc)
+{/usr/local/texlive/2014basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
 \tf@toc=\write3
 \openout3 = `note.toc'.
 
- [1
-
-{/usr/local/texlive/2014basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 24--25
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 27--28
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 26--27
-
- []
-
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
+Underfull \hbox (badness 10000) in paragraph at lines 29--30
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 168--169
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
-! Extra }, or forgotten \endgroup.
-\@endfloatbox ...pagefalse \outer@nobreak \egroup 
-                                                  \color@endbox 
-l.194 \end{algorithm}
-                     
-? q
-OK, entering \batchmode...
-
-! LaTeX Error: \begin{algorithm} on input line 170 ended by \end{enumerate}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.209 \end{enumerate}
-                     
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.209 \end{enumerate}
-                     
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
- [4] [5] [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 475--476
-
+[5] [6]
+Overfull \hbox (39.87277pt too wide) detected at line 273
+[] []\OML/cmm/m/it/10 k[] \OMS/cmsy/m/n/10 ^^T [] [] \OT1/cmr/m/n/10 + \OML/cmm
+/m/it/10 ^^Mn [] k \OMS/cmsy/m/n/10 ^^T [] [] \OT1/cmr/m/n/10 + \OML/cmm/m/it/1
+0 ^^Mn [] k \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 C[]^^Mn [] []
  []
 
- [9] [10] [11] [12]
-Overfull \hbox (23.52202pt too wide) in paragraph at lines 661--661
+[7] [8]
+Overfull \hbox (8.8643pt too wide) in paragraph at lines 379--379
 [] 
  []
 
- [13]
-Overfull \hbox (46.58806pt too wide) in paragraph at lines 718--718
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 384.
+
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 384.
+ [9] [10]
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 531--532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 551--552
+
+ []
+
+[12] [13] [14] [15]
+Overfull \hbox (23.52202pt too wide) in paragraph at lines 737--737
 [] 
  []
 
- [14] [15]
-Overfull \hbox (6.2198pt too wide) in paragraph at lines 808--809
+[16]
+Overfull \hbox (46.58806pt too wide) in paragraph at lines 794--794
+[] 
+ []
+
+[17] [18]
+Overfull \hbox (6.2198pt too wide) in paragraph at lines 884--885
 []\OT1/cmr/m/n/10 The fol-low-ing lemma bounds the quan-tity $[] \OMS/cmsy/m/n/
 10 ^^@ \OT1/cmr/m/n/10 1$ for ei-ther the case that $^^A[] \OMS/cmsy/m/n/10 ^^U
  \OML/cmm/m/it/10 C[][]$
  []
 
- [16] [17]
-Underfull \hbox (badness 10000) in paragraph at lines 889--890
+[19] [20]
+Underfull \hbox (badness 10000) in paragraph at lines 965--966
 
  []
 
- [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 1090--1091
+[21] [22] [23] [24]
+Underfull \hbox (badness 10000) in paragraph at lines 1214--1215
 
  []
 
- [22]
-Overfull \hbox (4.0306pt too wide) in paragraph at lines 1150--1152
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 1221--1222
+
+ []
+
+[26]
+Overfull \hbox (4.0306pt too wide) in paragraph at lines 1278--1280
 []\OT1/cmr/bx/n/10 Proposition 8.1. []\OT1/cmr/m/it/10 (Or-a-cle Set-ting Up-pe
 r Bound for Con-tin-u-ous Dis-tri-bu-tions) As-sume $[] \OMS/cmsy/m/n/10 !
  []
 
- [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 1262--1263
+[27] [28]
+Underfull \hbox (badness 10000) in paragraph at lines 1407--1408
+
+ []
+
+[29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 1487--1488
+
+ []
+
+[31] [32] [33] [34] [35]
+Underfull \hbox (badness 10000) in paragraph at lines 1755--1756
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1270--1271
+Underfull \hbox (badness 10000) in paragraph at lines 1783--1785
 
  []
 
- [25] [26] [27] [28] [29] [30] [31] [32] [33] (./note.bbl) [34]
 
-! LaTeX Error: Float(s) lost.
+Overfull \hbox (57.9924pt too wide) in paragraph at lines 1798--1798
+[] 
+ []
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1658 \end{document}
-                     
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[36] [37] [38] [39] [40]
+Overfull \hbox (37.0046pt too wide) in paragraph at lines 2046--2046
+[] 
+ []
 
- (./note.aux)
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 2057--2058
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+ []
 
- ) 
+[42] [43] [44] [45] [46] [47] [48] (./note.bbl) [49] (./note.aux) ) 
 Here is how much of TeX's memory you used:
- 3798 strings out of 494522
- 50416 string characters out of 6167205
- 139593 words of memory out of 5000000
- 6976 multiletter control sequences out of 15000+600000
+ 3819 strings out of 494522
+ 50842 string characters out of 6167205
+ 133640 words of memory out of 5000000
+ 6994 multiletter control sequences out of 15000+600000
  14132 words of font info for 53 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 38i,19n,37p,600b,299s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-0.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmbx9.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbxti10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmex10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/
-public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2014basic/texmf-dist/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014basic/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2014basic/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014basic/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014basic
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014ba
-sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014
-basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/20
-14basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
-2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
-ive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/t
-exlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loca
-l/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
-local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></u
-sr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
-0.pfb>
-Output written on note.pdf (34 pages, 374710 bytes).
+ 38i,19n,37p,690b,299s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/
+texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/lo
+cal/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><
+/usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pf
+b></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxt
+i10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmex10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfont
+s/cmextra/cmex7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014basic/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014basic/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014basic/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014basic/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014basic/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014basic/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014bas
+ic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014
+basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
+2014basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on note.pdf (49 pages, 434085 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 142 compressed objects within 2 object streams
+ 248 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
