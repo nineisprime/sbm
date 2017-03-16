@@ -1,0 +1,35 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  30 JAN 2017 14:50
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**&pdflatex prv_paper.ini \nonstopmode\nofiles\PassOptionsToPackage{active,tigh
+tpage,auctex}{preview}\AtBeginDocument{\ifx\ifPreview\undefined\RequirePackage[
+displaymath,floats,graphics,textmath,sections,footnotes]{preview}[2004/11/05]\f
+i} \input paper.tex
+(./prv_paper.ini
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 21 languages loaded.
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/carlisle/mylatex.ltx)
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/tools/.tex File ignored))
+No auxiliary output files.
+
+! I can't find file `paper.tex'.
+<*> ...]{preview}[2004/11/05]\fi} \input paper.tex
+                                                  
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name
+! Emergency stop.
+<*> ...]{preview}[2004/11/05]\fi} \input paper.tex
+                                                  
+*** (job aborted, file error in nonstop mode)
+
+ 
+Here is how much of TeX's memory you used:
+ 25 strings out of 494522
+ 666 string characters out of 6167205
+ 47238 words of memory out of 5000000
+ 3377 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 5i,0n,5p,489b,12s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

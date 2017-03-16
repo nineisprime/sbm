@@ -1,0 +1,100 @@
+
+
+\subsection{Useful Lemmas}
+
+\begin{lemma}
+\label{lem:renyi_hellinger}
+Let $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and let $H = (\sqrt{P_0} - \sqrt{Q_0})^2 + \int \left( \sqrt{ (1-P_0) p(x)} - \sqrt{ (1-Q_0) q(x)} \right)^2 dx$. If $I < 1- \epsilon$, then we have that
+
+\[
+I = H(1+\eta)
+\]
+
+where $|\eta| \leq \frac{H}{4\epsilon}$. Therefore, we have that $I \rightarrow 0$ iff $H \rightarrow 0$ and that if $I \rightarrow 0$, $ I = H(1+o(1))$.
+
+\end{lemma}
+
+\begin{proof}
+
+\begin{align*}
+I &= -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right) \\
+  &= -2 \log \left( 1 - \frac{1}{2} \left( 
+                (\sqrt{P_0} - \sqrt{Q_0})^2 + 
+               \int (\sqrt{(1-P_0)p(x)} - \sqrt{(1-Q_0)q(x)} )^2 dx \right) \right)\\
+ &= -2 \log \left(1 - \frac{1}{2} H \right) \\
+  &= 2 \frac{1}{2} H (1 + \eta)
+\end{align*}
+
+where $|\eta| \leq \frac{H}{2 \epsilon}$. 
+\end{proof}
+
+
+\subsection{Technical Lemmas}
+
+\begin{lemma}
+Suppose $x \geq 0$ and $1 \geq \epsilon > 0$, then we have that, for all $0 \leq x < 1-\epsilon$,
+\[
+\log (1 - x) = - (1 + \eta) x 
+\]
+where $| \eta| \leq \frac{x}{2 \epsilon}$
+\end{lemma}
+
+\begin{proof}
+[TODO: fill]
+\end{proof}
+
+\begin{lemma}
+\label{lem:sqrt_linearize}
+Define $f(z) =  \frac{1 - \frac{z}{2} - \sqrt{ 1 - z}}{z} $ for $z \leq 1$ and $z \neq 0$ and define $f(0) = 0$. Then we have that,
+\[
+\left| f(z)  \right| \leq |z|
+\]
+for all $z \leq 1$.
+\end{lemma}
+
+\begin{proof}
+
+Define $f(z) = \frac{1 - \frac{z}{2} - \sqrt{ 1 - z}}{z}$, where we set $f(0) = 0$. Note that $f$ is continuous. 
+
+The derivative of $f$ is 
+\[
+f'(z) = - \frac{1}{z^2} - \frac{z - 2}{2 z^2 \sqrt{1-z}}
+\]
+
+It is straight forward to check that $f'(z) \geq 0$ for all $z < 1$ and that we can define $f'(0) = \frac{1}{4}$ such that $f'(z)$ is continuous.
+
+Therefore, $f(z)$ is monotonic and maximized at $z = 1$, yielding $f(1) = 1/2$ and minimized at $\lim_{z \rightarrow -\infty} f(z) = -\frac{1}{2}$. 
+
+Now we perform case analysis. Suppose $z < -1/2$, then $|f(z)| \leq \frac{1}{2} < |z|$.
+
+Suppose $-1/2 \leq z \leq 1/2$. By Taylor expansion, we have
+
+\[
+\sqrt{1 - z} = 1 - \frac{1}{2} z - \frac{1}{8} z^2 - \frac{1}{16} z^3  - ... \frac{(n+1)!!}{2^n n!} z^n - ... 
+\]
+
+
+Therefore,
+\begin{align*}
+\left| \sqrt{1-z} - (1 - \frac{z}{2}) \right| &\leq
+     \frac{1}{8} (|z|^2 + |z|^3 + ... ) \\
+  &\leq \frac{1}{8} |z|^2 ( 1 + |z| + |z|^2 + ...) \\
+  &\leq \frac{1}{8} |z|^2 \frac{1}{1 - |z|} \\
+  &\leq \frac{1}{4} |z|^2 
+\end{align*}
+
+Therefore, $|f(z)| \leq \frac{1}{4} |z|$. 
+
+Finally, suppose $z > 1/2$. Then, 
+
+$|f(z)| \leq \frac{1}{2} < z$. 
+
+
+
+
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

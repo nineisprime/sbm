@@ -1,0 +1,386 @@
+\section{Analysis of misclustering error}
+\label{sec:rate}
+
+On the unweighted stochastic block model, the key information quantity that governs the threshold behavior is $I = -2 \log (\sqrt{p q} + \sqrt{(1-p)(1-q)})$. This is the Renyi divergence of order $\frac{1}{2}$ between the $Ber(p)$ distribution and the $Ber(q)$ distribution. 
+
+The Renyi divergence of order $\frac{1}{2}$ is defined on pairs of general measures as 
+\[
+I = -2 \log \int \left( \frac{dP}{dQ} \right)^{1/2} dQ
+\]
+Interestingly, this generalized form of the Renyi divergence is also what governs both the rate of convergence of our proposed algorithm and the threshold behavior of the weighted stochastic block model. In the weighted stochastic block model setting where $P, Q$ have continuous part $p(x), q(x)$ and a point mass of probability $P_0, Q_0$ at zero, the Renyi divergence takes on the form
+\[
+I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0)p(x) q(x)} dx \right)
+\]
+When $I \rightarrow 0$, which is the scenario that we analyze, then $I$ is also asymptotically equal to the Hellinger distance:
+\begin{align}
+I &= \left\{ (\sqrt{P_0} - \sqrt{Q_0})^2 + \int (\sqrt{(1-P_0)p(x)} - \sqrt{(1-Q_0)q(x)} )^2 dx \right\} (1 + o(1)) \nonumber \\ 
+ &= \left\{ (\sqrt{P_0} - \sqrt{Q_0})^2 + (\sqrt{1-P_0} + \sqrt{1-Q_0})^2 + 
+             \sqrt{(1-P_0)(1-Q_0)} \int (\sqrt{p(x)} - \sqrt{q(x)} )^2 dx \right\} \nonumber \\
+             %
+             & \qquad \cdot (1 + o(1)) \label{eqn:I_decompose} 
+\end{align}
+Equation~\ref{eqn:I_decompose} shows that the Renyi divergence is driven by both the divergence between the edge probabilities $1-P_0, 1-Q_0$ as well as the divergence between the densities $p(x), q(x)$. This is a novel feature of the weighted stochastic block model. 
+
+
+When $p(x) = q(x)$, the Renyi divergence $I$ reverts to the unweighted SBM case where it is a divergence between two Bernoulli distributions. This is intuitive because if $p(x) = q(x)$, then the edge weights give no additional information about the cluster structure. When $P_0 = Q_0$, then the Renyi divergence is driven only by the difference between the edge weight densities $p(x), q(x)$. This is also intuitive because if $P_0 = Q_0$, then the presence or absence of an edge offers no information on the cluster structure. 
+
+
+For the remainder of this paper, we define $H := \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$. Note that $H \leq 2$. It is important to note that $I \rightarrow 0$ quickly either when $H = o(1)$ or, if $\sqrt{(1-P_0)(1-Q_0)}$ is small, when $H = \Theta(1)$. Both of these are important cases to consider: in the first case, the challenge is to distinguish two densities $p(x), q(x)$ which are becoming increasingly similar; in the second case, the challenge is to estimate the density well when the amount of edges may be very sparse. The algorithm we propose in section~\ref{sec:method} can handle both of these settings but the theoretical analyses are different. 
+
+
+\subsection{Rate of convergence}
+
+
+Our analysis is asymptotic. We characterize the performance of the algorithm as $n \rightarrow \infty$. In our analysis, we treat $p(x), q(x), P_0, Q_0$ all as varying with $n$; we should properly write $p_n(x), q_n(x), P_{0n}, Q_{0n}$ but for the purpose of presentation, we omit the subscript and leave the dependency on $n$ as implicit. All of our results will use the following assumption.
+
+\paragraph{\textbf{Assumption A0:}} There exist absolute constants $c_0, C_0$ such that $c_0 \leq \frac{1-P_0}{1-Q_0} \leq C_0$. \\
+
+Assumption A0 says that the density of edges between the communities is of the same order as the density of edges across communities. This assumption is standard in the existing literature on unweighted stochastic block model. 
+
+%We now state our regularity assumptions on the continuous densities $p(x), q(x)$. Naturally, these depend on the transformation function $\Phi$ that we use. The fact that $\Phi$ appears in the regularity assumptions on $p(x), q(x)$ means that it is difficult to know how to choose $\Phi$, but as we demonstrate in section~\ref{sec:examples}, it is generally sufficient to choose $\Phi$ as the CDF of the log-normal distribution. 
+
+Recall that $\Phi \,:\, \R \rightarrow [0,1]$ and that it must be invertible, differentiable, and a cumulative distribution function. We let $\phi$ denote $\Phi'$ and $\phi$ is thus the density of some distribution. We let $\Phi \{ \cdot \}$ denote the $\Phi$-measure of a set. Intuitively, the additional regularity conditions stated below require $p(x)$ and $q(x)$ to be smooth and the likelihood ratio $\frac{p(x)}{q(x)}$ to be well-behaved. Furthermore, the distribution $\phi$ must be heavier-tailed than $p(x)$ and $q(x)$. Note that $H = \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$ may either be $o(1)$ or $\Theta(1)$. Since these two cases lead to significant differences in their respective analyses, we require different sets of assumptions for $p(x)$ and $q(x)$ for each case.
+
+\subsubsection{The case $H = o(1)$}
+
+We state the assumptions for the case of $H = o(1)$, and then present our main result for this sub-problem.\\
+
+\noindent \textbf{Regularity conditions:} 
+\begin{enumerate}
+\item[A1] There exists a constant $C >0$ such that  $0 < p(x), q(x) \leq C$, and $p(x)$ and $q(x)$ are absolutely continuous.  Moreover, the transformation density $\phi$ satisfies 
+$$\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty.$$
+
+\item[A2] There exists $R$ a subinterval of $\R$ such that: (a) $\Phi\{R^c\} = o(H)$, and (b)  $\frac{1}{\rho} \leq \frac{p(x)}{q(x)} \leq \rho $  for all $x \in R$ and for a constant $\rho$. (Recall that we define $H \equiv \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$.)
+
+\item[A3] Let $\alpha^2 = \int_R q(x) \left( \frac{p(x) - q(x)}{q(x)} \right)^2 dx$ and $\gamma(x) = \frac{q(x) - p(x)}{\alpha}$. There exists constants $M, r \geq 4$ such that  
+$$\int_R q(x) \left| \frac{\gamma(x)}{q(x)} \right|^r dx  \leq M.$$
+\item[A4] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{\gamma'(x)}{q(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|  \right\} $. There exist constants $M'$ and $1 \geq t \geq 2/r$ such that
+ $$\int_R |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'.$$
+Additionally, we require that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$ where $K_h$ is a constant. We also assume $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
+
+\item[A5]  There exists a constant $c' > 0$ such that $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$.
+\end{enumerate}
+
+The simplest setting for which the assumptions are satisfied is when $p(x)$ and $q(x)$ are compactly supported (so the transformation $\Phi$ is not even necessary), have bounded first derivatives, likelihood ratio $\frac{p(x)}{q(x)}$ bounded away from 0 and infinity, and uniform convergence of $p(x) - q(x) \rightarrow 0$. However, this simple setting excludes many interesting cases, for example when $p(x)$ and $q(x)$ are Gaussian. To include such cases (cf.\ Section~\ref{SubsecExa} below), we require the more technical conditions.
+
+We then have the following result:
+\begin{theorem}
+\label{thm:weighted_sbm_rate1}
+Suppose $\hat{\sigma}$ is the output of the algorithm in section~\ref{sec:method} with transformation $\Phi$ and discretization level $L$ chosen such that $L \rightarrow \infty$, $L = o(\frac{1}{H})$, and $L = o(nI)$. Suppose that $P_0, Q_0$ satisfy assumption A0 and that $p(x), q(x)$ satisfy assumptions A1-A5 with respect to $\Phi$. Suppose $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = o(1)$, that $K$ is fixed, and $I = o(1)$. Then, we have that
+\[
+\lim_{n \rightarrow \infty} P \left\{
+     l(\hat{\sigma}, \sigma_0) \leq \exp\left( - \frac{nI}{\beta K} (1 + o(1)) \right)
+    \right\} \rightarrow 1.
+\]
+\end{theorem}
+The proof of Theorem~\ref{thm:weighted_sbm_rate1} is outlined in Appendix~\ref{AppThmRate1}.
+
+\subsubsection{Examples}
+\label{SubsecExa}
+
+Since conditions A1-A5 are rather technical, we illustrate with several concrete examples. Although we do not in general require $p(x)$ and $q(x)$ to belong to a parametric family, we will discuss cases where $p(x) = \exp( f_{\theta_1}(x))$ and $q(x) = \exp( f_{\theta_0}(x))$ where $f_{\theta}(x)$ is a set of functions indexed by $\theta$ where  $\theta \in \Theta \subset \R^{d_{\Theta}}$ and where $\Theta$ is some compact subset of the Euclidean space.
+Although there is not a universal function $\Phi$ that works in all situations, it is generally sufficient, when $p(x), q(x)$ have subexponential tails, to take $\Phi$ as the CDF of the log-normal distribution. That is, we take $\phi(x) = \frac{1}{x \sigma \sqrt{2\pi}} \exp\left\{ - \frac{\ln^2 (x)}{2} \right\}$.
+
+\begin{example} (Gaussian with varying mean and variance)\\
+Suppose $p(x) = N(\mu_1, \sigma_1^2)$ and $q(x) = N(\mu_0, \sigma_0^2)$ are both Gaussian with different mean and variance. Then, $\theta = (\mu, \sigma^2)$. We can take $\Theta$ to be any compact set where $\sigma^2$ is bounded away from 0. For example, we can let $\Theta = [-1,1] \times [0.1, 2]$. Then, we have
+\begin{align*}
+f_\theta(x) &= - \frac{1}{2} \frac{(x - \mu)^2 }{\sigma^2} - \frac{1}{2} \log (2\pi \sigma^2 ).
+%\nabla_{\theta} f_\theta(x) &= \left( - \frac{(\mu - x) }{\sigma^2}, \frac{1}{2} \frac{(x- \mu)^2}{\sigma^4} - \frac{1}{2} \frac{1}{\sigma^2} \right)
+\end{align*}
+Since the log-normal distribution has all moments and has heavier tails than Gaussians, one can verify that the conditions A1-A5 are always satisfied.
+%all conditions B1-B5 are satisfied. 
+\end{example}
+
+\begin{example} (Laplace  with varying location and scale)\\
+Suppose $p(x) = \frac{1}{2b_1} \exp\left( - \frac{|x - \mu_1|}{b_1} \right)$ and $q(x) = \frac{1}{2b_0} \exp\left( - \frac{|x - \mu_0|}{b_0} \right)$. Then $\theta = (\mu, b)$ and we can take $\Theta$ to be any compact set where $b$ is bounded away from 0.
+\begin{align*}
+f_{\theta}(x) &= - \frac{|x - \mu|}{b} - \log 2b.
+%\nabla f_{\theta}(x) &= \left( -\frac{\trm{sign}(x - \mu)}{b}, -\frac{| x - \mu|}{b^2} \right)
+\end{align*}
+Again, one can show that conditions A1-A5 are always satisfied.
+\end{example}
+
+\begin{example} (Location Family)
+For a given density $\exp f(x)$ with mean zero, we can define a location family parametrized by $\mu$ as $\exp( f(x - \mu))$. We let $p(x) = \exp( f( x - \mu_1))$ and $q(x) = \exp( f ( x - \mu_0))$. In this case, $\theta = \mu$ and we can let $\Theta = [-c, c]$ for some constant $c$. 
+
+In this case, 
+\begin{align*}
+f_{\theta} &= f( x - \mu).
+%\nabla_\theta f_{\theta} &= d_{\mu} f(x - \mu) = -f'(x - \mu) \\
+%\nabla_\theta f_{\theta}' &= - f''(x-  \mu)
+\end{align*}
+One can show that conditions A1-A5 are always satisfied when $\sup_{\mu \in [-c, c]} | f'(x-  \mu) |$ and $| f''(x - \mu) |$ are bounded by a polynomial of $x$.
+
+%Take $\Phi$ as the CDF of the log-normal distribution. Because all moments of the log-normal distributions are finite, we have that $p(x)$ and $q(x)$ satisfy assumption B1-B5 so long as $\sup_{\mu \in [-c, c]} | f'(x-  \mu) |$ and $| f''(x - \mu) |$ are bounded by a polynomial of $x$. 
+\end{example}
+
+\subsubsection{The case $H = \Theta(1)$}
+
+We now state the assumptions we require in the case $H = \Theta(1)$.
+
+\paragraph{\textbf{Regularity conditions:}} 
+
+\begin{enumerate}
+\item[A1'] There exists a constant $C >0$ such that $0 \leq p(x), q(x) \leq C$, and $p(x)$ and $q(x)$ are absolutely continuous.  Moreover, we assume that 
+$$\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty.$$
+\item[A2'] For all large enough $\kappa > 0$, there exists a subinterval $R$ of $\R$, and a constant $r > 2$ such that: (a) $\exp(-\kappa^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(\kappa^{1/r})$, and (b) $\Phi \{ R^c \} \leq \frac{1}{2\kappa}.$
+\item[A3'] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{p'(x)}{p(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|  \right\} $. There exist constants $M'$ and $1 \geq t \geq 2/r$ such that $\int_R |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'$. Additionally, the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$ for a constant $K_h$. We also assume $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
+\item[A4']  There exists a constant $c'>0$ such that $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$.
+\end{enumerate}
+
+These assumptions are similar in nature to conditions A1-A5, and one can show that the examples in Section~\ref{SubsecExa} also satisfy conditions A1'-A4'. Our main result here is as follows:
+
+\begin{theorem}
+\label{thm:weighted_sbm_rate2}
+Suppose $\hat{\sigma}$ is the output of the algorithm in section~\ref{sec:method} with transformation $\Phi$ and discretization level $L$ chosen such that $L \rightarrow \infty$ and $\frac{n I}{ L \exp(L^{1/r}) } \rightarrow \infty$. Suppose that $P_0, Q_0$ satisfy assumption A0 and that $p(x), q(x)$ satisfy assumptions A1'-A4' with respect to $\Phi$. Suppose $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \Theta(1)$. Then, we have that
+
+\[
+\lim_{n \rightarrow \infty} P \left\{
+     l(\hat{\sigma}, \sigma_0) \leq \exp\left( - \frac{nI}{\beta K} (1 + o(1)) \right)
+    \right\} \rightarrow 1.
+\]
+\end{theorem}
+For the proof of Theorem~\ref{thm:weighted_sbm_rate2}, see Appendix~\ref{AppThmRate2}.
+
+\subsubsection{Additional discussion of assumptions}
+
+It is crucial to note that our algorithm does not require any knowledge about the form of $p(x), q(x)$. The same algorithm and the same guarantees apply whether $p(x)$ and $q(x)$ are Gaussian, Laplace, or any other (possibly non-parametric) distributions, as long as they satisfy conditions A1-A5 in conjunction with the transformation function $\Phi$.
+
+To aid the reader, we provide a brief non-technical interpretation of the regularity conditions.
+
+\paragraph{\textbf{Interpretation of assumptions A1-A5:}}
+
+\begin{enumerate}
+\item[A1] Assumption A1 is simple; the second part states that $\Phi$ must have a tail just as heavy as that of $p(x)$ and $q(x)$. 
+\item[A2] In Assumption A2, we require that the likelihood ratio $\frac{p(x)}{q(x)}$ be bounded away from 0 and $\infty$ except on a region $ R^c \subset \R$. Since $H \rightarrow 0$, we have that $p(x), q(x)$ are becoming more similar and thus $R^c$ is shrinking. We require that the measure of $R^c$, with respect to $\Phi$, shrinks faster than $H$. This condition intuitively states that $|\frac{p(x)}{q(x)}|$ and its reciprocal tend to infinity slowly with respect to $x$. If $\Phi$ has a heavier tail, then A2 is a stronger condition on $\frac{p(x)}{q(x)}$. If $\Phi$ has a lighter tail, then A2 is a looser condition.
+\item[A3] In Assumption A3, note that because $H \rightarrow 0$, $\alpha \rightarrow 0$ as well. $\gamma(x) = \frac{p(x) - q(x)}{\alpha}$ is thus a function of constant order. The integrability condition on $\gamma(x)$ effectively says that $p(x) - q(x)$ must converge to 0 almost uniformly for all $x$ in the region $R$. (Having an $L_\infty$ bound on $\gamma$ would imply uniform convergence.) 
+\item[A4]  Assumption A4 imposes smoothness on $q(x)$ as well as $\gamma(x)$. The second part of A4 is a weak condition that says $h(x)$ cannot oscillate with infinite frequency. 
+\item[A5] Assumption A5 is another way of saying that $\phi$ must have a tail as heavy as that of $p(x)$ and $q(x)$. 
+\end{enumerate}
+Note that an analogous interpretation may be used to describe to the conditions A1'-A4'.
+
+An alternative way to interpret these assumptions is that, for a given transformation $\Phi$, there is a space $\mathcal{P}_{\Phi}(C, \rho, r, M, t, M', K_h, c')$ of densities that satisfy assumptions A1 to A5. We again emphasize that $\mathcal{P}_\Phi$ is actually a sequence of function spaces indexed by $n$; we make the dependence implicit in our notation. For a given $\Phi$, assumption A1-A5 imposes a set of constraints on the densities $p(x), q(x)$. But suppose that $p(x), q(x)$ are given, it is difficult unfortunately to know how to choose an appropriate $\Phi$ from the statement of the assumptions.
+%Section~\ref{sec:examples} show however that choosing $\Phi$ as the CDF of the log-normal distribution suffices for a broad family of subexponential densities. 
+
+%%%%%%
+
+\paragraph{\textbf{Assumptions for parametric families:}} When $p(x)$ and $q(x)$ belong to a parametric family, as in the examples discussed in Section~\ref{SubsecExa}, it is helpful to consider a simpler set of assumptions. Suppose $p(x) = \exp( f_{\theta_1}(x))$ and $q(x) = \exp( f_{\theta_0}(x))$ where $f_{\theta}(x)$ is a set of functions indexed by $\theta$ where  $\theta \in \Theta \subset \R^{d_{\Theta}}$ and where $\Theta$ is some compact subset of the Euclidean space. Consider the following conditions:
+
+\begin{enumerate}
+\item[B1] For all $\theta \in \Theta$, $\liminf_{|x| \rightarrow \infty} \left( (\log \phi)(x) - f_\theta(x) \right) > -\infty$. 
+\item[B2] Define the Fisher information matrix $G_\theta$ as
+$$G_{\theta} = \int_{-\infty}^{\infty} (\nabla_{\theta} f_{\theta}(x)) 
+                                    (\nabla_{\theta} f_{\theta}(x))^\tran 
+                      \exp( f_{\theta}(x)) dx.$$
+ We assume that this matrix is full-rank:
+   \[
+ 0<   c_{\min} <  \inf_{\theta \in \Theta} \lambda_{min}(G_\theta) \leq \sup_{\theta \in \Theta} \lambda_{max}(G_{\theta}) < c_{\max} < \infty
+  \]
+\item[B3] There is some constant $c$ such that $\sup_\theta$ $\| \nabla_{\theta} f_{\theta} (x) \|$ is monotonically non-decreasing in $|x|$ for $|x| \geq c$.
+\item[B4] The following four integrability conditions hold:
+  \begin{align*}
+  \int_{-\infty}^\infty \sup_{\theta \in \Theta} \| \nabla_{\theta} f_\theta(x) \|^{r \vee \frac{2t}{1-t}} \phi(x) dx &< \infty\\
+   \sup_{\theta \in \Theta} \int_{-\infty}^\infty \| \nabla_{\theta} f'_\theta(x) \|^{2t/(1-t)} \phi(x) dx &< \infty\\
+  \sup_{\theta \in \Theta} \int_{-\infty}^\infty | f'_{\theta}(x) |^{2t/(1-t)} \phi(x) &< \infty   \\
+        \int_{-\infty}^\infty | (\log \phi)'(x) |^{2t/(1-t)} \phi(x) &< \infty.  
+  \end{align*}
+\item[B5] There is some constant $c' > 0$ such that, for all $\theta$, $f'_\theta(x) \geq (\log \phi)'(x) > 0$ for all $x \leq -c'$ and 
+          $f'_\theta(x) \leq (\log \phi)'(x) < 0$ for all $x \geq c'$.
+\end{enumerate}
+Note that B4 translates to a moment condition on the transformation distribution $\Phi$.
+
+We then have the following result, proved in Section~\ref{sec:theta_rate_proof}:
+\begin{proposition}
+\label{prop:theta_rate}
+Suppose assumptions B1-B5 hold. Then the following statements are true:
+\begin{enumerate}
+\item[(a)] If $\| \theta_1 - \theta_0 \| \rightarrow 0$, then $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \rightarrow 0$ and that assumptions A1-A5 are satisfied. 
+\item[(b)] In the case where $\| \theta_1 - \theta_0\| = \Theta(1)$, then $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \Theta(1)$ and that assumptions A1'-A4' are satisfied.
+\end{enumerate}
+\end{proposition}
+
+%%%%%%
+
+\subsection{Lower bound}
+
+
+In this section, we give a lower bound on the performance of any clustering algorithms on the weighted stochastic block model. For technical reasons, we require the likelihood ratio $\frac{p(x)}{q(x)}$ to be bounded instead of approximately bounded as in Assumption A2 or A2'; we conjecture that the bounded likelihood ratio condition can be relaxed but leave its verification to future works. We also take the true clustering $\sigma_0$ to be random so that a clustering algorithm cannot use any prior information on $\sigma_0$; if $\sigma_0$ were fixed, then the algorithm that trivially outputs $\sigma_0$ would have error 0 for example. We also use a weak technical condition that $H = \int (\sqrt{p(x)} - \sqrt{q(x)} )^2 dx$ cannot go to zero too quickly.
+
+\begin{theorem}
+\label{thm:lower_bound}
+Suppose we have $K$ clusters all of the same size and suppose the true clustering $\sigma_0$ is drawn uniformly at random. 
+
+Suppose $P_0, Q_0$ satisfy assumption A0 and that $p(x), q(x)$ are two densities such that $\left| \log \frac{p(x)}{q(x)} \right| \leq C$ for some constant $C$. Suppose that $I \rightarrow 0$ and that $H = \omega \left( \sqrt{ \frac{K}{n} } \right)$.
+
+Then, we have that, for any community recovery algorithm $\hat{\sigma}$:
+\[
+\E l(\hat{\sigma}, \sigma_0) \geq \exp \left( - (1 + o(1)) \frac{ n I}{K} \right)
+\]
+\end{theorem}
+The proof of Theorem~\ref{thm:lower_bound} is provided in Appendix~\ref{sec:lower_bound_proof}. The proof employs the same change of measure technique used by Yun and Proutiere to prove a similar lower bound on labeled stochastic block model~\cite{yun2016optimal}. 
+
+\section{Exact recovery thresholds}
+\label{sec:threshold}
+
+We characterize the threshold for exact recovery of the communities on the weighted SBM, as Abbe et al \cite{abbe2014exact} and Abbe and Sandon \cite{AbbSan15} have done for the unweighted SBM. We consider, in this subsection, the setting where $p(x),\, q(x)$ are fixed with respect to $n$ and that, for two positive constants $a, b$, that $P_0 = 1 - \frac{a \log n}{n}$ and $Q_0 =  1 - \frac{b \log n}{n} $. This is the \emph{sparse} network setting where the average degree for any node is only of the order $\log n$. The following lemma characterizes the Renyi divergence in this setting.
+
+\begin{lemma}
+In the setting where $p(x), q(x)$ are fixed and $P_0 = 1 - \frac{a \log n}{n}$ and $Q_0 = 1 - \frac{b \log n}{n}$, we have that 
+\[
+I = (1 + o(1)) \frac{\log n}{n} \left( (\sqrt{a} - \sqrt{b})^2 + \sqrt{ab} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right)
+\]
+where $o(1)$ is a term that goes to 0 as $n \rightarrow \infty$.
+\end{lemma}
+
+
+With this characterization of the Renyi divergence, we can describe the threshold for exact recovery on the weighted stochastic block model. 
+
+\subsection{Error bounds for recovery algorithm}
+
+\begin{theorem}
+\label{thm:threshold_achievability}
+Suppose $K \geq 2$ is fixed and $\Phi$ is fixed, suppose that $p(x), q(x)$ satisfy assumptions A1'-A4' with respect to $\Phi$, and suppose that 
+\[
+ (\sqrt{a} - \sqrt{b})^2 + \sqrt{ab} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 > K
+\]
+Then, our algorithm, with a discretization level $L$ that satisfies both $L \rightarrow \infty$ and $L = o( \log \log n)$, can exactly recover all the communities with probability converging to 1 as $n \rightarrow \infty$.
+\end{theorem}
+
+This is a corollary of theorem~\ref{thm:weighted_sbm_rate2}. If $ (\sqrt{a} - \sqrt{b})^2 + \sqrt{ab} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 > K
+$, then we have that $ \frac{ n I}{K} > \log n$ and thus, the bound on the misclustering proportion is $\exp( - (1+o(1)) \frac{n I}{K}) < \frac{1}{n}$. Choosing $L = o( \log \log n)$ satisfies the conditions on $L$ required in theorem~\ref{thm:weighted_sbm_rate2}. 
+
+\subsection{Lower bounds}
+
+Theorem~\ref{thm:threshold_achievability} shows that community recovery is possible when the Renyi divergence is above a certain threshold, the next theorem shows that community recovery is impossible when the Renyi divergence is below a certain threshold. 
+
+%Theorem~\ref{thm:threshold_achievability}.
+
+\begin{theorem}
+\label{thm:threshold_impossibility}
+Suppose $K \geq 2$ is fixed, suppose that $\left| \log \frac{p(x)}{q(x)} \right|$ is bounded, and suppose that
+\[
+ (\sqrt{a} - \sqrt{b})^2 + \sqrt{ab} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 < K
+\]
+
+Then, every community recovery algorithm fails with probability at least $\frac{1}{3}$. 
+\end{theorem}
+The proof of Theorem~\ref{thm:threshold_impossibility} is provided in Appendix~\ref{sec:threshold_proof}. It follows the technique of Abbe at al.~\cite{abbe2014exact}. Although we require a bounded log-likelihood-ratio condition that is stronger than the condition given in assumption A2', we not believe that this condition is necessary and it remains an open question how to relax this condition. 
+
+%%%%%
+
+\section{Proof sketch: Recovery algorithm}
+\label{SecProofs}
+
+A large portion of the appendix is devoted to proving that our recovery algorithm succeeds and achieves the optimal error rates. Since this also constitutes the a significant part of the novel technical contribution of our paper, we provide an outline of the proof here. More details may be found in Appendix~\ref{AppSecProofs}.
+
+We divide our argument into propositions that focus on successive stages of our algorithm. If we take a bird-eye view of our method, we find that it consists of two major components: first convert a weighted network into a labeled network, and then second, run community recovery algorithm on the labeled network. The first component has two steps: transformation and discretization. 
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.4, trim={0 6.5in 0 .8in}]{../figs/method_pipeline2.pdf}
+\caption{Analysis of the right-most blue region is in subsection~\ref{sec:labeled_sbm_analysis}, of the middle green region in subsection~\ref{sec:discretization_analysis}, and of the left-most red region in subsection~\ref{sec:transformation_analysis}}
+\label{fig:method_pipeline1}
+\end{figure}
+
+
+\subsection{Analysis of community recovery on a labeled network}
+\label{sec:labeled_sbm_analysis}
+
+The workhorse behind our algorithm is a subroutine (right-most blue region in Figure~\ref{fig:method_pipeline1}) for recovering communities on a network where the edges have a discrete label $l=1,...L$. The following proposition characterizes the rate of convergence of the subroutine on the labeled stochastic block model where an edge within a community receives a label $l$ with probability $P_l$ and an edge between communities receives a label $l$ with probability $Q_l$. 
+
+
+\begin{proposition}
+\label{prop:labeled_sbm_rate}
+Suppose we have $l=1,...,L$ edge labels and suppose that the label probabilities satisfy $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$ for a sequence $\rho_L = \Omega(1)$. Define $I_L = -2 \log \sum_{l=0}^L \sqrt{P_l Q_l}$ and suppose $I_L \rightarrow 0$.  \\
+
+Suppose $L = \Omega(1)$ and satisfies $\frac{n I_L}{L \rho^2_L} \rightarrow \infty$. Let $\hat{\sigma}$ be the output of our algorithm. Then, we have that
+
+\[
+\lim_{n \rightarrow \infty} P \left( l(\hat{\sigma}, \sigma_0) \leq \exp \left( - \frac{ n I_L}{ \beta K} (1 + o(1)) \right) \right) \rightarrow 1.
+\]
+\end{proposition}
+
+Yun and Proutiere \cite{yun2016optimal} have proposed an algorithm for the labeled SBM that achieves the same rate of convergence. Proposition~\ref{prop:labeled_sbm_rate} is more general in that we allow the number of labels $L$ and the bound on the ratio $\frac{P_l}{Q_l}$ to both go to infinity. This extension is critical for weighted SBM because to achieve consistency, we must let the discretization level $L$ increase with $n$. 
+
+
+\subsection{Discretization of the Renyi divergence}
+\label{sec:discretization_analysis}
+
+The rate of proposition~\ref{prop:labeled_sbm_rate} looks similar to that of theorems~\ref{thm:weighted_sbm_rate1} and \ref{thm:weighted_sbm_rate2}, except that instead of the actual Renyi divergence $I$, we have the discretized Renyi divergence $I_L$. A way to prove theorems~\ref{thm:weighted_sbm_rate1} and \ref{thm:weighted_sbm_rate2} then is to show that the two quantities are close to each other; the following propositions do exactly that for distributions supported on $[0,1]$ and satisfying some additional assumptions. 
+
+It is easy to show that $I_L \leq I$ because discretization always loses information. If $p(x), q(x)$ are sufficiently regular in that they can be well approximated by discretization, then one might expect that $I_L$ is not much smaller than $I$. Proposition~\ref{prop:discretization1} and \ref{prop:discretization2} shows exactly that. 
+
+The following proposition is useful for proving theorem \ref{thm:weighted_sbm_rate1}:
+\begin{proposition} 
+\label{prop:discretization1}
+Let $p(z), q(z)$ be two densities supported on $[0,1]$. Suppose that $H \equiv \int (\sqrt{p(z)} - \sqrt{q(z)})^2 dz = o(1)$. Let $L$ be a sequence such that $L \rightarrow \infty$.
+
+
+Suppose the following assumptions are satisfied:
+\begin{enumerate}
+\item[C1] Suppose $p(z), q(z) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2] There exists $R$ a subinterval of $[0,1]$ such that $\frac{1}{\rho} \leq \left| \frac{p(z)}{q(z)} \right| \leq \rho$ and $\mu\{R^c\} = o(H)$ where $\mu$ is the Lebesgue measure.
+
+\item[C3] Define $\alpha^2 = \int_R \frac{(p(z) - q(z))^2}{q(z)} dz$ and $\gamma(z) = \frac{q(z) - p(z)}{\alpha}$. Suppose $\int_R q(z) \left| \frac{\gamma(z)}{q(z)} \right|^r dz  \leq M$ for constants $M, r \geq 4$.
+\item[C4] Let $h(z) \geq \sup_n \max \left\{  \left|\frac{\gamma'(z)}{q(z)} \right|, 
+ \left|\frac{q'(z)}{q(z)}\right|  \right\} $. Suppose $\int_R |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C5] For all $z \leq \frac{1}{L}$, $p'(z), q'(z) \geq 0$ and for all $z \geq 1 - \frac{1}{L}$, we have that $p'(z), q'(z) \leq 0$.
+\end{enumerate}
+
+Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(z) dz$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(z) dz$. Suppose $L \rightarrow \infty$ but that $L \leq \frac{2}{H}$.
+
+Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(z) q(z)} dz \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. \\
+
+Then, we have that
+ $$\left| \frac{I - I_L}{I} \right| = o(1)$$ 
+and that $\frac{1}{4\rho c_0} \leq \frac{P_l}{Q_l} \leq 4\rho c_0$ for all $l$. 
+\end{proposition}
+
+The following proposition is useful for proving theorem \ref{thm:weighted_sbm_rate2}:
+
+\begin{proposition}
+\label{prop:discretization2}
+Let $p(z), q(z)$ be two densities supported on $[0,1]$. Suppose that $H \equiv \int (\sqrt{p(z)} - \sqrt{q(z)})^2 dz = \Theta(1)$. 
+
+Let $L$ be a sequence such that $L \rightarrow \infty$.
+\begin{enumerate}
+\item[C1'] Suppose $p(z), q(z) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2'] There exists $R$ a subinterval of $[0,1]$ such that $\exp(-L^{1/r}) \leq \frac{p(z)}{q(z)} \leq \exp(L^{1/r})$ and $\mu\{ R^c \} \leq \frac{1}{2L}$.
+\item[C3'] Let $h(z) \geq \sup_n \max \left\{  \left|\frac{p'(z)}{p(z)} \right|, 
+ \left|\frac{q'(z)}{q(z)}\right|  \right\} $. Suppose $\int |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C4']  $(\log p)'(z), (\log q)'(z) \geq (\log \phi)'(z) \geq 0$ for all $z < \Phi^{-1}(\frac{1}{L})$ and $ (\log p)'(z), (\log q)'(z) \leq (\log \phi)'(z) \leq 0$ for all $z > \Phi^{-1}(1-\frac{1}{L})$. 
+\end{enumerate}
+
+
+Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $Bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(z) dz$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(z) dz$. 
+
+Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(z) q(z)} dz \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. \\
+
+Then, we have that
+ $$\left| \frac{I - I_L}{I} \right| = o(1)$$ 
+and that $\frac{1}{4\rho_L c_0} \leq \frac{P_l}{Q_l} \leq 4\rho_L c_0$ for all $l$. 
+\end{proposition}
+
+
+\subsection{Analysis on the transformation function}
+\label{sec:transformation_analysis}
+
+Proposition~\ref{prop:discretization1} and \ref{prop:discretization2} considers densities supported on $[0,1]$. This is enough for us because once we transform the densities by an application of $\Phi$, the new densities are compactly supported and, importantly, the Renyi divergence $I$ and the Hellinger divergence $H$ are invariant with respect to the transformation $\Phi$.
+
+To see this, let $p(x), q(x)$ denote densities over $\R$ and let $p_{\Phi}(z)$ and $q_{\Phi}(z)$ denote the transformed densities over $[0,1]$. It is easy to see that $p_{\Phi}(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$ and $q_{\Phi}(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$. Therefore, by a change of variables $z = \Phi^{-1}(x)$, we have that the following integrals are equal:
+\begin{align*}
+\int_\R \sqrt{p(x)q(x)} dx &= \int_0^1 \sqrt{p_{\Phi}(z) q_{\Phi}(z)} dz \\
+\int_\R (\sqrt{p(x)} - \sqrt{q(x)})^2 dx &= \int_0^1 (\sqrt{p_{\Phi}(z)} -\sqrt{q_{\Phi}(z)})^2 dz 
+\end{align*}
+Therefore, the divergences $I$ and $H$ between $p(x), q(x)$ are the same as the divergences between $p_{\Phi}(z)$ and $q_{\Phi}(z)$.
+
+To prove theorems~\ref{thm:weighted_sbm_rate1} and \ref{thm:weighted_sbm_rate2}, we then have to show that if the densities $p(x), q(x)$ satisfy assumptions A1-A5 (or A1'-A4'), then the transformed densities $p_{\Phi}(z), q_{\Phi}(z)$ satisfy assumptions C1-C5 (or C1'-C4') in proposition~\ref{prop:discretization1} (or proposition~\ref{prop:discretization2}). This is done through proposition~\ref{prop:transformation1} and \ref{prop:transformation2}.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

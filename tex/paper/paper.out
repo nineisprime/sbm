@@ -1,0 +1,39 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Model and problem formulation}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Model definition}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Community estimation}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Recovery algorithm}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Algorithm overview}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Transformation and discretization}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Initialization}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.4}{Refinement and consensus}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{Analysis of misclustering error}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Rate of convergence}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Lower bound}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Exact recovery thresholds}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Error bounds for recovery algorithm}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.2}{Lower bounds}{section.5}% 15
+\BOOKMARK [1][-]{section.6}{Proof sketch: Recovery algorithm}{}% 16
+\BOOKMARK [2][-]{subsection.6.1}{Analysis of community recovery on a labeled network}{section.6}% 17
+\BOOKMARK [2][-]{subsection.6.2}{Discretization of the Renyi divergence}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.3}{Analysis on the transformation function}{section.6}% 19
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 20
+\BOOKMARK [1][-]{appendix.A}{Proofs of propositions in Section 6}{}% 21
+\BOOKMARK [2][-]{subsection.A.1}{Proof of Proposition 6.1}{appendix.A}% 22
+\BOOKMARK [2][-]{subsection.A.2}{Proof of Proposition 6.2}{appendix.A}% 23
+\BOOKMARK [2][-]{subsection.A.3}{Proof of Proposition 6.3}{appendix.A}% 24
+\BOOKMARK [1][-]{appendix.B}{Proofs of Theorems 4.1 and Theorem 4.2}{}% 25
+\BOOKMARK [2][-]{subsection.B.1}{Main argument: Proof of Theorem 4.1}{appendix.B}% 26
+\BOOKMARK [2][-]{subsection.B.2}{Main argument: Proof of Theorem 4.2}{appendix.B}% 27
+\BOOKMARK [2][-]{subsection.B.3}{Transformation Analysis}{appendix.B}% 28
+\BOOKMARK [2][-]{subsection.B.4}{Analysis of the Initialization Scheme}{appendix.B}% 29
+\BOOKMARK [2][-]{subsection.B.5}{Analysis of the spectral clustering algorithm}{appendix.B}% 30
+\BOOKMARK [2][-]{subsection.B.6}{Supporting lemmas}{appendix.B}% 31
+\BOOKMARK [1][-]{appendix.C}{Proof of Proposition 4.1}{}% 32
+\BOOKMARK [2][-]{subsection.C.1}{Supporting propositions}{appendix.C}% 33
+\BOOKMARK [2][-]{subsection.C.2}{Supporting lemmas}{appendix.C}% 34
+\BOOKMARK [1][-]{appendix.D}{Proof of Theorem 4.3}{}% 35
+\BOOKMARK [1][-]{appendix.E}{Proof of Theorem 5.2}{}% 36
+\BOOKMARK [2][-]{subsection.E.1}{Main argument}{appendix.E}% 37
+\BOOKMARK [2][-]{subsection.E.2}{Supporting lemmas}{appendix.E}% 38
+\BOOKMARK [1][-]{appendix.F}{Additional useful lemmas}{}% 39

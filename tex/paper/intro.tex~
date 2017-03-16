@@ -1,0 +1,53 @@
+
+\section{Introduction}
+
+
+The recent explosion of interest in network data has created a need for new statistical methods for analyzing network datasets and interpreting results~\cite{NewEtal06, DavKle10, Jac10, GolEtal10}. One active area of research with diverse applications in many scientific fields pertains to community detection and estimation, where the information available consists of the presence or absence of edges between nodes in the graph, and the goal is to partition the nodes into disjoint groups based on their relative connectivity~\cite{FieEtal85, HarSha00, PriEtal00, ShiMal00, McS01, NewGir04}.
+
+A standard assumption in statistical modeling is that conditioned on the community labels of the nodes in the graph, edges are generated independently according to fixed distributions governing the connectivity of nodes within and between communities in the graph. This is the setting of the stochastic block model (SBM)~\cite{HolEtal83, HarEtal76, WasAnd87}. In the homogeneous case, edges follow one distribution when both endpoints are in the same community, regardless of the community label; and edges follow a second distribution when the endpoints are in different communities. The majority of existing literature on stochastic block models has focused on the case where no other information is available beyond the unweighted adjacency matrix, and much work in the information theory and statistics has focused on  deriving thresholds for \emph{exact} or \emph{weak} recovery of community labels in terms of the underlying probability parameters and the size of the graph (e.g., \cite{MosEtal12, MosEtal14, Mas14, AbbEtal14, abbe2014exact, AbbSan15, HajEtal14, HajEtal15, zhangminimax}).
+
+However, the pairwise connections in many real-world networks possess a natural weighting structure~\cite{New04, BocEtal06}. For example, in social networks, information may be available quantifying the strength of a tie, such as the frequency of interactions between the individuals~\cite{Sad72}; in cellular networks, information may be available quantifying the frequency of communication between users~\cite{BloEtal08}; in gene co-expression networks, edges weights range from -1 to 1 and indicate the correlation between the expression levels of a gene pair; and in neural networks, edge weights may symbolize the level of neural activity between regions in the brain~\cite{RubSpo10}. Of course, the connectivity data could be condensed into an adjacency matrix consisting of only zeros and ones, but this would result in a loss of valuable information that could be used to recover node communities.
+
+In this paper, we analyze the ``weighted" setting of the stochastic block model~\cite{aicher2014learning}, where, after an edge is generated from a Bernoulli distribution, it is given an edge weight generated from one of two arbitrary densities $p(x), q(x)$ depending on whether the edge is between-cluster or within-cluster. The weighted SBM presents a serious challenge in the design of algorithms because $p(x), q(x)$ are unknown and must be estimated. Nonparametric estimation of a density is a difficult problem in its own right and it is made much harder in the weighted SBM because one does not know whether an edge weight is drawn from $p(x)$ and $q(x)$ without the latent cluster structure. There are various approaches to the weighted SBM. For example, Newman \cite{New04} assumes that the edge weights have discrete units and then converts a weighted graph into a multigraph; Aicher et al \cite{aicher2014learning} assumes $p(x), q(x)$ to be from a known exponential family and performs variational Bayesian inference. These approaches can be effective but they rely on strong assumptions to simplify the problems and nothing is known about their theoretical properties. 
+
+Our paper proposes a new discretization based approach that imposes weak assumptions and possesses strong guarantees. In the case of finitely-supported distributions, which correspond to a ``labeled" or ``colored" SBM, we demonstrate a method for choosing an initial label on which we apply a standard SBM estimation method to obtain an initial clustering. We then show how to use this initial rough clustering, together with the full set of edge labels, to obtain more accurate estimates of the true cluster assignments. In the case of continuous weight distributions, we propose a discretization strategy that will allow us to apply a recovery algorithm for the labeled case after appropriate preprocessing. Our method does not rely on prior knowledge of the densities $p(x)$ and $q(x)$ and does not rely on parametric assumptions.
+
+Importantly, we show that the output of our algorithm is optimal, in the sense that under mild regularity assumptions on $p(x)$ and $q(x)$, the misclustering error of our algorithm converges to zero at an optimal rate. Our analysis generalizes the results of Zhang and Zhou~\cite{zhangminimax} and Gao et al~\cite{gao2015achieving}, which show that the optimal rate of convergence of unweighted SBM is driven by the Renyi divergence of order $1/2$ between two Bernoulli distributions, corresponding to the probability of generation for within-community and between-community edges. In fact, a similar phenomenon holds for the weighted SBM setting in our paper: the optimal error rate is also driven by a Renyi divergence of order $1/2$ between two mixed distributions that capture both the divergence between the edge probabilities and the divergence between the edge weight densities $p(x)$ and $q(x)$. Note that in order to achieve the optimal error rate, our discretization strategy must be chosen carefully when $p(x)$ and $q(x)$ are continuous distributions. Our proposed algorithm first transforms the distributions to be supported on $[0,1]$, then bins the interval appropriately; in general, since $p(x)$ and $q(x)$ may vary with the size of the graph, the number of bins used will also need to grow slowly as the number of nodes increases.
+
+%Our method first discretizes the continuous edge weights to convert the weighted network into a labeled network~\cite{yun2016optimal}, which can then be clustered by modifying existing techniques for the unweighted stochastic block model. This method is computationally tractable and does not impose any parametric assumption on the weight densities.
+
+We also explore the related problem of exact recovery for weighted SBMs. Exact recovery refers to the case where the communities are partitioned perfectly, and a corresponding estimator is called \emph{strongly consistent}. We analyze the performance of our algorithm in the case when the average number of edges scales according to $\Theta(\log n)$, known as the \emph{sparse} regime in SBM literature. Again, we show that the thresholds for exact recovery may be expressed in terms of the Renyi divergence between weighted distributions, in the sense that our algorithm exactly recovers the true community labels when the Renyi divergence exceeds a certain threshold, and every algorithm fails with nontrivial probability when the Renyi divergence lies below the threshold.
+
+%% TODO CONTINUE!
+
+The remainder of the paper is organized as follows: section~\ref{sec:formulation} introduces the mathematical framework of the weighted stochastic block model and defines the problems which we are trying to solve. Section~\ref{sec:method} describes our proposed algorithm for finding communities on the weighted SBM. Section~\ref{sec:rate} analyzes our proposed algorithm and shows its rate of convergence. Section~\ref{sec:threshold} studies the exact threshold behavior of the weighted SBM. Finally, Section~\ref{sec:conclusion} describes further implications and open questions related to our results. Note that some of the content in this paper overlaps with an earlier version of our manuscript~\cite{JogLoh15}, which focused on finitely-supported edge weight distributions.
+
+
+
+% Network analysis concerns data that describe connectivity relationships between objects, objects such as people in the case of social networks, machines in the case of computer network, genes in the case of gene co-expression network, etc. The objects and their connectivities are modeled as vertices and edges in a graph. We study the problem of estimating communities in a network. A community, intuitively, is a cluster of nodes that are tightly connected amongst each other and loosely connected to nodes outside. An example is a random graph in which amongst-cluster edges occur with some probability $p$, between-cluster edges occur with some probability $q$, and that $p > q$ -- this is known as the Stochastic Block Model (SBM). 
+
+% Edges in real world networks are often associated with weights. By ``weight'', we refer to a numerical value that usually indicate the intensity of a connection. For example, in a gene co-expression network, two genes are connected if their expression levels are dependent upon one-another. This dependency is represented by the Pearson correlation coefficient that ranges from -1 to 1, -1 indicating that the two genes exclude each other and 1 indicating that they associate with each other. As another example, in a co-citation network, two publications are connected by an edge if they were cited together and the weight could be the number of times the two publications were co-cited. 
+
+
+
+
+% [Discuss aspects of weighted Graph. Gaussian case fairly well studied.]
+
+% [Unify weighted and labeled graphs with the colored-SBM]
+
+
+% [Briefly set the stage and state our results]
+
+% [Give an overview of our results]
+
+% [Discuss existing work related to colored-SBM]
+
+% [Discuss existing work related to SBM]
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

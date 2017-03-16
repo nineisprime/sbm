@@ -1,0 +1,323 @@
+
+
+\subsection{Analysis of the Initialization Scheme}
+
+\begin{proposition}
+\label{prop:initial_guarantee}
+Let $K$ be fixed. Suppose that $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$ for all colors $l$. 
+
+Let $\sigma^l$ be a spectral clustering of the graph based on $\tilde{A}_{ij} = \mathbf{1}(A_{ij} = l)$ and let $\hat{P}_l, \hat{Q}_l$ be estimates of $P_l, Q_l$ constructed from $\sigma^l$.
+
+Then, there is a positive constant $C_{test}$ such that, with probability at least $1 - Ln^{-3 + \delta_p}$,
+
+\begin{enumerate} 
+\item for all colors $l$ satisfying $\Delta_l \geq C_{test} \sqrt{ \frac{P_l \vee Q_l}{n}}, $  we have that
+\begin{align}
+\frac{1}{\sqrt{5}} \frac{ | P_l - Q_l |}{\sqrt{P_l \vee Q_l}}  \leq \frac{ | \hat{P}_l - \hat{Q}_l| }{\sqrt{ \hat{P}_l \vee \hat{Q}_l }} \leq  
+\frac{3}{\sqrt{3}} \frac{ | P_l - Q_l | }{\sqrt{ P_l \vee Q_l}} 
+\end{align}
+
+\item for all colors satisfying $\Delta_l <  C_{test} \sqrt{ \frac{P_l \vee Q_l}{n} }$, we have that
+
+\begin{align}
+\frac{ | \hat{P}_l - \hat{Q}_l|}{\sqrt{ \hat{P}_l \vee \hat{Q}_l}} \leq C_{test}^{1/2} C_{\beta, K, \delta_p} \sqrt{ \frac{1}{n} } 
+\label{eqn:bad_l_initialization}
+\end{align}
+
+
+\end{enumerate}
+
+\end{proposition}
+
+\begin{proof}
+Define 
+\[
+\gamma =  32 C^2 \beta \frac{K^2 (P_l \vee Q_l)}{n (P_l - Q_l)^2}.
+\]
+
+From Proposition~\ref{prop:spectral_analysis}, we have that$ l(\sigma^l, \sigma_0) \leq \gamma$ with probability at least $1 - n^{-4}$.  We let $C_{test} = 10 \cdot 15^3 \cdot 32 C^2 \beta K^4 \vee C_{thresh}$. 
+
+Suppose $\Delta_l^2 \geq  C_{test} \frac{P_l \vee Q_l}{n} $. Then, $C_{test} \frac{P_l \vee Q_l}{n (P_l - Q_l)^2} \leq 1$ and thus, $\gamma \leq \frac{1}{10 \cdot 15^3 K^2}$. By Proposition~\ref{prop:estimation_consistency}, we have that $|\hat{P}_l - P_l| \leq \eta \Delta_l$ where $|\eta| \leq 15 \sqrt{\gamma K \log \frac{K}{\gamma}} \leq \frac{1}{4}$. Likewise, we have that $| \hat{Q}_l - Q_l | \leq \eta \Delta_l$. 
+
+To bound $\frac{ | \hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}}$, we bound the numerator and denominator separately. First, we bound the numerator:
+\begin{align*}
+| \hat{P}_l - \hat{Q}_l | &\leq |\hat{P}_l - P_l| + |P_l - Q_l| + |\hat{Q}_l - Q_l|   \\
+   &\leq 2 |\eta| \Delta_l + \Delta_l \\
+   &\leq \frac{3}{2} \Delta.
+\end{align*}
+Furthermore,
+\begin{align*}
+| \hat{P}_l - \hat{Q}_l | &\geq  |P_l - Q_l| - |\hat{Q}_l - Q_l| - |\hat{P}_l - P_l|   \\
+   &\geq  \Delta_l - 2 |\eta| \Delta_l \\
+  &\geq \frac{1}{2} \Delta_l.
+\end{align*}
+
+Next, we bound the denominator:
+\begin{align*}
+\hat{P}_l &\leq (P_l \vee Q_l) + |\eta| \Delta_l\\
+   &\leq (P_l \vee Q_l) + |\eta| (P_l \vee Q_l) \\
+   &\leq \frac{5}{4} (P_l \vee Q_l),
+\end{align*}
+where we have used the fact that $|\eta| \leq \frac{1}{4}$. Similar reasoning applies to give an upper bound on $\hat{Q}_l$. For the lower bound on the denominator, we first observe that $\hat{P}_l \geq P_l - |\eta| \Delta_l $ and that 
+$\hat{Q}_l \geq Q_l - |\eta| \Delta_l$.
+
+Let us suppose without loss of generality that $P_l \geq Q_l$. Then, we have that 
+\[
+\hat{P}_l \vee \hat{Q}_l \geq (P_l \vee Q_l) - |\eta| \Delta_l \geq \frac{3}{4} (P_l \vee Q_l)
+\]
+
+
+Therefore, we have that
+\[
+\frac{1}{\sqrt{5}} \frac{\Delta_l}{P_l \vee Q_l} \leq \frac{ | \hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}} \leq \frac{3}{\sqrt{3}} \frac{\Delta_l}{P_l \vee Q_l}
+\]
+
+
+Now we move on to the second claim where we suppose $\Delta_l^2 \leq C_{test} \frac{P_l \vee Q_l}{n}$.
+
+From proposition~\ref{prop:estimation_consistency}, we have
+\begin{align*}
+|\hat{P}_l - P_l| \leq \eta \left( \Delta_l \vee \sqrt{\frac{P_l \vee Q_l}{n} } \right)
+\end{align*}
+
+where $|\eta| \leq C_{\beta, K, \delta_p}$. $|\eta|$ is bounded by a constant here because the best upper bound we have on $\gamma$ is that $\gamma \leq 1$. 
+
+\[
+| \hat{P}_l - P_l | \leq C^{1/2}_{test} C_{\beta, K, \delta_p} \sqrt{ \frac{P_l \vee Q_l}{n} } 
+\]
+and likewise with $|\hat{Q}_l - Q_l|$, both uniformly for all $l$, with probability $1 - L n^{-(3+\delta_p)}$. 
+
+Putting these together, we have that
+\begin{align*}
+|\hat{P}_l - \hat{Q}_l| &= | \hat{P}_l - P_l + P_l - Q_l + Q_l - \hat{Q}_l| \\
+    &\leq \Delta_l + | \hat{P}_l - P_l| + |\hat{Q}_l - Q_l| \\
+    &\leq \Delta_l + C_{test} C_{\beta, k, \delta} \sqrt{ \frac{P_l \vee Q_l}{n} } \\
+    &\leq 2 C_{test} C_{\beta, k, \delta} \sqrt{ \frac{P_l \vee Q_l}{n} }
+\end{align*}
+To bound the denominator term $\sqrt{ \hat{P}_l \vee \hat{Q}_l}$, we have that $\hat{P}_l \geq P_l - C_{test}^{1/2} C_{\beta, K, \delta_p} \sqrt{ \frac{P_l \vee Q_l}{n} }$ and $\hat{Q}_l \geq Q_l - C_{test}^{1/2} C_{\beta, K, \delta_p} \sqrt{ \frac{P_l \vee Q_l}{n}}$. Suppose without loss of generality that $P_l \geq Q_l$ so that $P_l = (P_l \vee Q_l)$. 
+
+\begin{align*}
+\hat{P}_l \vee \hat{Q}_l &\geq (P_l \vee Q_l) - C_{test}^{1/2} C_{\beta, K, \delta_p} \sqrt{ \frac{P_l \vee Q_l}{n}} \geq \frac{1}{2} P_l \vee Q_l
+\end{align*} 
+
+Where we used the assumption that $P_l \vee Q_l \geq \frac{c}{n}$.
+
+Thus, we have that
+\begin{align*}
+\frac{| \hat{P}_l - \hat{Q}_l| }{\sqrt{ \hat{P}_l \vee \hat{Q}_l} } \leq 2 C^{1/2}_{test} C_{\beta, K, \delta} \sqrt{ \frac{1}{n} }
+\end{align*}
+
+\end{proof}
+
+
+Let $l^*$ be the color chosen by the initialization algorithm. We will show that $\frac{n I_{l^*}}{\rho_L} \rightarrow \infty$.
+
+\begin{proposition}
+\label{prop:initialization_correctness}
+Let $a_n = \frac{ n I_L}{L \rho^2_L} $ and assume that $a_n \rightarrow \infty$.
+
+For large enough $n$, we have that, with probability at least $1 - 2L n^{-(3+\delta_p)}$, we have that $\frac{n (P_{l^*}-Q_{l^*})^2}{(P_{l^*} \vee Q_{l^*}) \rho^2_L} \ge c \cdot a_n$ for some constant $c$. 
+\end{proposition}
+
+\begin{proof}
+Throughout this proof, we let $C$ denote a $\Theta(1)$ sequence whose value may change from line to line.
+
+Let $C_{test}$ be the constant in proposition~\ref{prop:initial_guarantee}. 
+
+Note that $I_L = C \sum_{l=1}^L \frac{\Delta_l^2}{P_l \vee Q_l}$, therefore, there must exist some color $l_n$ (we leave the dependency on $n$ implicit and denote it just by $l$) such that $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq  C \frac{n I_L}{L} = C a_n \rho^2_L$. The same color $l$ must also satisfy $\Delta_l \geq C_{test} \sqrt{\frac{P_l \vee Q_l}{n}}$. \\
+
+Suppose that the probability event of proposition~\ref{prop:initial_guarantee} holds, which happens with probability at least $1 - L n^{-(3+\delta)}$. 
+
+\textbf{Step 1.} We claim that $l^*$ satisfies $\Delta_{l^*} \geq C_{test} \sqrt{ \frac{P_l \vee Q_l}{n}} $. Let $l$ be a color such that $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C a_n \rho^2_L$ and suppose $l^*$ does not satisfy $\Delta_{l^*} \geq C_{test} \sqrt{ \frac{P_l \vee Q_l}{n} }$. 
+
+Then, we have that, by proposition~\ref{prop:initial_guarantee}, 
+\begin{align*}
+\frac{| \hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}} 
+  \leq \frac{| \hat{P}_{l^*} - \hat{Q}_{l^*} | }{\sqrt{ \hat{P}_{l^*} \vee \hat{Q}_{l^*}}} 
+         \leq C^{1/2}_{test} C_{\beta, K, \delta_p} \sqrt{ \frac{1}{n}} 
+\end{align*}
+
+But, because $l$ satisfies $\Delta_l \geq C_{test} \sqrt{ \frac{P_l \vee Q_l}{n}}$, we also have
+\begin{align*}
+\frac{| \hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}} 
+  \geq \frac{1}{\sqrt{5}} \frac{ | P_l - Q_l|}{\sqrt{P_l \vee Q_l}} 
+   \geq C \sqrt{ a_n \rho^2_L \frac{1}{n}}
+\end{align*}
+
+Since $a_n \rightarrow \infty$ and $\rho_L \geq 1$, we have a contradiction. 
+
+\textbf{Step 2:}
+
+Again, let $l$ be a color such that $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C a_n \rho^2_L$.
+
+\begin{align*}
+\frac{ |P_{l^*} - Q_{l^*}|}{\sqrt{ P_{l^*} \vee Q_{l^*}}} &\geq 
+\frac{\sqrt{3}}{3} \frac{|\hat{P}_{l^*} - \hat{Q}_{l^*} | }{\sqrt{ \hat{P}_{l^*} \vee \hat{Q}_{l^*} }} 
+  \\
+& \geq
+\frac{\sqrt{3}}{3} \frac{|\hat{P}_l - \hat{Q}_l | }{\sqrt{ \hat{P}_l \vee \hat{Q}_l}}  \\
+ &\geq \frac{|P_l - Q_l|}{\sqrt{P_l \vee Q_l}} \frac{1}{\sqrt{15}}  \\
+ &\geq C \sqrt{a_n \rho^2_L \frac{1}{n} }
+\end{align*}
+where the first inequality follows from step 1 and proposition~\ref{prop:initial_guarantee}. The third inequality again follows from proposition~\ref{prop:initial_guarantee}.
+
+The conclusion thus follows.
+\end{proof}
+
+\subsection{Analysis of the spectral clustering algorithm}
+
+Define $\bar{d} = \frac{1}{n} \sum_{u=1}^n d_u$ be the average degree.
+
+\begin{proposition}
+\label{prop:spectral_analysis}
+Suppose that an unweighted $A$ is drawn from a homogeneous stochastic block model with probabilities $p, q$ and cluster imbalance factor $\beta$, with the number of communities $K$ fixed. Suppose $p, q \geq \frac{c}{n}$ for some absolute constant $c$. \\
+
+Suppose we run spectral clustering (algorithm~\ref{alg:spectral}) with tuning parameter $\mu \geq 16 C^2 \beta$ and trim threshold $\tau = \tilde{C} \bar{d}$, where $\tilde{C}$ is a constant depending on $K$. Let $\sigma$ be the output. 
+
+Suppose that $128 \mu \beta C^2 K^3 \frac{(p \vee q)}{n (p-q)^2} \leq 1$. \\
+
+Then, we have that, probability at least $1 - n^{-C'}$ where $C' \geq 4$, 
+
+\[
+l(\sigma, \sigma_0) \leq 32 C^2 \beta  \frac{K^2 (p \vee q) }{n (p-q)^2}
+\]
+for some constant $C$. 
+
+\end{proposition}
+
+\begin{proof}
+
+First, we see that for an appropriate choice of $\tilde{C}$ and large enough $n$, the parameter $\tau$ lies in the range described by Lemma~\ref{lem:trimmed_A_bound} with probability at least $1- \exp(-cn)$. Hence,
+\begin{equation*}
+\| T_{\tau}(A) - P \|_2 \leq C \sqrt{ n (p \vee q) + 1}.
+\end{equation*}
+
+Thus, we have that,
+
+\begin{align*}
+\| \hat{A} - P \|_2 &\leq \| T_\tau(A)  - P \|_2 + \| \hat{A} - T_\tau(A) \|_2 \\
+   &\leq 2\| T_\tau(A) - P \|_2 \\
+  &\leq 2C \sqrt{ n (p \vee q) + 1} 
+\end{align*}
+
+The second inequality follows because $\hat{A}$ is the best rank-$K$ approximation of $T_\tau (A)$ and $\rank(P) = K$, so $\|T_\tau(A) - \hat{A}\|_2 \le \|T_\tau(A) - P\|_2$ by the Eckart-Young-Mirsky Theorem.
+
+Thus, we have that
+
+\begin{align*}
+\sum_{u=1}^n \| \hat{A}_u - P_u \|_2^2 &= \| \hat{A} - P \|_F^2 \\
+       &\leq 2 K C^2 n (p \vee q)
+\end{align*}
+
+We also know that, if $u, v$ are in different clusters, 
+\[
+\| P_u - P_v \|_2^2 \geq \frac{2}{\beta K} (p - q)^2 n 
+\]
+
+
+Suppose that the $P_u$'s are known, then we can cluster $v$ by matching $\hat{A}_v$ to the closest $P_u$. We would make a mistake only if $\| \hat{A}_u - P_u \|_2^2 \geq \frac{1}{\beta K} (p-q)^2 n$. Thus, the number of mistakes we make cannot be larger than
+
+\[
+\frac{\sum_{u=1}^n \| \hat{A}_u - P_u \|_2^2}{ \frac{1}{\beta K} (p-q)^2 n } \leq \frac{ 2 K C^2 n (p \vee q)}{ \frac{1}{\beta K} (p-q)^2 n} \leq \frac{2 \beta K^2 C^2 (p \vee q)}{(p-q)^2} 
+\]
+
+
+But because we do not know the true $P_u$'s, we use the set $S$ as a surrogate. 
+
+First, we define a point $u$ as valid if $\| \hat{A}_u - P_v \|_2^2 \leq \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n$ for some $v$, not necessarily in the same cluster as $u$. $u$ is declared invalid if the condition is not fulfilled. 
+
+Secondly, for a node $u$, define $u^* = \argmin_{v \in S} \| \hat{A}_u - P_v \|_2^2$, so $P_{u^*}$ is the row of the $P$ matrix closest to $\hat{A}_u$. Notice that if $u$ is valid, then $\| \hat{A}_u - P_{u^*} \|_2^2 \leq \frac{1}{16} \frac{1}{\beta K} (p - q)^2 n$.
+
+We then claim the following: \\
+
+\noindent \textbf{Claim 1:} $S$ contains only valid points. \\
+\textbf{Claim 2:} For every pair of distinct nodes $u,v \in S$, we have $P_{u^*} \neq P_{v^*}$. \\
+
+First, let us suppose that these two claims are true and see that the proposition follows. The number of mistakes we make is bounded by the number of invalid points plus the number of misclassified valid points. Note that if $u$ is invalid, we have $\|\hat{A}_u - P_u\|_2^2 \ge \frac{1}{16} \frac{1}{\beta K} (p-q)^2n$. We claim that the same inequality holds for any valid point $u$ incorrectly assigned to a point in $S$. Suppose for a contradiction that 
+$ \| \hat{A}_u - P_u \|_2^2 \leq \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n$. 
+
+
+Let $w$ be a point in $S$ such that $P_u = P_{w^*}$. We then have $ \| \hat{A}_u - P_{w^*} \|_2^2 \leq \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n$. By claim 1, $w$ is a valid point and thus, $\| \hat{A}_w - P_{w^*} \|_2^2 \leq  \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n$. By combining these two bounds with the triangle inequality, we have that $\| \hat{A}_u - \hat{A}_w \|_2^2 \leq \frac{1}{4} \frac{1}{\beta K} (p-q)^2 n$.
+
+Since $u$ was assigned to $w' \in S$,  $\| \hat{A}_u - \hat{A}_{w'} \|_2^2 \leq \frac{1}{4} \frac{1}{\beta K} (p-q)^2 n$, and since $w'$ is valid, 
+$\|  \hat{A}_u - P_{w^{\prime *}} \|_2^2 \leq \frac{1}{\beta K} (p-q)^2 n$. 
+
+
+By applying triangle inequality between $\| \hat{A}_u - P_{w^*} \|$ and $\| \hat{A}_u - P_{w^{\prime *}} \|$, we conclude that:
+\[
+\| P_{w^*} - P_{w^{\prime *}} \|_2^2 < 2 \frac{1}{\beta K} (p-q)^2 n
+\]
+
+Since $P_{w^*} \neq P_{w^{\prime *}}$ by \textbf{claim 2}, $\| P_{w^*} - P_{w^{\prime *}} \|_2^2 \geq 2 \frac{1}{\beta K} (p-q)^2 n$. Thus, we have a contradiction. Hence, it cannot be that $ \| \hat{A}_u - P_u \|_2^2 \leq \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n$ to start out with. 
+
+Thus, the number of mistakes is bounded by
+\[
+\frac{\sum_{u=1}^n \| \hat{A}_u - P_u \|_2^2}{ \frac{1}{16 \beta K} (p-q)^2 n } \leq 
+        \frac{ 2 K C^2 n (p \vee q)}{ \frac{1}{16 \beta K} (p-q)^2 n} \leq \frac{32 \beta K^2 C^2 (p \vee q)}{(p-q)^2},
+\]
+as wanted.
+
+\paragraph{\textbf{Proof of Claim 1:}} Recall that given a point $u$, the neighbors of $u$ are $N(u) = \{ v \,:\, \| \hat{A}_u - \hat{A}_v \|_2^2 \leq \mu K^2 \frac{\bar{d}}{n} \}$. Furthermore, $\bar{d} \leq 2 (p \vee q) n$ with probability $1 - e^{-n}$. 
+We condition on this event so that if $v \in N(u)$, then $\| \hat{A}_u - \hat{A}_v \| \leq 2 \mu K^2 (p \vee q)$. 
+
+We prove the claim by showing that an invalid point $u$ cannot have $\frac{1}{\mu} \frac{n}{K}$ neighbors. We have that by definition of invalidity, $ \| \hat{A}_u - P_w \|_2^2 \geq \frac{1}{16 \beta K} (p-q)^2 n$ for any $w$.
+
+Let $v$ be a neighbor of $u$. Since $ \frac{2 \mu K^2 (p \vee q)}{ \frac{1}{16 \beta K} (p-q)^2 n} \leq \frac{1}{64}$ by assumption, we have that $\| \hat{A}_v - P_w \|_2^2 \geq \frac{1}{64 \beta K} (p - q)^2 n$ for any $w$. Therefore, it follows that $\| \hat{A}_v - P_v \|_2^2 \geq \frac{1}{64 \beta K} (p-q)^2 n$. 
+
+Because we have a bound on the total error, the number of neighbors of $u$ is bounded by 
+
+\[
+\frac{\sum_{v=1}^n \| \hat{A}_v - P_v \|_2^2}{ \frac{1}{64 \beta K} (p-q)^2 n } \leq 
+        \frac{ 2 K C^2 n (p \vee q)}{ \frac{1}{64 \beta K} (p-q)^2 n} \leq \frac{128 \beta K^2 C^2 (p \vee q)}{(p-q)^2} 
+\]
+
+This quantity is less than $\frac{1}{\mu} \frac{n}{K}$ by assumption.
+
+\paragraph{\textbf{Proof of Claim 2:}} We first claim that in every cluster, at least half the points $u$ satisfy $\| \hat{A}_u - P_u \|_2^2 \leq \frac{1}{4} \mu K^2 (p \vee q)$. This is because the total error is bounded by $\sum_{u=1}^n \| \hat{A}_u - P_u \|_2^2 \leq 2 K C^2 n (p \vee q)$ and thus, the total number of points that violate the condition is at most $\frac{ 2 K C^2 n (p \vee q)}{ \frac{1}{4} \mu K^2 (p \vee q)} \leq \frac{n}{2 \beta K}$ by the assumption that $\mu \geq 16 C^2 \beta$. 
+
+If $\| \hat{A}_w - P_w \|_2^2 \leq  \frac{1}{4} \mu K^2 (p \vee q)$ for $w \in \{u,v\}$, we also have $\| \hat{A}_u - \hat{A}_v \|_2^2 \leq \mu K^2 (p \vee q)$.  This is because
+\begin{equation*}
+\|\hat{A}_u - \hat{A}_v\|_2 \le \|\hat{A}_u - P_u\|_2 + \|\hat{A}_v - P_v\|_2,
+\end{equation*}
+since $P_u = P_v$. Thus, in every cluster, there exists a point $u$ such that $N(u) \geq \frac{1}{\mu} \frac{n}{K}$.
+
+
+Now we are ready to prove claim 3. Suppose for contradiction that the algorithm is placing $w'$ into $S$ but that $P_{w^{\prime *}} = P_{w^*}$ for some $w$ that already exists in $S$. Then, because $w, w'$ are both valid, we have bounds for both $\| \hat{A}_w - P_{w^*} \|$ and $\| \hat{A}_{w'} - P_{w^*} \|$. Applying triangle inequality then gives $\| \hat{A}_w - \hat{A}_{w'} \|_2^2 \leq \frac{1}{4 \beta K} (p - q)^2 n$. 
+
+On the other hand, because $S$ does not yet have $K$ nodes, there must be a row of $P$ not equal to $P_{v^*}$ for any $v \in S$. The cluster that corresponds to this missing row must, by our neighborhood size analysis, 
+contain a node $u$ such that $N(u) \geq \frac{1}{\mu} \frac{n}{K}$ and that
+
+\[
+\| \hat{A}_u - P_{u^*} \|_2^2 \leq \frac{1}{4} \mu K^2 (p \vee q)  \leq \frac{1}{16} \frac{1}{\beta K} (p-q)^2 n
+\]
+the second inequality follows from the assumption of the proposition statement.
+
+Since $P_{u^*} \neq P_{v^*}$ for any $v \in S$, $\| P_{u^*} - P_{v^*} \|_2^2 \geq 2 \frac{1}{\beta K} (p-q)^2 n$ for all $v \in S$. $v$ is valid by claim 1 and thus, $\| \hat{A}_v - P_{v^*} \| \leq \frac{1}{16} \frac{1}{\beta K} (p - q)^2 n$. So we have that, by triangle inequality, that $\| \hat{A}_u - \hat{A}_v \|_2^2 \geq \frac{1}{\beta K} (p - q)^2 n$ for all $v \in S$. 
+
+This is a contradiction because $u$ is farther away from every $v \in S$ than $w'$ is from $w$. So, the algorithm would have put $u$ into the set $S$ rather than $w'$.
+
+\end{proof}
+
+
+
+\subsection{Supporting lemmas}
+
+\begin{lemma} (Lemma 5 of \textcolor{red}{[TODO:cite]}) \\
+\label{lem:trimmed_A_bound}
+
+Let $P \in [0,1]^{n \times n}$ be a symmetric matrix. Let $A$ be an adjacency matrix such that $A_{uu} = 0$, $A_{uv} \sim Ber(P_{uv})$ for the lower triangular part $u < v$. For any $C' > 0$, there exists some $C > 0$ such that
+\[
+\| T_\tau(A) - P \|_2 \leq C \sqrt{ n p_{max} + 1}
+\]
+with probability at least $1-n^{-C'}$, uniformly over $\tau \in [C_1 (np_{max} + 1), C_2 (np_{max} + 1)]$, for some sufficiently large constants $C_1, C_2$, where $p_{max} = \max_{u \geq v} P_{uv}$. 
+
+\end{lemma}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

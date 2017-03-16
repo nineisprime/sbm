@@ -1,0 +1,11 @@
+
+\begin{abstract}
+The problem of community detection is usually studied in the setting where the edges are binary -- either on or off. Yet in real world networks, edges often have weights or labels that carry important information such as the modes of the interactions or the intensities of the connectivities. In this paper, we consider a weighted/labeled variation of the Stochastic Block Model. We show that, under the weighted/labeled SBM, the edge weight/label information indeed helps in recovering the underlying communities and that it is possible to leverage this information in a computationally tractable and minimax-optimal way. The weighted/labeled SBM we use is one in which among-cluster edges are drawn from some distribution $P$, the between-cluster edges are drawn from some other distribution $Q$, and, importantly, \textbf{the distributions $P,Q$ are unknown}. We allow $P,Q$ to be general: they need not have densities and they need not differ in the first moment. Under our setting, we show that the minimax rate for community recovery is $\exp( - n I (1 - o(1))$ where $I$ is the Renyi-divergence of $P,Q$ of order $1/2$. 
+
+%Our estimation algorithm uses the coarse-to-fine idea from [TODO]; it first performs a coarse clustering, uses the coarse clustering to estimate $P,Q$, and then refine the clustering with the distribution estimates $\hat{P}, \hat{Q}$.   
+\end{abstract}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

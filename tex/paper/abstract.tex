@@ -1,0 +1,19 @@
+\begin{abstract}
+
+Identifying communities in a network is an important problem in many fields, including social science, neuroscience, military intelligence, and genetic analysis. In the past decade, the Stochastic Block Model (SBM) has emerged as one of the most well-studied and well-understood statistical models for this problem. Yet, the SBM has an important limitation: it assumes that each network edge is drawn from a Bernoulli distribution. This is rather restrictive, since weighted edges are fairly ubiquitous in scientific applications, and disregarding edge weights naturally results in a loss of valuable information. In this paper, we study a weighted generalization of the SBM, where observations are collected in the form of a weighted adjacency matrix, and the weight of each edge is generated independently from a distribution determined by the community membership of its endpoints. We propose and analyze a novel algorithm for community estimation in the weighted SBM based on various subroutines involving transformation, discretization, spectral clustering, and appropriate refinements. We prove that our procedure is optimal in terms of its rate of convergence, and that the misclassification rate is characterized by the Renyi divergence between the distributions of within-community edges and between-community edges. In the regime where the edges are sparse, we also establish sharp thresholds for exact recovery of the communities. Our theoretical results substantially generalize previously established thresholds derived specifically for unweighted block models. Furthermore, our algorithm introduces a principled and computationally tractable method of incorporating edge weights to the analysis of network data.
+
+\end{abstract}
+
+
+
+
+% \begin{abstract}
+% Real world networks often have communities, which are clusters of nodes such that nodes in the same community are more likely to be connected to each other than nodes across different communities. Finding the communities in a network is an important problem in social science, marketing, cyber-security, gene analysis, and more. Community recovery has received much attention in the past decade and Stochastic Block Model (SBM) has emerged as the most well-studied and well-understood statistical model for this problem. Yet SBM has a limitation: it assumes that each network edge is Bernoulli--either 0 or 1; this is restrictive because weighted edges are ubiquitous and, when edge weights are present, it may be important to incorporate them into a community recovery algorithm. In this paper, we study the weighted generalization of the Stochastic Block Model in which an edge-weight random variable can have an unknown general distribution rather than a Bernoulli distribution; we propose and analyze an algorithm for the weighted SBM based on discretization. We show that this procedure has a rate of convergence that depends on an information divergence that also governs the threshold behavior of the unweighted Stochastic Block Model--a rate that in many cases has matching lower bounds. Our result gives a principled and tractable way of incorporating edge weights into the analysis of network data. 
+% \end{abstract}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

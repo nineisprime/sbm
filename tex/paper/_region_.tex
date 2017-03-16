@@ -1,0 +1,69 @@
+\message{ !name(paper_all_in_one.tex)}\documentclass{article}
+%\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
+
+%TODO
+%Modify algorithm to take into account the noise adding state
+%Change the tau and other stuff in algorithm descriptions
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+%\usepackage[noend]{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+%\usepackage[hscale=0.7,vscale=0.8]{geometry}
+\usepackage[text={6.0in,8.6in},centering]{geometry}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage[colorlinks]{hyperref}
+\usepackage{yhmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{shadecolor}{gray}{0.9}
+\definecolor{shadecolor}{gray}{0.9}
+\hypersetup{citecolor=blue}
+\hypersetup{linkcolor=blue}
+\hypersetup{urlcolor=blue}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{color}
+%This is for repeating theorems, lemmas
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\makeatother
+%end repeat theorems
+\newreptheorem{theorem}{Theorem} %repeat theorem
+\newreptheorem{lemma}{Lemma}      %repeat lemma
+\newreptheorem{proposition}{Proposition} %repeat proposition  
+
+\newcommand{\bin}{\text{bin}}
+\allowdisplaybreaks
+
+\renewcommand{\baselinestretch}{1.045}
+%\parskip12pt
+%\parindent0pt
+\setcounter{tocdepth}{2}
+
+\input{macros}
+
+\begin{document}
+
+\message{ !name(paper_all_in_one.tex) !offset(542) }
+
+
+In this section, we give a lower bound on the performance of any clustering algorithms on the weighted stochastic block model. For technical reasons, we require the likelihood ratio $\frac{p(x)}{q(x)}$ to be bounded instead of approximately bounded as in Assumption A2 or A2'; we conjecture that the bounded likelihood ratio condition can be relaxed but leave its verification to future works. We also take the true clustering $\sigma_0$ to be random in the sense that $\sigma_0 = \sigma'_0 \circ \pi$ where $\sigma'_0 : [n] \rightarrow [K]$ is any fixed clustering and $\pi \in S_n$ is a random permutation on $[n]$. We take $\sigma_0$ to be random so that a clustering algorithm cannot use any prior information on $\sigma_0$; if $\sigma_0$ were fixed, then the algorithm that trivially outputs $\sigma_0$ would have error 0 for example.
+
+\message{ !name(paper_all_in_one.tex) !offset(3456) }
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

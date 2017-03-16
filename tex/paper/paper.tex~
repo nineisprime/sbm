@@ -1,0 +1,64 @@
+\documentclass{article}
+%\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+%\usepackage[noend]{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+%\usepackage[hscale=0.7,vscale=0.8]{geometry}
+\usepackage[text={6.0in,8.6in},centering]{geometry}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{yhmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{shadecolor}{gray}{0.9}
+\definecolor{shadecolor}{gray}{0.9}
+\hypersetup{citecolor=MidnightBlue}
+\hypersetup{linkcolor=MidnightBlue}
+\hypersetup{urlcolor=MidnightBlue}
+\usepackage{enumerate}
+\usepackage{multirow}
+
+\renewcommand{\baselinestretch}{1.045}
+%\parskip12pt
+%\parindent0pt
+\setcounter{tocdepth}{2}
+
+\input{macros}
+
+\begin{document}
+
+\title{Community Recovery on the Weighted Stochastic Block Model and Its Information-Theoretic Limits}
+%\runtitle{Community Recovery for the Weighted and Labeled Network}
+
+\author{Min Xu, Varun Jog, Po-Ling Loh}
+\maketitle
+
+\input{abstract}
+
+
+\maketitle
+
+\vskip10pt
+
+\input{intro}
+\input{background}
+\input{method}
+\input{results}
+%\input{experiments}
+\input{conclusion}
+
+\newpage
+\input{proof}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

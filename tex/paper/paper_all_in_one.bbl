@@ -1,0 +1,194 @@
+\begin{thebibliography}{10}
+
+\bibitem{AbbEtal14}
+E.~Abbe, A.~S. Bandeira, A.~Bracher, and A.~Singer.
+\newblock Decoding binary node labels from censored edge measurements: {P}hase
+  transition and efficient recovery.
+\newblock {\em IEEE Transactions on Network Science and Engineering},
+  1(1):10--22, 2014.
+
+\bibitem{abbe2014exact}
+E.~Abbe, A.~S. Bandeira, and G.~Hall.
+\newblock Exact recovery in the stochastic block model.
+\newblock {\em arXiv preprint arXiv:1405.3267}, 2014.
+
+\bibitem{AbbSan15}
+E.~Abbe and C.~Sandon.
+\newblock Community detection in general stochastic block models: {F}undamental
+  limits and efficient recovery algorithms.
+\newblock {\em arXiv preprint arXiv:1503.00609}, 2015.
+
+\bibitem{aicher2014learning}
+Christopher Aicher, Abigail~Z Jacobs, and Aaron Clauset.
+\newblock Learning latent block structure in weighted networks.
+\newblock {\em Journal of Complex Networks}, page cnu026, 2014.
+
+\bibitem{AminiEtal13}
+A.~A. Amini, A.~Chen, P.~J. Bickel, E.~Levina, et~al.
+\newblock Pseudo-likelihood methods for community detection in large sparse
+  networks.
+\newblock {\em The Annals of Statistics}, 41(4):2097--2122, 2013.
+
+\bibitem{BloEtal08}
+V.~D. Blondel, J.-L. Guillaume, R.~Lambiotte, and E.~Lefebvre.
+\newblock Fast unfolding of communities in large networks.
+\newblock {\em Journal of Statistical Mechanics: Theory and Experiment},
+  2008(10):P10008, 2008.
+
+\bibitem{BocEtal06}
+S.~Boccaletti, V.~Latora, Y.~Moreno, M.~Chavez, and D.-U. Hwang.
+\newblock Complex networks: {S}tructure and dynamics.
+\newblock {\em Physics reports}, 424(4):175--308, 2006.
+
+\bibitem{DavKle10}
+D.~Easley and J.~Kleinberg.
+\newblock {\em Networks, Crowds, and Markets: Reasoning About a Highly
+  Connected World}.
+\newblock Cambridge University Press, New York, NY, USA, 2010.
+
+\bibitem{FieEtal85}
+S.~E. Fienberg, M.~M. Meyer, and S.~S. Wasserman.
+\newblock Statistical analysis of multiple sociometric relations.
+\newblock {\em Journal of the American Statistical Association},
+  80(389):51--67, 1985.
+
+\bibitem{gao2015achieving}
+Chao Gao, Zongming Ma, Anderson~Y Zhang, and Harrison~H Zhou.
+\newblock Achieving optimal misclassification proportion in stochastic block
+  model.
+\newblock {\em arXiv preprint arXiv:1505.03772}, 2015.
+
+\bibitem{gao2016community}
+Chao Gao, Zongming Ma, Anderson~Y Zhang, and Harrison~H Zhou.
+\newblock Community detection in degree-corrected block models.
+\newblock {\em arXiv preprint arXiv:1607.06993}, 2016.
+
+\bibitem{GolEtal10}
+A.~Goldenberg, A.~X. Zheng, S.~E. Fienberg, and E.~M. Airoldi.
+\newblock A survey of statistical network models.
+\newblock {\em Found. Trends Mach. Learn.}, 2(2):129--233, February 2010.
+
+\bibitem{HajEtal14}
+B.~Hajek, Y.~Wu, and J.~Xu.
+\newblock Achieving exact cluster recovery threshold via semidefinite
+  programming.
+\newblock {\em arXiv preprint arXiv:1412.6156}, 2014.
+
+\bibitem{HajEtal15}
+B.~Hajek, Y.~Wu, and J.~Xu.
+\newblock Achieving exact cluster recovery threshold via semidefinite
+  programming: {E}xtensions.
+\newblock {\em arXiv preprint arXiv:1502.07738}, 2015.
+
+\bibitem{HarSha00}
+E.~Hartuv and R.~Shamir.
+\newblock A clustering algorithm based on graph connectivity.
+\newblock {\em Information Processing Letters}, 76(4--6):175--181, 2000.
+
+\bibitem{HolEtal83}
+P.~W. Holland, K.~B. Laskey, and S.~Leinhardt.
+\newblock Stochastic blockmodels: {F}irst steps.
+\newblock {\em Social Networks}, 5(2):109--137, 1983.
+
+\bibitem{Jac10}
+M.~O. Jackson.
+\newblock {\em Social and Economic Networks}.
+\newblock Princeton University Press, 2010.
+
+\bibitem{JogLoh15}
+V.~Jog and P.~Loh.
+\newblock Information-theoretic bounds for exact recovery in weighted
+  stochastic block models using the renyi divergence.
+\newblock {\em arXiv preprint arXiv:1509.06418}, 2015.
+
+\bibitem{Mas14}
+L.~Massouli{\'e}.
+\newblock Community detection thresholds and the weak {R}amanujan property.
+\newblock In {\em Proceedings of the 46th Annual ACM Symposium on Theory of
+  Computing}, STOC '14, pages 694--703. ACM, 2014.
+
+\bibitem{McS01}
+F.~McSherry.
+\newblock Spectral partitioning of random graphs.
+\newblock In {\em Foundations of Computer Science, 2001. Proceedings. 42nd IEEE
+  Symposium on}, pages 529--537. IEEE, 2001.
+
+\bibitem{MosEtal12}
+E.~{Mossel}, J.~{Neeman}, and A.~{Sly}.
+\newblock {Stochastic Block Models and Reconstruction}.
+\newblock {\em arXiv preprint arXiv:1202.1499}.
+
+\bibitem{MosEtal14}
+E.~Mossel, J.~Neeman, and A.~Sly.
+\newblock Consistency thresholds for binary symmetric block models.
+\newblock {\em arXiv preprint arXiv:1407.1591}, 2014.
+
+\bibitem{NewEtal06}
+M.~Newman, A.-L. Barabasi, and D.~J. Watts.
+\newblock {\em The Structure and Dynamics of Networks: (Princeton Studies in
+  Complexity)}.
+\newblock Princeton University Press, Princeton, NJ, USA, 2006.
+
+\bibitem{New04}
+M.~E.~J. Newman.
+\newblock Analysis of weighted networks.
+\newblock {\em Physical Review E}, 70(5):056131, 2004.
+
+\bibitem{NewGir04}
+M.~E.~J. Newman and M.~Girvan.
+\newblock Finding and evaluating community structure in networks.
+\newblock {\em Physical review E}, 69(2):026113, 2004.
+
+\bibitem{PriEtal00}
+J.~K. Pritchard, M.~Stephens, and P.~Donnelly.
+\newblock Inference of population structure using multilocus genotype data.
+\newblock {\em Genetics}, 155(2):945--959, 2000.
+
+\bibitem{RubSpo10}
+M.~Rubinov and O.~Sporns.
+\newblock Complex network measures of brain connectivity: {U}ses and
+  interpretations.
+\newblock {\em NeuroImage}, 52(3):1059--1069, 2010.
+\newblock Computational Models of the Brain.
+
+\bibitem{Sad72}
+D.S. Sade.
+\newblock Sociometrics of {M}acaca mulatta: {I.} {L}inkages and cliques in
+  grooming matrices.
+\newblock {\em Folia Primatologica}, 18(3--4):196--223, 1972.
+
+\bibitem{ShiMal00}
+J.~Shi and J.~Malik.
+\newblock Normalized cuts and image segmentation.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 22(8):888--905, August
+  2000.
+
+\bibitem{WasAnd87}
+S.~Wasserman and C.~Anderson.
+\newblock Stochastic a posteriori blockmodels: {C}onstruction and assessment.
+\newblock {\em Social Networks}, 9(1):1--36, 1987.
+
+\bibitem{HarEtal76}
+H.~C. White, S.~A. Boorman, and R.~L. Breiger.
+\newblock Social structure from multiple networks: {I.} {B}lockmodels of roles
+  and positions.
+\newblock {\em American Journal of Sociology}, 81(4):730--780, 1976.
+
+\bibitem{yun2016optimal}
+Se-Young Yun and Alexandre Proutiere.
+\newblock Optimal cluster recovery in the labeled stochastic block model.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  965--973, 2016.
+
+\bibitem{zhangminimax}
+A.~Y. Zhang and H.~H. Zhou.
+\newblock Minimax rates of community detection in stochastic block model.
+\newblock {\em arXiv preprint arXiv:1507.05313}, 2015.
+
+\bibitem{zhao2012consistency}
+Yunpeng Zhao, Elizaveta Levina, Ji~Zhu, et~al.
+\newblock Consistency of community detection in networks under degree-corrected
+  stochastic block models.
+\newblock {\em The Annals of Statistics}, 40(4):2266--2292, 2012.
+
+\end{thebibliography}

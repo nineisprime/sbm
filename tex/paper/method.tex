@@ -1,0 +1,156 @@
+
+\section{Recovery algorithm}
+\label{sec:method}
+
+The weighted stochastic block model presents an extra layer of difficulty on top of the stochastic block model because the densities $p(x), q(x)$ are unknown. For example, one consequence of not knowing $p(x), q(x)$ is that the MLE does not exist. To see this, let us first see the MLE for stochastic block model:
+$
+\hat{\sigma}^{SBM}_{MLE} = \argmax_{\sigma}  \sum_{\substack{ (u,v) \in E \\ \sigma(u) = \sigma(v)}} \log \frac{p(1-q)}{q(1-p)}.
+$
+Since $\log \frac{p (1-q)}{q (1-p)} > 0$, the estimator $\hat{\sigma}^{SBM}_{MLE}$ may be computed by searching for the clustering that maximizes the number of within cluster edges. In contrast, one can show, after straightforward algebraic manipulation, that likelihood maximization for wSBM takes on the form
+\[
+\sup_{\sigma,\, p(x), q(x) \in \mathcal{P} } \sum_{\substack{ (u,v) \in E \\ \sigma(u) = \sigma(v)}} \log \frac{p(A_{uv}) (1-Q_0)}{q(A_{uv}) (1-P_0)}
+\]
+where $\mathcal{P}$ is the set of all densities. The maximum does not exist here because the maximizer of the likelihood does not exist for nonparametric density estimation. This remains true even if we restrict $\mathcal{P}$ to be the set of all smooth densities with say bounded second derivatives. Our approach therefore is to combine the idea of discretization from nonparametric density estimation with existing clustering techniques on the unweighted stochastic block model. 
+
+\subsection{Algorithm overview}
+
+The key idea behind our method is to convert the edge weights into a finite set of labels by discretization. We then cluster on the labeled network. We first give a broad overview of our algorithm and then describe each steps in detail. Given a weighted network represented as an adjacency matrix $A$, our estimation method has four steps. We summarize the flow of the algorithm below and also in figure~\ref{fig:method_pipeline1}.
+
+
+\begin{enumerate}
+\item \textbf{Transformation.} We take as input a weighted matrix $A$ and apply an invertible transformation function $\Phi \,:\, \mathbb{R} \rightarrow [0,1]$ to it. The resulting output $\Phi(A)$ is a matrix whose weights are between 0 and 1.
+\item \textbf{Discretization.} We divide the $[0,1]$ interval into $l=1,...,L$ equally spaced subintervals, which we call bins. We replace the real-valued weight entries $\Phi(A)$ with a categorical label $l \in \{1,...,L\}$: $[\Phi(A)]_{uv}$ is assigned label $l$ if the value $[\Phi(A)]_{uv}$ falls into bin $l$. We output a network whose edges are colored with $L$ possible colors. 
+\item \textbf{Initialization Part 1.} For each color $l$, we create a sub-network by including in it only edges whose color is $l$. For each sub-network, we perform spectral clustering. We output as $l^*$ the color that induces the maximally separated spectral clustering. 
+\item \textbf{Initialization Part 2.} For each $u \in \{1, \dots, n\}$, we perform spectral clustering on $A^*_{-u}$. We output $n$ clusters $\tilde{\sigma}_1, \dots, \tilde{\sigma}_n$. 
+\item \textbf{Refinement.} For each node $u \in \{1, \dots, n\}$, we update the cluster assignment of $u$ by considering $\tilde{\sigma}_u$ and  maximizing the likelihood looking at only the neighborhood around $u$. 
+\item \textbf{Consensus.} We align the cluster assignments made in the previous step. 
+\end{enumerate}
+
+ 
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.4, trim={0 6.5in 0 0}]{../figs/method_pipeline1.pdf}
+\caption{Pipeline for the our proposed algorithm}
+\label{fig:method_pipeline1}
+\end{figure}
+
+
+
+\subsection{Transformation and discretization}
+
+These two steps are straightforward. In the transformation step, we apply an invertible CDF function $\Phi \,:\, \mathbb{R} \rightarrow [0,1]$ as the transformation function onto all the edge weights so that the transformed edge weights $\Phi(A)$ is in the interval $[0,1]$. In the discretization step, we divide the interval $[0,1]$ into $L$ equally spaced bins labeled $l=1, \dots, L$. Each bin $l$ is of the form $[a_l, b_l]$ where $a_1 = 0, b_L = 1$ and $b_l - a_l = 1/L$. We give an edge the label $l$ if the weight of that edge falls into bin $l$. 
+
+\begin{algorithm}
+\caption{Transformation and Discretization}
+\label{alg:transform_and_discretize}
+\textbf{Input:} A weighted network $A$, a positive integer $L$, and an invertible function $\Phi \,:\, \mathbb{R} \rightarrow [0,1]$.
+\textbf{Output:} A labeled network $A_L$ \\
+
+\begin{algorithmic}
+\State Divide $[0,1]$ into $L$ bins, labeled $Bin_1, \dots, Bin_L$.
+\For{every edge $(u,v)$}
+   \State let $l$ be the bin in which $\Phi(A_{uv})$ falls.
+   \State Give the edge $(u,v)$ the label $l$ in the labeled network $A_L$
+\EndFor
+\State Output $A_L$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Initialization}
+
+The initialization procedure takes as input a network whose edges are labeled with a color $l \in \{1, ..., L\}$. The goal of the initialization procedure is create a rough clustering $\tilde{\sigma}$ that is sub-optimal but still consistent. As outlined in Algorithm~\ref{alg:initialization1}, the rough clustering is based on a single color $\ell^*$, which is chosen based on the maximum value of the estimated Renyi divergence between within-community and between-community distributions for the unweighted SBMs based on individual colors.
+
+\begin{algorithm}[h!]
+\caption{Initialization}
+\label{alg:initialization1}
+\textbf{Input:} A labeled network $A_L$ \\
+\textbf{Output:} A set of clusterings $\{ \tilde{\sigma}_u \}_{u=1,...,n}$\\
+
+\begin{algorithmic}[1]
+\State Separate $A_L$ into $L$ networks $\{ A_l \}_{l=1, \dots, l^*}$ where $A_l$ contains only edges with label $l$.  \Comment{Stage 1}
+\For{each label $l$}
+   \State Compute $\bar{d} = \frac{1}{n} \sum_{u=1}^n d_u$ as the average degree.
+   \State Perform spectral clustering with $\tau = \tilde{C} \bar{d}$ and $\mu \geq C\beta$ to get $\tilde{\sigma}_l$, where $\tilde{C}, C$ are some large constants.
+   \State estimate $\hat{P}_l = 
+             \frac{ \sum_{u \neq v \,:\, \tilde{\sigma}_l(u) = \tilde{\sigma}_l(v) } (A_l)_{uv} }
+                  { |{u \neq v \,:\, \tilde{\sigma}_l(u) = \tilde{\sigma}_l(v) }| }$ and 
+               $\hat{Q}_l = 
+            \frac{ \sum_{u \neq v \,:\, \tilde{\sigma}_l(u) \neq \tilde{\sigma}_l(v) } (A_l)_{uv} }
+              { |{u \neq v \,:\, \tilde{\sigma}_l(u) \neq \tilde{\sigma}_l(v) }| }$. 
+   \State $\hat{I}_l \leftarrow 
+               \frac{ (\hat{P}_l - \hat{Q}_l)^2}{\hat{P}_l \vee \hat{Q}_l}$
+\EndFor
+\State Choose $l^* = \argmax_l \hat{I}_l$. Let $A_{l^*}$ be the network with only edges labeled $l^*$.
+\For{each node $u$}  \Comment{Stage 2}
+   \State Create network $A_{l^*} - \{u\}$ by removing node $u$ from $A_{l^*}$. 
+   \State Perform spectral clustering on $A_{l^*} - \{ u \}$ to get $\tilde{\sigma}_u$.
+\EndFor 
+\State Output the set of clusterings $\{ \tilde{\sigma}_u \}_{u=1, \dots, n}$.
+\end{algorithmic}
+\end{algorithm}
+
+For technical reasons, we will actually create $n$ separate rough clusterings $\{\tilde{\sigma}_u \}_{u = 1, \dots, n}$ where each $\tilde{\sigma}_u \,:\, [n-1] \rightarrow [K]$ is a clustering of a network of $n-1$ nodes where node $u$ has been removed.
+
+\paragraph{\textbf{Spectral clustering:}} Note that Algorithm~\ref{alg:initialization1} involves several applications of spectral clustering. We describe the spectral clustering algorithm used as a subroutine in Algorithm~\ref{alg:spectral} below:
+
+\begin{algorithm}[h!]
+\caption{Spectral clustering}
+\label{alg:spectral}
+\textbf{Input:} An unweighted network $A$, trim threshold $\tau$, number of communities $K$, tuning parameter $\mu$ \\
+\textbf{Output:} A clustering $\sigma$ \\
+
+\begin{algorithmic}[1]
+\State For each node $u$ whose degree $d_u \geq \tau$, set $A_{uv} = 0$ to get $T_{\tau}(A)$. 
+\State Let $\hat{A}$ be the best rank-$K$ approximation to $T_{\tau}(A)$ in spectral norm.
+\State For each node $u$, define the neighbor set $N(u) = \{ v \,:\, \| \hat{A}_u - \hat{A}_v \|_2^2 \leq \mu K^2 \frac{\bar{d}}{n} \}$
+\State Initialize $S \leftarrow 0$. Select node $u$ with the most neighbors and add $u$ into $S$ as $S[1]$
+\For{$i = 2, \dots, K$}
+    \State Among all $u$ such that $|N(u)| \geq \frac{n}{\mu K}$, select 
+           $u^* = \argmax_u \min_{v \in S} \| \hat{A}_u - \hat{A}_v \|_2$.
+    \State Add $u^*$ into $S$ as $S[i]$.
+\EndFor
+\For{$u = 1,...,n$}
+    \State Take $\argmin_i \| \hat{A}_u - \hat{A}_{S[i]} \|_2$ and assign $\sigma(u) = i$.
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+Importantly, note that we may always choose the parameter $\mu$ sufficiently large such that Algorithm~\ref{alg:spectral} generates a set $S$ with $|S| = K$.
+
+\subsection{Refinement and consensus}
+
+Our refinement and consensus step closely follow the method described by Gao et al \cite{gao2015achieving}. In the refinement step, we use the set of initial clusterings $\{\tilde{\sigma}_u\}_{u=1, \dots, n}$ to generate a more accurate clustering for the labeled network $A_L$. We do this by locally maximizing an approximate log-likelihood expression for each of the nodes $u=1, \dots, n$. The consensus step is to resolve a technical cluster label consistency problem that arises after the refinement stage. 
+
+\begin{algorithm}
+\caption{Refinement}
+\label{alg:refinement}
+\textbf{Input:} A labeled network $A_L$ and a set of rough clusterings $\{\tilde{\sigma}_u\}_{u=1,...,n}$ \\
+\textbf{Output:} a clustering $\hat{\sigma}$ over the whole network
+
+\begin{algorithmic}[1]
+\For{each node $u$}
+   \State Estimate $\{ \hat{P}_l, \hat{Q}_l\}_{l=0,...,L}$ from $\tilde{\sigma}_u$.
+   \State Let $\hat{\sigma}_u : [n] \rightarrow [K]$ where 
+       $\hat{\sigma}_u(v) = \tilde{\sigma}_u(v)$ for all $v \neq u$ and 
+   \[
+    \hat{\sigma}_u(u) = \argmax_k \sum_{v \,:\, \tilde{\sigma}_u(v) = k ,\, v\neq u} 
+         \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
+     \]    
+\EndFor 
+\State Let $\hat{\sigma}(1) = \hat{\sigma}_1(1)$.  \Comment{Consensus Stage}
+\For{each node $u \neq 1$}
+\[
+\hat{\sigma}(u) = \argmax_k | \{ v \,:\,  \hat{\sigma}_1(v) = k \} \cap
+                                 \{ v \,:\, \hat{\sigma}_u(v) = \hat{\sigma}_u(u) \}|
+\]
+\EndFor
+\State Output $\hat{\sigma}$
+\end{algorithmic}
+
+\end{algorithm}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

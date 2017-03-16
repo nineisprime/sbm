@@ -1,0 +1,166 @@
+
+
+
+
+\subsection{Proof of Theorem~\ref{thm:threshold_impossibility}}
+\label{sec:threshold_proof}
+
+We will follow the proof strategy of Abbe et al.~\cite{abbe2014exact}. We will show that if 
+\[
+ (\sqrt{a} - \sqrt{b})^2 + \sqrt{ab} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 < 1
+\]
+there with a probability of at least $1/3$, we can find nodes $i \in A$ and $j \in B$ such that exchanging their community assignments has a larger likelihood than the ground truth. This would establish that the maximum likelihood estimator fails with probability at least $1/3$. Although we will establish the proof for the case of two communities, we note that the proof below trivially extends to $K > 2$ communities each of size $n$, simply by taking $A$ and $B$ to be any two fixed communities from the $K$ communities.  \\
+
+
+Let $A = \{1, 2, \dots, n\}$ and $B = \{n+1, n+2, \dots, 2n\}$. For $i \neq j$, let $w_{ij} \in \{0, 1, \dots, L\}$ be the weight of the edge $(i,j)$. Just as in the case of unlabeled edges, maximizing the likelihood in the labeled case may be interpreted as finding the min-cut for the stochastic block model, where the weight of an edge with color $\ell \in \{0, \dots, L\}$ is $\log \left(\frac{p_n(\ell)}{q_n(\ell)}\right)$. For ease of notation, define the function $$d_n(\ell) = \log \left( \frac{p_n(\ell)}{q_n(\ell)} \right).$$  We may describe $d_n$ explicitly as
+\begin{equation}
+\label{EqnDefnDn}
+d_n(0) = \log \left\{ \frac{1 - u\log n/n}{1 - v\log n/n}\right\}, \qquad d_n(\ell) = \log \left( \frac{a_\ell}{b_\ell} \right)\text{ for } 1 \leq \ell \leq K.
+\end{equation}
+Note that since $d_n(0) \to 0$ as $n \to \infty$, we may find a constant $\cM > 0$ that upper-bounds $d_n$ for all $n$. Thus, 
+\begin{equation*}
+\cM \geq \max_\ell d_n(\ell), \qquad \text{for all } n \text{ and all } 0 \leq \ell \leq L.
+\end{equation*}
+For any node $i$ and any subset of nodes $H$, denote 
+$$\cS(i , H) = \sum_{j \in H, j \neq i} d_n(w_{ij}).$$
+Using an argument along the lines of Lemma \ref{lemma: aww}, it is easy to check that if there exist nodes $i \in A$ and $j \in B$ such that
+\begin{align}\label{eq: ml fail}
+\cS(i, A\setminus \{i\}) + \cS(j, B\setminus \{j\}) < \cS(i, B\setminus \{j\}) + \cS(j, A\setminus \{i\}),
+\end{align}
+then the community assignment where $\sigma(i) = B$ and $\sigma(j) = A$ and every other assignment remains the same is more likely than the truth. Thus, the maximum likelihood estimator will fail if this happens. Define the following events:
+\begin{align*}
+F &= \text{ maximum likelihood fails},\\
+F_A &= \exists i \in A ~:~ \cS(i, A \setminus \{i\}) < \cS(i, B) - \cM,\\
+F_B &= \exists j \in B ~:~ \cS(j, B \setminus \{j\}) < \cS(i, A) - \cM.
+\end{align*}
+We have the following simple lemma:
+\begin{lemma}\label{lemma: FA}
+If $\mathbb P(F_A) \ge 2/3$, then $\mathbb P(F) \ge 1/3$.
+\end{lemma}
+
+\begin{proof}
+By symmetry, we have $\mathbb P(F_B) \ge 2/3$, so by a union bound, $\mathbb P(F_A\cap F_B) \ge 1/3$. Thus, with probability at least $1/3$, there exist nodes $i\in A$ and $j \in B$ such that
+\begin{align*}
+\cS(i, A\setminus \{i\}) & < \cS(i, B) - \cM \leq \cS(i, B) - \cS(i,j) = \cS(i, B\setminus \{j\}), \qquad \text{and} \\
+\cS(j, B\setminus \{j\}) & < \cS(j, A) - \cM \leq \cS(j, A) - \cS(i,j) = \cS(j, A\setminus \{j\}).
+\end{align*}
+This implies
+\begin{equation*}
+\cS(i, A\setminus \{i\})+\cS(j, B\setminus \{j\}) < \cS(i, B\setminus \{j\})+\cS(j, A\setminus \{j\}),
+\end{equation*}
+which from expression \eqref{eq: ml fail}, implies that the maximum likelihood estimator fails.
+\end{proof}
+
+We now define $\gamma(n)$ and $\delta(n)$ as follows:
+\begin{align*}
+\gamma(n) = (\log n)^{\log^{\frac{2}{3}} n}, \qquad \text{and} \qquad \delta(n) = \frac{\sqrt{\log n}}{\log \log n}.
+\end{align*}
+ Let $H$ be a fixed subset of $A$ of size $\frac{n}{\gamma(n)}$. We will take $\gamma(n) \asymp (\log n)^{\log^{\frac{2}{3}} n}$, such that $\frac{n}{\gamma(n)}$ is an integer. Define the event $\Delta$ as follows:
+\begin{align*}
+\Delta = \text{ for all nodes $i \in H$}, \quad  \cS(i, H) < \delta(n).
+\end{align*}
+We then have the following lemma:
+\begin{lemma}[Proof in Appendix~\ref{AppLemDelta}] \label{lemma: delta}
+$\mathbb P(\Delta) \geq \frac{9}{10}$.
+\end{lemma}
+
+Finally, define the events $F_H^{(i)}$ and $F_H$ as follows:
+\begin{align*}
+F_H^{(i)} &= \text{ node $i \in H$ satisfies } \cS(i, A \setminus H) + \delta(n) <  \cS(i, B) - \cM,\\
+F_H &= \cup_{i \in H} F_H^{(i)},
+\end{align*}
+and define
+\begin{align}
+\label{EqnDefnRho}
+\rho(n) = \mathbb P\Big(F_H^{(i)}\Big).
+\end{align}
+We have the following result:
+\begin{lemma}\label{lemma: final blow}
+If $\rho(n) > \frac{\gamma(n)\log 10}{n}$, then $\mathbb P(F) > 1/3$ for sufficiently large $n$.
+\end{lemma}
+
+\begin{proof}
+
+We first show that $\mathbb P(F_H) > \frac{9}{10}$ for large enough $n$. 
+Since the events $F_H^{(i)}$ are independent, we have
+\begin{align*}
+\mathbb P(F_H) = \mathbb P \left( \cup_{i \in H} F_H^{(i)} \right) = 1 - \mathbb P \left(  \cap_{i \in H} \left(F_H^{(i)}\right)^c \right) = 1 - (1-\rho(n))^{\frac{n}{\gamma(n)}}.
+\end{align*}
+Clearly, if $\rho(n)$ is not $o(1)$, then $\mathbb P(F)$ tends to 1 and we are done. If $\rho(n)$ is $o(1)$, then
+\begin{align*}
+\lim_{n \to \infty} (1-\rho(n))^{\frac{n}{\gamma(n)}} = \lim_{n \to \infty} (1-\rho(n))^{\frac{1}{\rho(n)} \frac{\rho(n)n}{\gamma(n)}} &= \lim_{n \to \infty} \exp \left(- \frac{\rho(n)n}{\gamma(n)} \right) < \frac{1}{10},
+\end{align*}
+where the last inequality used the fact that $\rho(n) > \frac{\gamma(n)\log 10}{n}$. Hence, $\mathbb P(F_H) > \frac{9}{10}$, as claimed.
+
+Now note that $\Delta \cap F_H \subseteq F_A$. By Lemma~\ref{lemma: delta}, we also have $\mathbb P(\Delta) \ge \frac{9}{10}$. Hence,
+$$\mathbb P(F_A) \geq \mathbb P(\Delta) + \mathbb P(F_H) - 1 \geq \frac{8}{10} > \frac{2}{3},$$
+which combined with Lemma \ref{lemma: FA} implies the desired result.
+\end{proof}
+
+Let $\{X_i\}_{i \geq 1}$ be a sequence of i.i.d.\ random variables distributed according to $p_n$, and let $\{Y_i\}_{i \geq 1}$ be a sequence of i.i.d.\ random variables distributed according to $q_n$. From the definition~\eqref{EqnDefnRho} of $\rho(n)$, and using independence, we have
+\begin{align}
+\rho(n) &= \mathbb P \left( \sum_{i=1}^{n} d_n(Y_i) - \sum_{i=1}^{n-\frac{n}{\gamma(n)}} d_n(X_i) > \delta(n) + \cM \right) \notag \\
+%
+&\geq P \left( \sum_{i=1}^{n-\frac{n}{\gamma(n)}} d_n(Y_i) - \sum_{i=1}^{n-\frac{n}{\gamma(n)}} d_n(X_i) > \delta(n) + \cM - \hat \delta(n) \right)\times \mathbb P\left( \sum_{i= n-\frac{n}{\gamma(n)}+1}^n d_n(Y_i) \geq \hat \delta(n)\right), \label{eq: product}
+\end{align}
+for any $\hat \delta(n)$. We will choose a suitable $\hat \delta(n)$ so that
+\begin{equation}
+\label{EqnHari}
+\mathbb P\left( \sum_{i= n-\frac{n}{\gamma(n)}+1}^n d_n(Y_i) \geq \hat \delta(n)\right) \longrightarrow 1.
+\end{equation}
+Note that $d_n(Y_i)$ is a random variable satisfying 
+\begin{equation*}
+\mathbb P \left( d_n(Y_i) = \log \left\{\frac{1-u\log n/n}{1 - v\log n/n}\right\}\right) = 1 - \frac{v\log n}{n}.
+\end{equation*}
+Thus, 
+\begin{equation*}
+\mathbb P \left(d_n(Y_i) = \log \left\{\frac{1-u\log n/n}{1 - v\log n/n}\right\}, \text{ for all } n-\frac{n}{\gamma(n)}-1 \leq i \leq n \right) = \left(1 - \frac{v\log n}{n}\right)^{\frac{n}{\gamma(n)}}.
+\end{equation*}
+We may check that
+\begin{equation*}
+\left(1 - \frac{v\log n}{n}\right)^{\frac{n}{\gamma(n)}} \longrightarrow 1, 
+\end{equation*}
+implying that
+\begin{equation*}
+\mathbb P \left(\sum_{i= n-\frac{n}{\gamma(n)}+1}^n d_n(Y_i) = \frac{n}{\gamma(n)} \cdot \log \left\{\frac{1-u\log n/n}{1-v\log n/n}\right\} \right) \longrightarrow 1.
+\end{equation*}
+Thus, equation~\eqref{EqnHari} holds with 
+\begin{equation}
+\hat\delta(n) = \Bigg|  \frac{n}{\gamma(n)} \cdot \log \left\{\frac{1-u\log n/n}{1-v\log n/n}\right\} \Bigg|.
+\end{equation}
+Since $$\hat \delta(n)  = O\left(\frac{\log n}{\gamma(n)}\right) = o(\sqrt{\log n}),$$ 
+we have $\delta(n) + \cM - \hat\delta(n) = o(\sqrt{\log n})$.
+
+Recall the definition of the function $T$ in equation~\eqref{EqnT}. We have the following technical lemma:
+
+\begin{lemma}[Proof in Appendix~\ref{AppLemHorrible}] \label{lemma: horrible}
+Let $\omega(n) = o(\sqrt{\log n})$ and $N(n) = n(1 + o(1))$. Then
+$$-\log T\left(N(n), p_n, q_n, \omega(n)\right) \leq \left(\sum_{\ell=1}^L  \left(\sqrt{a_\ell} - \sqrt{b_\ell}\right)^2 \right)\log n + o(\log n).$$
+\end{lemma}
+Noting that
+\begin{equation*}
+T\left(n-\frac{n}{\gamma(n)}, p_n, q_n, \delta(n) + \cM -\hat \delta(n)\right) = \mathbb P \left( \sum_{i=1}^{n-\frac{n}{\gamma(n)}} d_n(Y_i) - \sum_{i=1}^{n-\frac{n}{\gamma(n)}} d_n(X_i) \geq \delta(n) + \cM - \hat \delta(n) \right),
+\end{equation*}
+and using Lemma~\ref{lemma: horrible}, we conclude that
+\begin{equation}\label{eq: pumpkin}
+ -\log T\left(n-\frac{n}{\gamma(n)}, p_n, q_n, \delta(n) + \cM -\hat \delta(n)\right) \leq  \left(\sum_{i=1}^L  \left(\sqrt{a_i} - \sqrt{b_i}\right)^2 \right)\log n + o(\log n).
+\end{equation}
+
+Substituting the bounds~\eqref{EqnHari} and~\eqref{eq: pumpkin} into equation \eqref{eq: product}, we then conclude that
+\begin{equation*}
+-\log \rho(n) \leq \left(\sum_{i=1}^L  \left(\sqrt{a_i} - \sqrt{b_i}\right)^2 \right)\log n + o(\log n).
+\end{equation*}
+In particular, when
+$$\sum_{\ell=1}^L  \left(\sqrt{a_\ell} - \sqrt{b_\ell}\right)^2 < 1,$$
+we have
+$$-\log \rho(n) \leq \log n -\log \gamma(n) - \log\log 10,$$
+for sufficiently large $n$. Lemma~\ref{lemma: final blow} then implies that maximum likelihood fails with probability at least $\frac{1}{3}$, completing the proof of the theorem.
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

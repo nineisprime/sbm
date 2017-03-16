@@ -1,0 +1,1149 @@
+
+\subsection{Proof of Proposition~\ref{prop:discretization1}}
+
+We first, for the convenience of the readers, restate the proposition:
+
+\begin{proposition} (Proposition~\ref{prop:discretization1})\\
+Let $p(x), q(x)$ be two densities supported on $[0,1]$. Suppose that $H \equiv \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = o(1)$ and suppose they satisfy the following assumptions:
+
+\begin{enumerate}
+\item[C1] Suppose $p(x), q(x) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2] There exists $R$ a subinterval of $[0,1]$ such that $\frac{1}{\rho} \leq \left| \frac{p(x)}{q(x)} \right| \leq \rho$ and $\mu\{R^c\} = o(H)$ where $\mu$ is the Lebesgue measure.
+
+\item[C3] Define $\alpha^2 = \int_R \frac{(p(x) - q(x))^2}{q(x)} dx$ and $\gamma(x) = \frac{q(x) - p(x)}{\alpha}$. Suppose $\int_R q(x) \left| \frac{\gamma(x)}{q(x)} \right|^r dx  \leq M$ for constants $M, r \geq 4$.
+\item[C4] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{\gamma'(x)}{q(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|  \right\} $. Suppose $\int_R |h(x)|^t dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C5] For all $x \leq \frac{1}{L}$, $p'(x), q'(x) \geq 0$ and for all $x \geq 1 - \frac{1}{L}$, we have that $p'(x), q'(x) \leq 0$.
+\end{enumerate}
+
+Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(x) dx$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(x) dx$. Suppose $L \leq \frac{2}{H}$.
+
+Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. \\
+
+Then, we have that
+ $$\left| \frac{I - I_L}{I} \right| = o(1)$$ 
+and that $\frac{1}{4\rho c_0} \leq \frac{P_l}{Q_l} \leq 4\rho c_0$ for all $l$. 
+
+\end{proposition}
+
+
+\begin{proof}
+
+We first prove the second claim. Define $\tilde{P}_l = \int_{a_l}^{b_l} p(x)dx$ and $\tilde{Q}_l = \int_{a_l}^{b_l} q(x) dx$. 
+
+It then follows from proposition~\ref{prop:pq_ratio_bound1} that $\frac{1}{4 \rho} \leq \frac{\tilde{P}_l}{\tilde{Q}_l} \leq 4 \rho$. The claim follows from the bound on $\frac{1-P_0}{1-Q_0}$.
+
+
+By lemma~\ref{lem:renyi_hellinger} and \ref{lem:hellinger_simplication}, we have that 
+
+\begin{align*}
+I &= (1+o(1))\left\{ (\sqrt{P_0} - \sqrt{Q_0} )^2 + 
+          \int \left( \sqrt{(1-P_0)p(x)} - \sqrt{(1-Q_0)q(x)} \right)^2 dx \right\} \\
+  &= (1+o(1)) \left\{ 
+       (\sqrt{P_0} - \sqrt{Q_0} )^2 + (\sqrt{1- P_0} - \sqrt{1-Q_0} )^2
+     + \sqrt{(1-P_0)(1-Q_0)} \int \left( \sqrt{p(x)} - \sqrt{q(x)} \right)^2 dx \right\}
+\end{align*}
+Likewise, we have that
+
+
+\begin{align*}
+I_L &= (1+o(1))\left\{ (\sqrt{P_0} - \sqrt{Q_0} )^2 + 
+          \sum_{l=1}^L \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2 dx \right\} \\
+  &= (1+o(1)) \left\{ 
+       (\sqrt{P_0} - \sqrt{Q_0} )^2 + (\sqrt{1- P_0} - \sqrt{1-Q_0} )^2
+     + \sqrt{(1-P_0)(1-Q_0)} \sum_{l=1}^L (\sqrt{\tilde{P}_l} - \sqrt{\tilde{Q}_l})^2 \right\}
+\end{align*}
+
+
+
+
+Proposition~\ref{prop:H_HL_convergence1} show that:
+\[
+\left| \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx - \sum_{l=1}^L (\sqrt{\tilde{P}_l} - \sqrt{\tilde{Q}_l})^2 \right| = o\left( \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right)
+\]
+
+Thus, 
+\begin{align*}
+I_L &= (1 + o(1))  \left\{ 
+       (\sqrt{P_0} - \sqrt{Q_0} )^2 + (\sqrt{1- P_0} - \sqrt{1-Q_0} )^2
+     + \sqrt{(1-P_0)(1-Q_0)} (1+o(1)) \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx  \right\} \\
+  &= (1 + o(1)) I 
+\end{align*}
+
+
+\end{proof}
+
+
+
+
+
+\subsubsection{Working with subinterval $R$}
+
+
+In this subsection, define an approximately uniform binning of an interval $R$ to be the division of $R$ into $L$ bins $[a_l, b_l]$ such that the length of each bin is bounded $\frac{c_{bin}}{L} \leq b_l - a_l \leq \frac{C_{bin}}{L}$ for some constants $c_{bin}$ and $C_{bin}$. 
+
+
+
+\begin{proposition}
+\label{prop:continuous_hellinger_chi_square}
+Let $H^R = \int_R (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$. Define $\delta(x) = q(x) - p(x)$ and let $\alpha$ be a real number such that 
+\[
+C' \int_R q(x) \left( \frac{\delta(x)}{q(x)} \right)^2 dx \geq \alpha^2 \geq c' \int_R q(x) \left( \frac{\delta(x)}{q(x)} \right)^2 dx
+\]
+ for some constants $C', c'$. Define $\gamma(x) = \frac{\delta(x)}{\alpha}$. Suppose that $\limsup_n \int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^4 dx \leq M$.\\
+Then, we have that, 
+
+
+\[
+H^R = d \alpha^2 ( 1 + \eta )
+\]
+where $d = \int_R p(x) \left( \frac{1}{2} \frac{\gamma(x)}{p(x)} \right)^2 dx$ and $|\eta| \leq (2\alpha + \alpha^2) \frac{C'M}{4}$. In particular, we have that if $H^R \rightarrow 0$, then $\alpha \rightarrow 0$ and $\eta \rightarrow 0$. 
+
+\end{proposition}
+
+\begin{proof}
+
+
+First, let us note that
+\[
+\frac{1}{c'} \geq \int_R q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \geq \frac{1}{C'}
+\]
+
+
+\begin{align*}
+  &\int_R (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \\
+=& \int_R ( \sqrt{q(x)} - \sqrt{q(x) - \delta(x)} )^2 dx \\
+=& \int_R q(x) \left( 1 - \sqrt{ 1 - \frac{\delta(x)}{q(x)}} \right)^2 dx 
+\end{align*}
+By convention, we let $\frac{\delta(x)}{q(x)} = 0$ whenever $q(x), p(x) = 0$. 
+
+Thus, we can define $\xi(x) = 1- \frac{1}{2} \frac{\delta(x)}{q(x)} - \sqrt{ 1 - \frac{\delta(x)}{q(x)}}$ for $x \in [0,1]$. 
+\begin{align*}
+=& \int_R q(x) \left( 1 - (1 - \frac{1}{2} \frac{\delta(x)}{q(x)} - \xi(x) ) \right)^2 dx \\
+=& \int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} - \xi(x) \right)^2 dx\\ 
+=& \int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 \left( 1 - \xi_2(x) \right)^2 dx 
+\end{align*}
+
+Where $\xi_2(x) = \frac{2\xi(x)}{\delta(x)/q(x)}$ if $\delta(x) \neq 0$ and $\xi_2(x) =0$ if $\delta(x) = 0$. 
+
+Thus,
+\begin{align*}
+\int_R \left( \sqrt{p(x)} - \sqrt{q(x)} \right)^2 dx &= (1 - \eta) \int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 dx \\
+  &= (1 - \eta) \alpha^2  \int_R q(x) \left( \frac{1}{2} \frac{\gamma(x)}{q(x)} \right)^2 dx
+\end{align*}
+
+where 
+\[
+\eta = \frac{\int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 (\xi_2(x)^2 + 2\xi_2(x)) dx }
+           { \int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 }
+\]
+
+By lemma~\ref{lem:sqrt_linearize}, $\xi_2(x) \leq 2 \left| \frac{ \delta(x)}{q(x)} \right|$. Thus, we have that
+
+\begin{align*}
+| \eta | &\leq  \left| \frac{\int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 (-\xi_2(x)^2 + 2\xi_2(x)) dx }
+           { \int_R q(x) \left( \frac{1}{2} \frac{\delta(x)}{q(x)} \right)^2 } \right| \\
+    &\leq 4 \frac{\int_R q(x) \left( \frac{1}{2} \frac{\gamma(x)}{q(x)} \right)^2 
+                  \left( \left|\frac{\delta(x)}{q(x)} \right|^2 + 2\left| \frac{\delta(x)}{q(x)} \right| \right)  dx }
+           { \int_R q(x) \left( \frac{1}{2} \frac{\gamma(x)}{q(x)} \right)^2 } \\
+    &\leq C' \left\{ 2 \alpha \int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^3 dx + 
+                           \alpha^2 \int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^4 dx \right\}
+\end{align*}
+
+Note that 
+\[
+\int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^3 dx \leq 
+    \left\{ \int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^3 dx \right\}^{2/3} \left\{\int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^4 dx \right\}^{1/3}
+\]
+
+Thus, we have that $\int_R q(x) \left( \frac{1}{2} \frac{\gamma(x)}{q(x)} \right)^3 dx \leq M$ as well. So,
+
+\[
+|\eta| \leq (2\alpha + \alpha^2) C' M
+\]
+
+\end{proof}
+
+
+
+
+
+\begin{proposition}
+\label{prop:discrete_hellinger_chi_square}
+Let $L \geq 1$ be arbitrary. Let $P_l = \int_{a_l}^{b_l} p(x) dx$ and $Q_l =  \int_{a_l}^{b_l} q(x) dx$. Define $H^R_L = \sum_{l=1}^L \left( \sqrt{P_l} - \sqrt{Q_l} \right)^2$. 
+
+Define $\delta(x) = q(x) - p(x)$ and let $\alpha$ be a real number such that 
+\[
+C' \int_R q(x) \left( \frac{\delta(x)}{q(x)} \right)^2 dx \geq \alpha^2 \geq c' \int_R q(x) \left( \frac{\delta(x)}{q(x)} \right)^2 dx
+\]
+ for some constants $C', c'$. Define $\gamma(x) = \frac{\delta(x)}{\alpha}$. Suppose that $\limsup_n \int_R q(x) \left| \frac{1}{2} \frac{\gamma(x)}{q(x)} \right|^4 dx \leq M$.\\
+Then, we have that, 
+
+\[
+H^R_L = d_L \alpha^2 ( 1 + \eta_L )
+\]
+where $d_L = \sum_{l=1}^L P_l \left( \frac{1}{2} \frac{\gamma_l}{P_l} \right)^2 dx$, $\gamma_l = \int_{a_l}^{b_l} \gamma(x)$ and $\sup_L |\eta_L | \leq (2 \alpha + \alpha^2) 2 C' M$. In particular, we have that if $\alpha \rightarrow 0$, then $\eta_L \rightarrow 0$. 
+\end{proposition}
+
+\begin{proof}
+
+
+\begin{align*}
+H^R_L &= \sum_{l=1}^L (\sqrt{P_l} - \sqrt{Q_l})^2 \\
+   &= \sum_{l=1}^L Q_l \left( 1 - \sqrt{\frac{P_l}{Q_l}} \right)^2 \\
+ &= \sum_{l=1}^L Q_l \left( 1 - \sqrt{1 - \frac{\delta_l}{Q_l}} \right)^2 \\
+ &= \sum_{l=1}^L Q_l \left( 1 - \left( 1 - \frac{1}{2} \frac{\delta_l}{Q_l} - \xi_l \right) \right)^2 \\
+\end{align*}
+
+where by convention, we define $\frac{\delta_l}{Q_l} = 0$ when $Q_l, P_l = 0$. Here, $\xi_l = 1 - \frac{1}{2} \frac{\delta_l}{Q_l} - \sqrt{ 1 - \frac{\delta_l}{Q_l} }$. Continuing,
+
+\begin{align*}
+H^R_L &=  \sum_{l=1}^L Q_l \left(  \frac{1}{2} \frac{\delta_l}{Q_l} - \xi_l \right)^2 \\
+  &=  \sum_{l=1}^L Q_l \left(  \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2 \left( 1 - \xi_{2l} \right)^2 
+\end{align*}
+
+where $\xi_{2l} = 0$ if $\frac{\delta_l}{Q_l} = 0$ and $\xi_{2l} = 2 \xi_l \frac{Q_l}{\delta_l}$ otherwise.
+
+\begin{align*}
+H^R_L &= (1 - \eta_L) \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2
+\end{align*}
+
+where $\eta_L = \frac{ \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2 (2 \xi_{2l} - \xi_{2l}^2) }
+          { \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2 }$.
+
+By lemma~\ref{lem:sqrt_linearize}, $|\xi_{2l}| \leq 2 \left| \frac{\delta_l}{Q_l} \right|$. Therefore,
+
+\begin{align*}
+|\eta_L| &= \left| \frac{ \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2 (2 \xi_{2l} - \xi_{2l}^2) }
+          { \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\delta_l}{Q_l} \right)^2 } \right| \\
+   &\leq  \frac{ \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 (2 |\xi_{2l}| + \xi_{2l}^2) }
+          { \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 } \\
+  &\leq   4 \frac{ \alpha \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^3 +  
+                   \alpha^2 \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^4 }
+          { \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 } \\
+\end{align*}
+
+The denominator can be bounded by $1/(2C')$ for large enough $L$ by proposition~\ref{prop:d_dL_convergence}.
+
+To bound the numerator, we note that for a single $l$:
+\[
+\int_{a_l}^{b_l} \frac{q(x)}{Q_l} \left| \frac{\gamma(x)}{q(x)} \right|^3 dx \geq
+ \left| \int_{Bin_l} \frac{q(x)}{Q_l} \frac{\gamma(x)}{q(x)} dx \right|^3 =
+ \left| \frac{\gamma_l}{Q_l} \right|^3
+\]
+
+Therefore,
+\begin{align*}
+\sum_{l=1}^L Q_l \left| \frac{\gamma_l}{Q_l} \right|^3 &\leq \int_R q(x) \left| \frac{\gamma(x)}{q(x)} \right|^3 \leq M \\
+\sum_{l=1}^L Q_l \left| \frac{\gamma_l}{Q_l} \right|^4 &\leq \int_R q(x) \left| \frac{\gamma(x)}{q(x)} \right|^4 \leq M \\
+\end{align*}
+
+Thus, 
+\begin{align*}
+|\eta_L| &\leq (2 \alpha + \alpha^2) 2 C' M
+\end{align*}
+
+\end{proof}
+
+
+
+For the next proposition, we use the notation $Bin_l$ to denote the bin $[a_l, b_l]$. 
+
+\begin{proposition}
+\label{prop:d_dL_convergence}
+Let $d = \int_R q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx$ and $d_L = \sum_l Q_l \left( \frac{\gamma_l}{Q_l} \right)^2$. 
+
+Suppose assumptions A1-A4 hold. Then we have that
+\[
+\lim_{L \rightarrow \infty} \sup_n \left| \frac{d}{d_L} - 1 \right| = o(1)
+\]
+\end{proposition}
+
+The proof strategy is to relate both $d$ and $d_L$ to the Riemann sum $d_R = \sum_l B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2$ where $x_l$ is some appropriately chosen element in $Bin_l$.  
+
+\begin{proof}
+
+\textbf{Step 1:} 
+The first step is to bound $|d_L - d_R|$. 
+
+Let $h(x)$ be as defined in Assumption C3; in particular, $|h(x)| \geq 
+\left| \frac{\gamma'(x)}{q(x)} \right| \vee \left| \frac{q'(x)}{q(x)} \right|$. 
+
+Let $0 < \tau < 1$. We say that a bin $l$ is good if
+$$
+\sup_{x \in Bin_l} |h(x)| \leq L^\tau
+$$
+the exponent $\tau$ will be chosen later to balance two error terms. We will now argue that the proportion of bad bins goes to 0 as $L \rightarrow \infty$.\\
+
+
+
+For all large enough $L$, $\left \{x \,:\, 
+    |h(x)|  \geq L^\tau \right \}$ is a union of at most $K$ intervals, thus, we have that
+
+\begin{align*}
+\sum_{l \in \left \{ l \,:\, |h(x)| 
+           \geq L^\tau \right \}}  B_l &\leq 
+   \mu \left( \left\{x \,:\, |h(x)|
+         \geq L^\tau \right\} \right) + 2 K C_{bin} L^{-1} \\
+  &\leq M' L^{-\tau t}  + 2K C_{bin} L^{-1} \\
+  & \leq C_{M', K} L^{ - \tau t} 
+\end{align*}
+The last inequality follows because $t \leq 1$ and thus $\tau t < 1$ and so the first term dominates. The second inequality follows from {Lemma}~\ref{lem:level_set_control}.
+
+We can now bound the number of bad bins: 
+\begin{align*}
+\# \{ l \,:\, |h(x)| \geq L^\tau \} \leq \frac{C_{M', K} L^{- \tau t} L}{c_{bin}}  \leq C_{M',K} L^{1 - \tau t}
+\end{align*}
+
+The inequality follows because $1 - \tau t > 0$. 
+
+For a bad bin $l$, we can bound $Q_l \left( \frac{\gamma_l}{Q_l} \right)^2$ as follows:
+\begin{align*}
+Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 &= Q_l \left( \frac{1}{Q_l} \int_{Bin_l} \gamma(x) dx \right)^2 \\
+   &= Q_l \left(  \int_{Bin_l} \frac{\gamma(x)}{q(x)} \frac{q(x)}{Q_l} dx \right)^2 \\
+   &\leq Q_l \int_{Bin_l} \frac{q(x)}{Q_l} \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \quad \trm{by Jensen} \\
+   &\leq \int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \\
+   &\leq \left(\int_{Bin_l} q(x) \left| \frac{\gamma(x)}{q(x)} \right|^r dx \right)^{2/r}
+         \left(\int_{Bin_l} q(x) dx \right)^{(r-2)/r} \\
+   &\leq M^{2/r} (C C_{bin})^{(r-2)/r} L^{-(r-2)/r} \\
+   &\leq C_{M, C} L^{- \frac{2}{r}}
+\end{align*}
+
+Now, we have
+
+\begin{align*}
+d_L &= \sum_{l=1}^L Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 \\
+  &= \sum_{l \, good} Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 + 
+      \sum_{l \, bad} Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 \\
+   &=   \sum_{l \, good} Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 + 
+       C_{M, C} L^{-\frac{2}{r}} | \{ l \,:\, l \trm{ bad} \}| \\
+   &=  \sum_{l \, good} Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 + 
+          C_{M, M', C, K} L^{1 - \tau t - \frac{(r-2)}{r}} \\
+  &=  \sum_{l \, good} Q_l \left( \frac{1}{2} \frac{\gamma_l}{Q_l} \right)^2 + 
+        C_{M, M', C, K} L^{\frac{2}{r} - \tau t} \\
+\end{align*}
+
+
+For each good bin $l$, define $x_l = \argmax_{x \in Bin_l} | q(x) |$ The argmax is attainable since $q$ is continuous and $q(x_l) < \infty$ since $q$ is bounded.
+
+Now, for a good bin, we have that 
+
+\begin{align*}
+Q_l &= \int_{\trm{Bin}_l} q(x) dx \\
+  &= \int_{a_l}^{b_l} q(x) dx \\
+ &= \int_{a_l}^{b_l} q(x_l) + q'(c_x) (x - x_l) dx \quad \trm{for some $c_x \in [a_l, b_l]$}\\
+ &= B_l q(x_l) + \int_{a_l}^{b_l} q'(c_x)(x-x_l) dx  \\
+ &= B_l q(x_l) + B_l^2 \xi_l \\
+\end{align*}
+
+where we define $\xi_l = \frac{1}{B_l^2} \int_{a_l}^{b_l} q'(c_x) (x-x_l) dx$. We can bound $B_l \left| \frac{\xi_l}{q(x_l)} \right|$:
+$$
+B_l \left| \frac{\xi_l}{q(x_l)} \right| 
+    \leq \frac{1}{B_l} \int_{a_l}^{b_l} \left|\frac{q'(c_x)}{q(x_l)} \right| |x - x_l| dx 
+   \leq \frac{1}{B_l} \int_{a_l}^{b_l} \left|\frac{q'(c_x)}{q(c_x)} \right| |x - x_l| dx 
+                \leq \frac{1}{B_l} \int_{a_l}^{b_l} L^{\tau} |x - x_l| dx \leq 
+ \frac{1}{2} C_{bin} L^{\tau - 1} 
+$$ 
+
+The second inequality follows because $q(c_x) \leq q(x_l)$. The third inequality follows because $l$ is a good bin and thus
+$\left| \frac{q'(c_x)}{q(c_x)} \right| \leq L^\tau$. The last inequality follows because $B_l \leq C_{bin} 1/L$. 
+
+
+We perform similar analysis on $\gamma$:
+\begin{align*}
+\gamma_L &= \int_{Bin_l} \gamma(x) dx \\
+     &=  \int_{a_l}^{b_l} \gamma(x_l) + \gamma'(c_x) (x - x_l) dx  \\
+     &= B_l \gamma(x_l) + B_l^2 \xi'_l
+\end{align*}  
+
+where $\xi'_l = \frac{1}{B_l^2} \int_{a_l}^{b_l} \gamma'(c_x)(x - x_l) dx$. It is straightforward to verify that
+ $ B_l \left| \frac{\xi'_l}{q(x_l)}\right| \leq \frac{1}{2} C_{bin} L^{\tau - 1}$. 
+
+For any bin $l$, we also have that
+\begin{align*}
+Q_l = \int_{Bin_l} q(x) dx \leq C B_l
+\end{align*}
+
+Now We look at a single $Q_l \left( \frac{\gamma_l}{Q_l} \right)^2$ term for a single good bin $l$. 
+\begin{align*}
+Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 &= \frac{\gamma_l^2}{Q_l} \\
+   &= \frac{ (B_l \gamma(x_l) + B_l^2 \xi'_l)^2}{B_l q(x_l) + B_l^2 \xi_l} \\
+   &= B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} + B_l \frac{\xi'_l}{q(x_l)} \right)^2 
+         \left( \frac{1}{1 + B_l \frac{\xi_l}{q(x_l)} } \right) \\
+   &=  B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} + B_l \frac{\xi'_l}{q(x_l)} \right)^2 
+         \left( 1 - B_l \frac{\xi_l}{q(x_l)} + \eta_l ( B_l \frac{\xi_l}{q(x_l)} )^2 \right)
+\end{align*}
+
+To arrive at the last equality, we assume that $L^{\tau-1} \geq \frac{1}{2} C_{bin}$, which is satisfied so long as $L \geq (2/C_{bin})^{\frac{1}{1-\tau}}$. Under this assumption, $\left| B_l \frac{\xi'_l}{q(x_l)} \right| \leq \frac{1}{2}$ and thus it is valid to take the Taylor approximation. Here, $\eta_l$ is some scalar that satisfies $|\eta_l| \leq 16$.
+
+\begin{align*}
+& Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 =  \\
+ &  \left( B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 + 
+          B_l q(x_l) \frac{\gamma(x_l)}{q(x_l)} B_l \frac{\xi'_l}{q(x_l)} +
+          B_l q(x_l) \left( B_l \frac{\xi'_l}{q(x_l)} \right)^2 \right) 
+       \left( 1 - B_l \frac{\xi_l}{q(x_l)} + \eta_l ( B_l \frac{\xi_l}{q(x_l)} )^2 \right)
+\end{align*}
+
+
+We again note that $\left| B_l \frac{\xi'_l}{q(x_l)} \right| \leq \frac{C_{bin}}{2} L^{\tau-1}$ and 
+$\left| B_l \frac{\xi_l}{q(x_l)} \right| \leq \frac{C_{bin}}{2} L^{\tau-1}$. Suppose $L \geq \left( \frac{1}{2 C_{bin}} \right)^{1 - \tau}$ so that $\frac{C_{bin}}{2} L^{\tau - 1} \leq \frac{1}{4}$, then
+
+
+\begin{align*}
+ \left| B_l \frac{\xi_l}{q(x_l)} \right|  + \left| \eta_l ( B_l \frac{\xi_l}{q(x_l)} )^2 \right| &\leq L^{\tau - 1} \\
+ \left| 1 - B_l \frac{\xi_l}{q(x_l)} + \eta_l ( B_l \frac{\xi_l}{q(x_l)} )^2 \right| &\leq 2
+\end{align*}
+
+Now, we can bound
+
+\begin{align*}
+& \left| Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 
+         - B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| \\
+& \leq B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 L^{\tau - 1} +
+       2 B_l q(x_l) \frac{\gamma(x_l)}{q(x_l)} L^{\tau - 1} +
+       2 B_l q(x_l) L^{2(\tau-1)} 
+\end{align*}
+
+The third term is bounded by $2B_l C L^{2(\tau -1)} \leq 2C_{bin} C L^{2\tau - 3}$. To bound the second term, we perform case analysis. 
+
+Case 1: $\left|\frac{\gamma(x_l)}{q(x_l)}\right| \geq 1$. In this case, 
+$q(x) \left| \frac{\gamma(x_l)}{q(x_l)} \right| 
+  \leq q(x) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 $.
+
+Case 2: $\left| \frac{\gamma(x_l)}{q(x_l)} \right| \leq 1$. Then, the second term is bounded by $2 B_l C L^{\tau - 1 } \leq 2 C_{bin} C L^{\tau - 2}$.
+
+In any case, we have that
+\begin{align*}
+& \left| Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 
+         - B q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| 
+  \leq 3 B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 L^{\tau - 1} +
+       4 C_{bin} C  L^{\tau - 2}
+\end{align*}
+
+Define $d_R = \sum_{l \, good} B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2$. Then,
+
+\begin{align*}
+  |d_L - d_R| &= \left| \sum_l Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 - \sum_{l \, good} B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| \\
+  &\leq \sum_{l \, good} \left| Q_l \left( \frac{\gamma_l}{Q_l} \right)^2 - B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| + C_{M, M', K, C} L^{\frac{2}{r} - \tau t} \\
+  &\leq 3 d_R L^{\tau - 1}
+       + C_{C,C_{bin}} L^{\tau - 2}  + C_{M, M', K, C} L^{\frac{2}{r} - \tau t} \\
+  &\leq  3 d_R L^{\tau - 1} 
+       +   C_{C, C_{bin}} L^{\tau - 2}  + C_{M, M', K, C} L^{\frac{2}{r} - \tau t} \\
+ &\leq 3 d_R L^{\frac{2 - rt}{r(1+t)}} 
+       +   C_{M, M', K, C, C_{bin}} L^{\frac{2 - rt}{r(1+t)} }
+                     \quad \trm{setting $\tau= \frac{2 + r}{r(1+t)} $} 
+\end{align*}
+
+The $\tau$ is chosen to balance $L^{\tau - 1}$ and $L^{2/r - \tau t}$. 
+
+Since $2 > rt$, we have that $|d_L - d_R| = o(d_R) + o(1)$. 
+
+\textbf{Step 2.} 
+
+In like fashion, we bound $| d_R - d|$. We use the same definition of good and bad bins as before.
+
+\begin{align*}
+d &= \int_R q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \\
+  &= \sum_{l=1}^L \int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \\
+  &= \sum_{l \, good} \int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx +
+     \sum_{l \, bad} \int_{Bin_l}  q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx \\
+  &\leq \sum_{l\, good} \int_{Bin_l}  q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx +
+        |\{ l \,:\, l \, \trm{bad}\}| C_{M,C} L^{-\frac{2}{r}} \\
+ & \leq \sum_{l\, good} \int_{Bin_l}  q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx +
+        C_{M,M',C,K} L^{\frac{2}{r} - \tau t} \\  
+\end{align*}
+
+The bound on the second term--the inequality--follows from the previous analysis. We now focus on the first term. Note that, for all $x \in Bin_l$
+
+\begin{align*}
+q(x) &= q(x_l) + q'(c_l)(x-x_l)  \\
+\gamma(x) &= \gamma(x_l) + \gamma'(c'_l)(x - x_l) 
+\end{align*}
+
+$c_l, c'_l$ are in $Bin_l$ and they are dependent on $x$; we leave that dependency implicit to make the notations simpler.  
+
+\begin{align*}
+\int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 &=
+  \int_{Bin_l} 
+      \frac{ (\gamma(x_l) + \gamma'(c'_l)(x - x_l))^2  }{ q(x_l) + q'(c_l)(x-x_l)} 
+  \\
+&= \int_{Bin_l} q(x_l)
+   \left( \frac{\gamma(x_l)}{q(x_l)} + \frac{\gamma'(c'_l)}{q(x_l)} (x - x_l) \right)^2
+  \left( \frac{1}{1 + \frac{q'(c_l)}{q(x_l)} (x - x_l)} \right) \\
+\end{align*}
+
+To make the algebraic manipulation more clear, let us use the following shorthand:
+\[
+T_1 = \frac{q'(c_l)}{q(x_l)} ( x - x_l) \quad
+T_2 = \frac{\gamma'(c'_l)}{q(x_l)} ( x - x_l) 
+\]
+
+We observe that $|x -x_l| \leq B_l$ and that
+
+\[
+\left| \frac{\gamma'(c'_l)}{q(x_l)} \right| 
+    \leq \left| \frac{\gamma'(c'_l)}{q(c'_l)} \right| \leq L^\tau
+\]
+and likewise,  $\left| \frac{q'(c_l)}{q(x_l)} \right| \leq L^\tau$. Thus, we have that $|T_1|, |T_2| \leq C_{bin} L^{\tau -1}$.
+
+Now, suppose $C_{bin} L^{\tau -1} \leq \frac{1}{2} $, which is satisfied if $L \geq (2 C_{bin})^{\frac{1}{1-\tau}}$. 
+
+\begin{align*}
+ =& \int_{Bin_l} q(x_l) 
+       \left( \frac{\gamma(x_l)}{q(x_l)} + T_2 \right)^2 
+        \left( \frac{1}{ 1 + T_1 } \right) dx  \\
+ =& \int_{Bin_l} \left( q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 + 
+                q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right) T_2 + q(x_l) T_2^2 \right) dx
+    (1 - T_1 + \eta T_1^2) \\
+\end{align*}
+where $\eta$ is some function of $x$ that satisfies $|\eta| \leq 16$. Thus, we have that
+
+\begin{align*}
+& \left| \int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx - 
+      B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| \\
+& \leq   B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 L^{\tau-1} +
+      B_l q(x_l) \frac{\gamma(x_l)}{q(x_l)} L^{\tau-1} + B_l q(x_l) L^{2(\tau-1)} 
+\end{align*}
+
+Since $q(x_l) \leq C$, the $q(x_l) L^{2(\tau-1)}$ term is bounded by $C L^{2(\tau - 1)}$. To bound the $q(x_l) \frac{\gamma(x_l)}{q(x_l)} L^{\tau-1} $ term, we perform case analysis.
+
+Case 1: if $\frac{\gamma(x_l)}{q(x_l)} \geq 1$. Then $q(x_l) \frac{\gamma(x_l)}{q(x_l)} L^{\tau-1} \leq q(x_l) \left(\frac{\gamma(x_l)}{q(x_l)} \right)^2 L^{\tau-1}$. 
+
+Case 2: if $\frac{\gamma(x_l)}{q(x_l)} \leq 1$. Then $q(x_l) \frac{\gamma(x_l)}{q(x_l)} L^{\tau-1} \leq C L^{\tau-1}$. 
+
+Thus, in any case, we have that, for a single good bin:
+
+
+\begin{align*}
+& \left| \int_{Bin_l} q(x) \left( \frac{\gamma(x)}{q(x)} \right)^2 dx - 
+      B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 \right| \\
+& \leq   B_l q(x_l) \left( \frac{\gamma(x_l)}{q(x_l)} \right)^2 L^{\tau-1} +
+      B_l C L^{\tau-1} 
+\end{align*}
+
+Therefore, we have that
+
+\[
+|d - d_R | \leq d_R L^{\tau-1} + C L^{\tau-1} + C_{M, M', C, K} L^{\frac{2}{r} - \frac{\tau}{t}}
+\]
+
+So that $|d - d_R| = o(d_R) + o(1)$. 
+
+Since $d = 1$, we have that $|d - d_L| = o(1)$ and that $\left| \frac{d_L}{d} - 1 \right| = o(1)$. 
+
+\end{proof}
+
+
+
+\begin{proposition}
+\label{prop:H_HL_convergence_R}
+Suppose assumptions A1-4 hold. Let $n \rightarrow \infty$, then, we have that, for any sequence $L_n \rightarrow \infty, \alpha_n \rightarrow 0$,
+
+\[
+\lim_{n \rightarrow \infty} \left| \frac{\sum_l (\sqrt{P_l} - \sqrt{Q_l})^2}{\int_R (\sqrt{p(x)} - \sqrt{q(x)})^2 dx} 
+        - 1 \right| \rightarrow 0
+\]
+
+\end{proposition}
+
+\begin{proof}
+
+By proposition~\ref{prop:continuous_hellinger_chi_square} and proposition~\ref{prop:discrete_hellinger_chi_square}, we have that, for all $\alpha$,
+
+\begin{align*}
+| H^R_L - H^R | 
+ & \leq \left| d_L \alpha^2 ( 1 + \eta_L) - d \alpha^2 ( 1 + \eta) \right| \\
+  &\leq d\alpha^2 \left| \frac{d_L}{d} (1 + \eta_L) - (1+\eta) \right|  \\
+ &\leq H^R \left| \frac{d_L}{d} \frac{(1 + \eta_L)}{(1+\eta)} - 1 \right| \\
+& \Rightarrow \\
+\left| \frac{H^R_L}{H^R} - 1 \right| &\leq 
+\left | \frac{d_L}{d} \frac{(1+\eta_L)}{1 + \eta} - 1 \right|
+\end{align*}
+
+where $|\eta|, |\eta_L| \leq 2(2\alpha + \alpha^2) C'M$ for all $L$. Thus, it is clear that 
+\[
+\lim_{\alpha_n \rightarrow 0} \sup_L \left| \frac{1+\eta_L}{1+\eta} - 1 \right| = 0
+\]
+
+Furthermore, it has been shown that
+\[
+\lim_{L_n \rightarrow \infty} \sup_\alpha \left| \frac{d_L}{d} - 1 \right| = 0
+\]
+
+Let $\epsilon > 0$ be arbitrarily fixed. 
+Choose $\alpha$ such that $\sup_L \left| \frac{1+\eta_L}{1+\eta} - 1 \right| \leq \epsilon/3$ and choose $L$ such that $\sup_\alpha \left| \frac{d_L}{d} -1 \right| \leq \epsilon/3$. 
+
+Choose $n_0$ such that $\alpha_n < \alpha$ and $L_n < L$ for all $n > n_0$. 
+
+Then, we have that, for all $n > n_0$:
+\begin{align*}
+& \left| \frac{d_L}{d} \frac{1+\eta_L}{1+\eta} - 1 \right | \\
+&= \left| \frac{d_L}{d} \frac{1 + \eta_L}{1 + \eta} - \frac{d_L}{d} + \frac{d_L}{d} - 1 \right| \\
+&= \left| \frac{d_L}{d} \left( \frac{1+\eta_L}{1+\eta} - 1 \right) + \left( \frac{d_L}{d} - 1 \right) \right| \\
+&= \left| \left( \frac{1+\eta_L}{1 + \eta} - 1 \right) + \left( \frac{d_L}{d} -1 \right) \left( \frac{1+\eta_L}{1+\eta} - 1 \right) + \left( \frac{d_L}{d} - 1 \right) \right| \\
+&\leq  \left| \frac{1+\eta_L}{1 + \eta} - 1 \right| + \left| \left( \frac{d_L}{d} -1 \right) \left( \frac{1+\eta_L}{1+\eta} - 1 \right) \right| + \left| \frac{d_L}{d} - 1  \right| \\
+&\leq \epsilon
+\end{align*}
+
+The claim thus follows. 
+
+\end{proof}
+
+
+
+
+
+\subsubsection{Going from $R$ to $[0,1]$}
+
+
+\begin{proposition}
+\label{prop:pq_ratio_bound1}
+Suppose assumptions $C2$ and $C5$ are satisfied. Suppose also that $L \leq \frac{2}{H}$.
+
+Define $P_l = \int_{a_l}^{b_l} p(x) dx$ and $Q_l = \int_{a_l}^{b_l} q(x)dx$. 
+Then, we have that $\frac{1}{2 \rho} \leq \frac{P_l}{Q_l} \leq 2\rho$ for all $l$. 
+\end{proposition}
+
+
+\begin{proof}
+
+Let $Bin_l$ denote the bin $[a_l, b_l]$. Let us consider an $l$ such that $Bin_l \cap R^c = \emptyset$. Then, for all $x \in Bin_l$, we have that 
+$\frac{1}{\rho} \leq \frac{p(x)}{q(x)} \leq \rho$.
+
+Therefore, $\frac{P_l}{Q_l} \leq \int \frac{p(x)}{q(x)} \frac{q(x)}{Q_l} dx \leq 2\rho$. We can upper bound $\frac{Q_l}{P_l}$ similarly. 
+
+Now suppose $Bin_l \cap R^c \neq \emptyset$. By the fact that $R$ is an interval and that $\mu\{R^c\} = o(H) \leq \frac{1}{2L}$, only the bins $[0, \frac{1}{L}]$ and $[1-\frac{1}{L}, 1]$ can potentially satisfy $Bin_l \cap R^c \neq 0$. 
+
+Define $P_l' = \int_{Bin_l \cap R} p(x) dx$ and $Q'_l = \int_{Bin_l \cap R} q(x) dx$. Define $P_l'' = \int_{Bin_l \cap R^c} p(x) dx$ and $Q''_l = \int_{Bin_l \cap R^c} q(x) dx$.
+
+
+\[
+P'_l \geq \min_{x \in Bin_l \cap R} p(x) \frac{1}{2L} \geq \max_{x \in Bin_l \cap R^c} p(x) \frac{1}{2L} \geq P''_l
+\]
+
+where the first inequality follows because $\mu(R^c) \leq \frac{1}{2L}$ and the second inequality follows from the first derivative conditions. Similarly, we can derive that $Q'_l \geq Q''_l$. 
+
+We also notice that $\frac{1}{\rho} \leq \frac{P'_l}{Q'_l} \leq \rho$ by the above discussion. 
+
+Thus,
+\begin{align*}
+\frac{P_l}{Q_l} &\leq \frac{2 P'_l}{ Q'_l} \leq 2\rho \\
+\frac{P_l}{Q_l} &\geq \frac{P'_l}{2 Q'_l} \geq \frac{1}{2\rho}
+\end{align*}
+
+\end{proof}
+
+
+
+
+
+\begin{proposition}
+\label{prop:H_HL_convergence1}
+Suppose assumptions A1-4 hold. Then we have that
+
+\[
+\left| \frac{
+         \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 }{ \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx} - 1 \right| \rightarrow 0
+\] 
+
+
+
+\end{proposition}
+
+
+\begin{proof}
+Let $H = \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$. 
+
+Let $a_L$ be an $o(1)$ sequence such that $\mu(R^c) \leq a_L H $. 
+
+We divide the set of bins into three sets $L_1, L_2, L_3$. 
+
+\begin{align*}
+L_1 &= \{ l\,:\, Bin_l \cap R^c = \emptyset \} \\
+L_2 &= \{ l \,:\, Bin_l \cap R^c \neq \emptyset, \, P_l \vee Q_l \geq 2C a_L H \} \\
+L_3 &= \{ l \,:\, Bin_l \cap R^c \neq \emptyset, \, P_l \vee Q_l \leq 2C a_L H \}
+\end{align*}
+
+For each bin $l$, define $P'_l = \int_{Bin_l \cap R} p(x) dx$ and $P''_l = \int_{Bin_l \cap R^c} p(x) dx$. Likewise for $Q'_l$ and $Q''_l$. 
+
+We now proceed in two steps:
+
+\textbf{Step 1:} We first claim that for all $l \in L_2$, 
+\[
+\left| (\sqrt{P_l} - \sqrt{Q_l})^2 - (\sqrt{P'_l} - \sqrt{Q'_l})^2 \right| \leq a_L H
+\]
+
+
+
+Since $\mu(R^c) \leq a_L H$, we have that $P''_l = \int_{Bin_l \cap R^c} p(x) dx \leq C a_L H $ and likewise for $Q''_l$. 
+\begin{align*}
+(\sqrt{P_l} - \sqrt{Q_l})^2 - (\sqrt{P'_l} - \sqrt{Q'_l})^2 &=
+   P_l + Q_l - P'_l - Q'_l - 2 \sqrt{P_l Q_l} + 2 \sqrt{P'_l Q'_l} \\
+  &\leq P''_l + Q''_l - 2 \sqrt{P''_l Q''_l} \\
+  &\leq P''_l + Q''_l \\
+  &\leq 2 C a_L H
+\end{align*}
+
+The first inequality follows because of the following reason. First, by AM-GM inequality, we have that $2 \sqrt{P'_l Q'_l P''_l Q''_l} \leq P'_l Q''_l + P''_l Q'_l$. Thus:
+
+\begin{align*}
+ & P'_l Q'_l + P''_l Q''_l + 2 \sqrt{P'_l Q'_l P''_l Q''_l } \leq (P'_l + P''_l)(Q'_l + Q''_l) \\
+(\Rightarrow) & \sqrt{P'_l Q'_l} + \sqrt{P''_l Q''_l} 
+   \leq \sqrt{ (P'_l + P''_l)(Q'_l + Q''_l) } \\
+(\Rightarrow) & \sqrt{P''_l Q''_l} \leq \sqrt{ P_l Q_l} - \sqrt{P'_l Q'_l}
+\end{align*}
+
+
+
+
+On the other hand, we have that
+\begin{align*}
+\sqrt{P_l Q_l} - \sqrt{P'_l Q'_l} &= 
+    \frac{(\sqrt{P_l Q_l} - \sqrt{P'_l Q'_l} )
+          (\sqrt{P_l Q_l} + \sqrt{P'_l Q'_l}) }
+     { \sqrt{P_l Q_l} + \sqrt{P'_l Q'_l} } \\
+  &= \frac{ P_l Q_l  - P'_l Q'_l }
+          {  \sqrt{P_l Q_l} + \sqrt{P'_l Q'_l} }\\
+  &= \frac{ P'_l Q''_l + P''_l Q'_l + P''_l Q''_l} 
+          {  \sqrt{ P_l Q_l } + \sqrt{P'_l Q'_l} } \\
+  &\leq  \frac{ P'_l Q''_l + P''_l Q'_l + P''_l Q''_l} 
+          {  2 \sqrt{P'_l Q'_l} } \\
+  &\leq Q''_l \frac{P'_l}{2 \sqrt{P'_l Q'_l}} + P''_l \frac{Q'_l}{2\sqrt{P'_l Q'_l}}
+        + Q''_l \frac{P''_l}{2 \sqrt{P'_l Q'_l}} 
+\end{align*}
+
+Note that because $P'_l$ and $Q'_l$ are defined on $R$, we have that
+\begin{align*}
+\left| \frac{P'_l}{Q'_l} \right| & =
+\left| \int_{Bin_l \cap R} \frac{ p(x)}{Q'_l} dx \right| \\
+ &\leq \int_{Bin_l \cap R} \left| \frac{p(x)}{q(x)} \right| \frac{q(x)}{Q'_l} dx \\
+ &\leq \rho 
+\end{align*}
+Thus, $\sqrt{ \frac{P'_l}{Q'_l} } \vee \sqrt{ \frac{Q'_l}{P'_l}} \leq \sqrt{\rho}$. This bounds the terms $ Q''_l \frac{P'_l}{2 \sqrt{P'_l Q'_l}} + P''_l \frac{Q'_l}{2\sqrt{P'_l Q'_l}} \leq \sqrt{\rho} (Q''_l + P''_l)$. We still need to bound the last term $\frac{Q''_l P''_l}{2 \sqrt{P'_l Q'_l}}$.
+
+
+Since $l \in L_2$, we have that either $P_l \geq 2 C a_L H$ or that $Q_l \geq 2 C a_L H$. Let us suppose the former; the latter case can be handled in an identical manner.
+
+Since $P''_l \leq C a_L H$ and $P_l \geq 2C a_L H$ , we have that $P''_l \leq P'_l$ and thus, 
+$\frac{Q''_l P''_l}{2 \sqrt{P'_l Q'_l}} \leq Q''_l \frac{P'_l}{2 \sqrt{P'_l Q'_l}} \leq \sqrt{\rho} Q''_l$.
+
+Putting all this together, we have that
+
+\[
+\sqrt{P_l Q_l} - \sqrt{P'_l Q'_l} \leq 2\sqrt{\rho} (Q''_l + P''_l)
+\]
+
+Thus, 
+\begin{align*}
+(\sqrt{P_l} - \sqrt{Q_l})^2 - (\sqrt{P'_l} - \sqrt{Q'_l})^2 &=
+   P_l + Q_l - P'_l - Q'_l - 2 \sqrt{P_l Q_l} + 2 \sqrt{P'_l Q'_l} \\
+  &\geq P''_l + Q''_l - \sqrt{\rho}( Q''_l + P''_l) \\
+  &\geq (1- \sqrt{\rho}) (P''_l + Q''_l) \\
+  &\geq - (\sqrt{\rho}+1) C a_L H
+\end{align*}
+
+Combining these two bounds, we have
+\[
+\left| (\sqrt{P_l} - \sqrt{Q_l})^2 - (\sqrt{P'_l} - \sqrt{Q'_l})^2 \right| \leq C_{C, \rho} a_L H
+\]
+
+This finishes step 1.
+
+
+\textbf{Step 2:} In step 2, we verify that $\{ Bin_l \}_{l \in L_1} \cup \{ Bin_l \cap R \}_{l \in L_2} \cup \{ Bin_l \cap R \}_{l \in L_3}$ constitute a valid approximately uniform binning of $R$. 
+
+First, because $R$ is an interval, it is easy to see that $Bin_l \cap R$ is an interval as well. Secondly, $| Bin_l \cap R^c | \leq \mu\{ R^c \} \leq a_L H$. Since $\frac{1}{H} \leq L$ by assumption, we have that $\mu\{ R^c \} \leq a_L \frac{1}{L}$ and so, there exists constants $c_{bin}$ such that $ \frac{c_{bin}}{L} \leq | Bin_l \cap R| \leq \frac{1}{L}$. 
+
+
+\textbf{Step 3:}
+
+\begin{align*}
+& \left| \sum_{l=1}^L (\sqrt{P_l} - \sqrt{Q_l})^2 
+        - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| \\
+&= \left| 
+   \sum_{l \in L_1}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+    + \sum_{l \in L_2}  (\sqrt{P_l} - \sqrt{Q_l})^2  
+      + \sum_{l \in L_3}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+     - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| \\
+&\leq \left| 
+   \sum_{l \in L_1}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+    + \sum_{l \in L_2}  (\sqrt{P_l} - \sqrt{Q_l})^2  
+     - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| + 8 C a_L H
+\end{align*}
+
+The inequality follows because $P_l \vee Q_l \leq 2 C a_L H$ for all $l \in L_3$ and because $|L_3| \leq 2$. Continuing on, we have:
+\begin{align*}
+&\leq  \left| 
+   \sum_{l \in L_1}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+    + \sum_{l \in L_2}  (\sqrt{P'_l} - \sqrt{Q'_l})^2  
+     - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| + C_{C, \rho} a_L H \\
+\end{align*}
+
+This is because of our bound in step 1. 
+
+
+\begin{align*}
+& \leq  \left| 
+   \sum_{l \in L_1}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+    + \sum_{l \in L_2}  (\sqrt{P'_l} - \sqrt{Q'_l})^2  
+    + \sum_{l \in L_3} (\sqrt{P'_l} - \sqrt{Q'_l})^2 
+     - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| + C_{C, \rho} a_L H \\
+& \leq  \left| 
+   \sum_{l \in L_1}  (\sqrt{P_l} - \sqrt{Q_l})^2 
+    + \sum_{l \in L_2}  (\sqrt{P'_l} - \sqrt{Q'_l})^2
+    + \sum_{l \in L_3} (\sqrt{P'_l} - \sqrt{Q'_l})^2 
+     - \int_{R} (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right| 
+    + C_{C, \rho} a_L H \\
+& \leq C_{C, \rho} a_L H
+\end{align*}
+
+ The first inequality follows because 
+$P'_l \leq P_l$ and thus $\sum_{l \in L_3} (\sqrt{P'_l} - \sqrt{Q'_l})^2 \leq 2 C a_L H$ as well. The second inequality follows because 
+$\int_{R^c} (\sqrt{p(x)} - \sqrt{q(x)})^2 \leq C \mu\{ R^c \} = C a_L H$ 
+
+The last inequality follows by proposition~\ref{prop:H_HL_convergence_R}.
+
+Since $a_L \rightarrow 0$, the conclusion follows. 
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Lemmas}
+
+\begin{lemma}
+\label{lem:hellinger_simplication}
+Let $a, b$ be positive scalars such that $\log \frac{a}{b}$ is bounded away from $-\infty$ and $\infty$. Suppose that 
+$ \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 - \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx 
+   = o \left( \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \right)$. \\
+
+Then, we have that
+\[
+\sum_l (\sqrt{a P_l} - \sqrt{b Q_l} )^2 - \int (\sqrt{a p(x)} - \sqrt{b q(x)})^2 dx = 
+  o \left( \int (\sqrt{a p(x)} - \sqrt{b q(x)})^2 dx \right)
+\]
+\end{lemma}
+
+\begin{proof}
+First, note that 
+\begin{align*}
+\sum_l (\sqrt{a P_l} - \sqrt{b Q_l} )^2 &= b \sum_l (\sqrt{\frac{a}{b} P_l} - \sqrt{Q_l} )^2 \\
+\int (\sqrt{a p(x)} - \sqrt{b q(x)})^2 dx &= b \int (\sqrt{\frac{a}{b} p(x)} - \sqrt{q(x)})^2 dx
+\end{align*}
+
+Therefore, we can, without loss of generality, rename $a \leftarrow \frac{a}{b}$, assume that $a$ is bounded away from $0$ and $\infty$, and prove only that
+\[
+\sum_l (\sqrt{a P_l} - \sqrt{Q_l} )^2 - \int (\sqrt{a p(x)} - \sqrt{q(x)})^2 dx = 
+  o\left( \int (\sqrt{a p(x)} - \sqrt{q(x)})^2 dx \right)
+\]
+
+To show this, we use the following identity:
+\begin{align*}
+& (\sqrt{a P_l} - \sqrt{Q_l} )^2 - (\sqrt{P_l} - \sqrt{Q_l})^2 \\
+&= a P_l + Q_l - 2 \sqrt{a P_l Q_l} - P_l - Q_l + 2 \sqrt{P_l Q_l} \\
+&= (a - 1)P_l - (\sqrt{a} - 1) 2 \sqrt{P_l Q_l} 
+\end{align*}
+
+Therefore, 
+\begin{align*}
+& \sum_l (\sqrt{a P_l} - \sqrt{Q_l})^2 - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \\
+&= (a-1) - (\sqrt{a} - 1) \sum_l 2 \sqrt{P_l Q_l} \\
+&= (a-1) - (\sqrt{a} - 1) \left( 2 - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \right) \\
+&= (a-1) - 2(\sqrt{a} - 1) + (\sqrt{a} - 1) 
+          \left\{ \sum_l (\sqrt{P_l} - \sqrt{Q_l} )^2 \right\}
+\end{align*}
+where we used the fact that $\sum_l 2 \sqrt{P_l Q_l} = 2 - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2$.
+
+Therefore, 
+\[
+\sum_l (\sqrt{a P_l} - \sqrt{Q_l})^2 =  (a-1) - 2(\sqrt{a} - 1) + \sqrt{a} 
+          \left\{ \sum_l (\sqrt{P_l} - \sqrt{Q_l} )^2 \right\}
+\]
+
+By the exact same calculation, we would get
+\[
+\int (\sqrt{a p(x)} - \sqrt{q(x)})^2 dx =  (a-1) - 2(\sqrt{a} - 1) + \sqrt{a}  
+          \left\{ \int (\sqrt{p(x)} - \sqrt{q(x)} )^2 \right\}
+\]
+
+Now we are ready to prove the proposition.
+\begin{align*}
+\sum_l (\sqrt{a P_l} - \sqrt{Q_l})^2 - \int (\sqrt{a p(x)} - \sqrt{q(x)})^2 dx &= 
+            \sqrt{a} \left\{  \sum_l (\sqrt{P_l} - \sqrt{Q_l} )^2 -
+                        \int ( \sqrt{p(x)} - \sqrt{q(x)} )^2 dx \right\}\\
+  &= o \left( \sqrt{a} \int ( \sqrt{p(x)} - \sqrt{q(x)} )^2 dx \right) \\
+  &= o \left( (a-1) - 2 (\sqrt{a}-1) + \sqrt{a} \int ( \sqrt{p(x)} - \sqrt{q(x)} )^2 dx \right) \\
+  &= o \left( \int (\sqrt{a p(x)} - \sqrt{q(x)})^2 dx \right)
+\end{align*}
+
+where the third inequality follows because $a$ is bounded away from 0 and because $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \leq 2$. 
+
+\end{proof}
+
+
+
+\subsection{Proof of Proposition~\ref{prop:discretization2}}
+
+\begin{proposition}
+Suppose $p(x), q(x)$ are supported on $[0,1]$.
+
+\begin{enumerate}
+\item[C1'] Suppose $p(x), q(x) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2'] There exists $R$ a subinterval of $[0,1]$ such that $\exp(-L^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(L^{1/r})$ and $\mu\{ R^c \} \leq \frac{1}{2L}$.
+\item[C3'] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{p'(x)}{p(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|  \right\} $. Suppose $\int |h(x)|^t dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C4']  $p'(x), q'(x) \geq 0$ for all $x < \frac{1}{L}$ and $ p'(x), q'(x) \leq 0$ for all $x > 1-\frac{1}{L}$. 
+\end{enumerate}
+
+
+Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $Bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(x) dx$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(x) dx$. 
+
+Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. \\
+
+Then, we have that
+ $$\left| \frac{I - I_L}{I} \right| = o(1)$$ 
+and that $\frac{1}{4\rho_L c_0} \leq \frac{P_l}{Q_l} \leq 4\rho_L c_0$ for all $l$. 
+
+
+\end{proposition}
+
+\begin{proof}
+
+The proof is identical to that of proposition~\ref{prop:discretization1} except that we use proposition~\ref{prop:H_HL_convergence2} instead of proposition~\ref{prop:H_HL_convergence1}.
+
+\end{proof}
+
+
+
+
+
+
+
+\begin{proposition}
+\label{prop:H_HL_convergence2}
+Let assumptions C1, C3 be satisfied. Let $Bin_l = [a_l, b_l]$ be a uniform binning of $[0,1]$ for $l=1,..,L$ and let $P_l = \int_{Bin_l} p(x) dx$ and $Q_l = \int_{Bin_l} q(x) dx$.\\
+
+Then, we have that
+\[
+\left| \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \right| \rightarrow 0
+\]
+
+\end{proposition}
+
+
+
+\begin{proof}
+
+The proof will be similar to that of Proposition~\ref{prop:d_dL_convergence}. 
+
+
+First, we observe that $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \int p(x) dx + \int q(x) dx - 2 \int \sqrt{p(x)q(x)} dx = 2 - 2 \int \sqrt{p(x)q(x)}$. And, that $\sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 = \sum_l P_l + \sum_l Q_l - 2 \sum_l \sqrt{P_l Q_l}$. 
+
+Thus, we need only show that 
+\[
+\left| \int \sqrt{p(x)q(x)} dx - \sum_l \sqrt{P_l Q_l} \right| \rightarrow 0
+\]
+
+
+We have that $|h(x)| \geq 
+\left| \frac{p'(x)}{p(x)} \right| \vee \left| \frac{q'(x)}{q(x)} \right|$. 
+
+Let $0 < \tau < 1$. We say that a bin $l$ is good if
+$$
+\sup_{x \in Bin_l} |h(x)| \leq L^\tau
+$$
+the exponent $\tau$ will be chosen later to balance two error terms. We will now argue that the proportion of bad bins goes to 0 as $L \rightarrow \infty$.\\
+
+
+For all large enough $L$, $\left \{x \,:\, 
+    |h(x)|  \geq L^\tau \right \}$ is a union of at most $K_h$ intervals, thus, we have that
+
+\begin{align*}
+\sum_{l \in \left \{ l \,:\, \sup_{x \in Bin_l} |h(x)| 
+           \geq L^\tau \right \}}  B_l &\leq 
+   \mu \left( \left\{x \,:\, \sup_{x \in Bin_l} |h(x)|
+         \geq L^\tau \right\} \right) + 2 K C_{bin} L^{-1} \\
+  &\leq M' L^{-\tau t}  + 2K C_{bin} L^{-1} \\
+  & \leq C_{M', K} L^{ - \tau t} 
+\end{align*}
+The last inequality follows because $t \leq 1$ and thus $\tau t < 1$ and so the first term dominates. The second inequality follows from \textcolor{red}{Lemma}~\ref{lem:level_set_control}.
+
+We can now bound the number of bad bins: 
+\begin{align*}
+\# \{ l \,:\, |h(x)| \geq L^\tau \} \leq \frac{C_{M', K} L^{- \tau t} L}{c_{bin}}  \leq C_{M',K} L^{1 - \tau t}
+\end{align*}
+
+
+For a bad bin, we can bound $P_l, Q_l \leq C_{bin} C L^{-1}$ and $\int_{Bin_l} (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \leq 2 L^{-1} C C_{bin} $.
+
+Now we consider a good bin $l$. Let $x_l$ be $\argmax_{x \in Bin_l} p(x)$. The argmax is attainable since $p$ is continuous and $p(x_l) < \infty$ since $p$ is bounded.
+\begin{align*}
+P_l &= \int_{a_l}^{b_l} p(x) dx \\
+   &= \int_{a_l}^{b_l} p(x_l) + p'(c_x)(x-x_l) dx \\
+   &= B_l p(x_l) + B_l^2 \xi_l
+\end{align*}
+
+where $\xi_l = \frac{1}{B_l^2} \int_{a_l}^{b_l} p'(c_x)(x - x_l)dx$. We can bound $B_l \left| \frac{\xi_l}{p(x_l)} \right|$:
+$$
+B_l \left| \frac{\xi_l}{p(x_l)} \right| 
+    \leq \frac{1}{B_l} \int_{a_l}^{b_l} \left|\frac{p'(c_x)}{p(x_l)} \right| |x - x_l| dx 
+   \leq \frac{1}{B_l} \int_{a_l}^{b_l} \left|\frac{p'(c_x)}{p(c_x)} \right| |x - x_l| dx 
+                \leq \frac{1}{B_l} \int_{a_l}^{b_l} L^{\tau} |x - x_l| dx \leq 
+ \frac{1}{2} C_{bin} L^{\tau - 1} 
+$$ 
+
+Likewise, define $x'_l = \argmax_{x \in Bin_l} q(x)$. We have that
+\[
+Q_l = B_l q(x'_l) + B_l^2 \xi'_l
+\]
+where $\xi'_l = \frac{1}{B_l} \int_{a_l}^{b_l} q'(c_x) (x - x'_l) dx$. We can also bound 
+\[
+B_l \left| \frac{\xi'_l}{q(x'_l)} \right| \leq \frac{1}{2} C_{bin} L^{\tau - 1}
+\]
+
+Thus, we have that
+
+\begin{align*}
+ \sqrt{P_l Q_l} &= \sqrt{ (B_l p(x_l) + B_l^2 \xi_l) 
+                           (B_l q(x'_l) + B_l^2 \xi'_l) } \\
+    &= \sqrt{p(x_l) q(x'_l)} \sqrt{ (B_l + B_l^2 \frac{\xi_l}{p(x_l)} ) 
+                                           (B_l + B_l^2 \frac{\xi'_l}{q(x'_l)} ) } \\
+   &=  \sqrt{p(x_l) q(x'_l)} B_l \sqrt{ (1 + B_l \frac{\xi_l}{p(x_l)} ) 
+                                           (1 + B_l \frac{\xi'_l}{q(x'_l)} ) } \\
+\end{align*}
+
+By our bounds on $ B_l \frac{\xi_l}{p(x_l)} $ and $B_l  \frac{\xi'_l}{q(x'_l)}$, we can bound the nuissance term 
+\begin{align*}
+ \sqrt{ (1 + B_l \frac{\xi_l}{p(x_l)} ) 
+         (1 + B_l \frac{\xi'_l}{q(x'_l)} ) } &\leq \sqrt{ 1 + C_{bin} L^{\tau - 1} (1+o(1))} \\
+   &\leq 1 + \frac{1}{2} C_{bin} L^{\tau - 1} (1 + o(1))
+\end{align*}
+
+
+It is clear that $B_l \sqrt{p(x_l)q(x'_l)} \leq B_l C$. Therefore, we have that
+
+\begin{align}
+\label{eqn:discrete_riemann_bound2}
+\left| \sqrt{ P_l Q_l} -  \sqrt{ p(x_l) q(x'_l)} B_l \right| \leq 
+     B_l C C_{bin} L^{\tau - 1}(1 + o(1))
+\end{align}
+
+Likewise, we have that 
+\begin{align*}
+\int_{a_l}^{b_l} \sqrt{p(x) q(x)}dx &= \int_{a_l}^{b_l} \sqrt{p(x) q(x)} dx \\
+                      &= \int_{a_l}^{b_l} \sqrt{ (p(x_l) + p'(c_x)(x - x_l))
+                                      (q(x'_l) + q'(c'_x)(x - x'_l)) } dx \\
+    &=\int_{a_l}^{b_l} \sqrt{ p(x_l) q(x'_l)} \left(
+              \sqrt{ 1+ (x - x_l) \frac{p'(c_x)}{p(x_l)} + (x - x'_l) \frac{q'(c'_x)}{q(x'_l)} 
+                     + (x - x_l)(x - x'_l) \frac{p'(c_x)}{p(x_l)} \frac{q'(c'_x)}{q(x'_l)} } \right) dx 
+\end{align*}
+
+We have that 
+\begin{align*}
+\left| (x - x_l) \frac{p'(c_x)}{p(x_l)} \right| &\leq B_l \left| \frac{ p'(c_x)}{p(c_x)} \right| \\
+                  &\leq C_{bin} L^{\tau - 1} 
+\end{align*}
+
+\begin{align*}
+\left| (x - x_l) \frac{q'(c'_x)}{q(x_l)} \right| &\leq B_l \left| \frac{ q'(c'_x)}{q(c'_x)} \right| \\
+                  &\leq C_{bin} L^{\tau - 1} 
+\end{align*}
+
+Therefore, we can bound the nuissance term:
+
+\begin{align*}
+ \sqrt{ 1+ (x - x_l) \frac{p'(c_x)}{p(x_l)} + (x - x'_l) \frac{q'(c'_x)}{q(x'_l)} 
+                     + (x - x_l)(x - x'_l) \frac{p'(c_x)}{p(x_l)} \frac{q'(c'_x)}{q(x'_l)} } 
+    &\leq \sqrt{ 1 + C_{bin} L^{\tau - 1} (1 + o(1)) } \\
+    &\leq 1 + \frac{1}{2} C_{bin} L^{\tau - 1} (1 + o(1)) 
+\end{align*}
+
+The term $B_l \sqrt{p(x_l)q(x'_l)}$ is bounded by $B_l C$. Hence, we have
+
+\begin{align}
+\label{eqn:continuous_riemann_bound2}
+\left| \int_{a_l}^{b_l} \sqrt{p(x) q(x)}dx - B_l \sqrt{p(x_l) q(x'_l)} \right| &\leq B_l C C_{bin} L^{\tau - 1}
+\end{align}
+        
+By combining inequalities~\eqref{eqn:discrete_riemann_bound2} and \eqref{eqn:continuous_riemann_bound2}, we have that
+\[
+\left| \sqrt{P_l Q_l} - \int_{a_l}^{b_l} \sqrt{p(x) q(x)} dx \right| \leq B_l C C_{bin} L^{\tau - 1}
+\]
+
+We can then complete the proof:
+
+\begin{align*}
+\left| \sum_l \sqrt{P_l Q_l} - \int \sqrt{p(x) q(x)} dx \right| &\leq
+   \sum_{l \,:\, \trm{ $l$ bad}} B_l C + 
+   \sum_{l \,:\, \trm{ $l$ good}} \left| \sqrt{P_l Q_l} - \int_{a_l}^{b_l} \sqrt{ p(x) q(x)} dx \right| \\
+  & \leq C_{M',K} L^{ - \tau t} + \sum_{l \,:\, \trm{ $l$ good}} B_l C C_{bin} L^{\tau - 1} \\
+  & \leq  C_{M',K} L^{ - \tau t} + C C_{bin} L^{\tau - 1}
+\end{align*}
+
+By setting $\tau = \frac{1}{1+t}$, we get that
+\[
+\left| \sum_l \sqrt{P_l Q_l} - \int \sqrt{p(x) q(x)} dx \right| \rightarrow 0 
+\]
+
+\end{proof}
+
+
+
+\begin{proposition}
+\label{prop:pq_ratio_bound2}
+Suppose assumption C2 holds. Define $P_l = \int_{a_l}^{b_l} p(x) dx$ and $Q_l = \int_{a_l}^{b_l} q(x) dx$. Then, we have that, for all $l$:
+
+\begin{align*}
+\frac{1}{4 \rho_L} \leq \frac{P_l}{Q_l} \leq 4 \rho_L 
+\end{align*}
+
+\end{proposition}
+
+
+\begin{proof}
+The proof is identical to that of proposition~\ref{prop:pq_ratio_bound1}.
+
+\end{proof}
+
+
+
+
+
+\begin{lemma}
+\label{lem:level_set_control}
+Let $h \,:\, [0,1] \rightarrow \R$ be a measurable function. Let $t > 0$, suppose $\int |h(x)|^t dx \leq M'$, then, we have that 
+$\mu \{ x \,:\, |h(x)| \geq \kappa \} \leq \frac{M'}{\kappa^t} $ for any $\kappa > 0$.
+\end{lemma}
+
+\begin{proof}
+By definition of Lebesgue integral:
+\[
+\kappa \mu\{ x \,:\, |h(x)|^t \geq \kappa \} \leq \int |h(x)|^t dx \leq M'
+\]
+
+Thus,
+\begin{align*}
+\mu\{ x \,:\, |h(x)|^t \geq \kappa \} &\leq \frac{M'}{\kappa} \\
+(\Leftrightarrow) \quad \mu\{ x \,:\, |h(x)| \geq \kappa^{1/t} \} &\leq \frac{M'}{\kappa}
+\end{align*}
+
+A change of variable completes the proof.
+
+\end{proof}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:
+

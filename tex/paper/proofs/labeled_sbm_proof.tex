@@ -1,0 +1,942 @@
+
+
+\subsection{Proof of Proposition~\ref{prop:labeled_sbm_rate}}
+
+The proof of Proposition~\ref{prop:labeled_sbm_rate} is quite involved. On a high level, we first show that the initialization stages output a set of rough clusterings $\tilde{\sigma}_1, \dots, \tilde{\sigma}_n$ such that the error $l(\tilde{\sigma}_u, \sigma_0)$ for any $u$ is bounded by a sequence $\gamma$ where $\gamma \rho_L^2 \rightarrow 0$, that is, the errors of the rough clusterings are small enough. Note that $\gamma \rho_L^2 \rightarrow 0$ also implies that $\gamma \rightarrow 0$. This step uses Propositions~\ref{prop:initialization_correctness} and~\ref{prop:spectral_analysis}.
+
+Then, we look at a single $\tilde{\sigma}_u$ and show that because $l(\tilde{\sigma}_u, \sigma_0)$ is small, the estimate $\hat{P}_l, \hat{Q}_l$ that we construct from it are close to the true $P_l, Q_l$. This is done through Proposition~\ref{prop:estimation_consistency}. Since $\hat{P}_l, \hat{Q}_l$ are good estimators, we prove, in Proposition~\ref{prop:single_node_error_bound}, that we can use $\log \frac{\hat{P}_l}{\hat{Q}_l}$ derived from $\tilde{\sigma}_u$ to correctly identify the true cluster membership of $u$ with high probability. Finally, we analyze the consensus stage to show that we can at the end construct a single coherent clustering from all the $\tilde{\sigma}_u$'s.
+
+Formal details are provided below, with proofs of supporting propositions appearing in succeeding subsections.
+
+\begin{proof} (Proof of Proposition~\ref{prop:labeled_sbm_rate})\\
+
+First we note that discarding color $l$ where $P_l \vee  Q_l \leq \frac{c}{n}$ does not affect the Renyi divergence $I$. To formalize this, define
+$P' = \sum_{l \,:\, P_l \wedge Q_l \geq c/n} P_l$ and $P'_l = P_l/P'$ and likewise for $Q'$ and $Q'_l$. Define also $I' = - 2 \log \sum_{l \,:\, P_l, Q_l \geq c/n} \sqrt{P'_l Q'_l}$.
+
+We claim that $I' = (1 + o(1)) I_L$. We have
+
+\begin{align*}
+I_L &= -2 \log \sum_l \sqrt{P_l Q_l} \\
+  &\leq -2 \log \sum_{l \,:, P_l \wedge Q_l \geq c/n} \sqrt{P_l Q_l} \\
+  &\leq -2 \log \sum_{l \,:\, P_l \wedge Q_l \geq c/n} \sqrt{P'_l Q'_l} - 2 \log \sqrt{P' Q'} \\
+  &\leq -2 \log \sum_{l \,:\, P_l \wedge Q_l \geq c/n} \sqrt{P'_l Q'_l} - 2\log\left(1 - \frac{cL}{n}\right),
+\end{align*}
+where the last inequality follows because $P' \geq 1 - \sum_{l \,:\, P_l \leq c/n} P_l \geq 1 - \frac{cL}{n}$, and likewise for $Q'$. Since $\frac{n I_L}{L} \rightarrow \infty$, we have that $\frac{cL}{n} = o(I_L) = o(1)$. The claim follows. 
+
+Now we prove the main result. Since $\frac{ nI}{L \rho_L^2} \rightarrow \infty$, Proposition~\ref{prop:initialization_correctness} shows that the first initialization stage of our algorithm selects a color $l^*$ that satisfies $\frac{n (P_{l^*} - Q_{l^*})^2}{ (P_{l^*} \vee Q_{l^*}) \rho^2_L } \rightarrow \infty$ with probability at least $1 - Ln^{3 + \delta_p}$. Let us denote this event by $E_1$.
+
+We then apply our analysis of spectral clustering (Proposition~\ref{prop:spectral_analysis}) on each of the clusterings $\tilde{\sigma}_1, \dots, \tilde{\sigma}_n$ and a union bound to show that $\max_u l( \tilde{\sigma}_u, \sigma_0) \leq \gamma$ with probability at least $1 - n^3$, where 
+\[
+\gamma = C K^2 \frac{ P_{l^*} \vee Q_{l^*}}{ n ( P_{l^*} - Q_{l^*} )^2} 
+\]
+Let us denote this event by $E_2$. 
+
+Conditioned on $E_1$ and $E_2$ described above, we have that $\gamma \rho_L^2 \rightarrow 0$. Thus, we can apply Proposition~\ref{prop:estimation_consistency} on each of the rough clustering $\tilde{\sigma}_u$'s and show that the conclusion of Proposition~\ref{prop:estimation_consistency} holds simultaneously for all $\tilde{\sigma}_u$ with probability at least $1 - Ln^{2 + \delta_p}$. Furthermore, the $\eta$ that appears in Proposition~\ref{prop:estimation_consistency} ($\eta = 4 \left( \sqrt{2 (5 + \delta_p) K \gamma \log \frac{K}{\gamma} } + \frac{5 + \delta_p}{c} K \gamma \log \frac{K}{\gamma} + \gamma K \right)$) satisfies $|\eta \rho_L| \rightarrow 0$. Let us denote this event by $E_3$.
+
+Now we condition on $E_3$ and look at the refinement and consensus stage of the algorithm. Let $\hat{\sigma}_u$ be the intermediate clustering on $n$ nodes created in the refinement stage. By construction of $\hat{\sigma}_u$, the error rate of $\hat{\sigma}_u$ is at most $ \gamma + \frac{1}{n}$ and thus, $l(\hat{\sigma}_u, \sigma_0) < \frac{1}{8 \beta K}$ for small enough $\gamma$. Let $\pi_u \in S_K$ denote the permutation such that $d(\pi_u(\hat{\sigma}_u), \sigma_0) < \frac{n}{8\beta K}$. 
+
+It is also clear that for any $u$, the minimum cluster size of the clustering $\hat{\sigma}_u$ is at least $\frac{n}{\beta K} - (n \gamma + 1) \geq \frac{ n(1 - \gamma k - 1/n)}{\beta K} \geq \frac{n}{2\beta K}$ for small enough $\gamma$. Therefore, we know by Lemma~\ref{lem:consensus_uniqueness} that $\pi_u$ is the permutation that minimizes the $l(\hat{\sigma}_u, \sigma_0)$. 
+
+Conditioned on $E_3$, we can apply proposition~\ref{prop:single_node_error_bound} to conclude that
+\[
+ P( \hat{\sigma}_u(u) \neq \pi^{-1}_u(\sigma_0(u)) \given E_3) \leq (K-1) \exp\left( - (1+o(1)) \frac{n I_L}{\beta K} \right)
+\]
+
+
+By a triangle inequality argument, we have that $l(\tilde{\sigma}_u, \tilde{\sigma}_1) \leq 2\gamma + 2/n < \frac{1}{4\beta K}$. Thus, we can apply lemma~\ref{lem:consensus_analysis} on the pair $(\tilde{\sigma}_1, \tilde{\sigma}_u)$ to show that the consensus function $\xi_u$ is the permutation that minimizes 
+$d(\xi_u(\tilde{\sigma}_1), \tilde{\sigma}_u)$.\\
+
+We claim then that $\pi_1 = \pi_u \cdot \xi_u$. We know that $d(\pi_1(\tilde{\sigma}_1), \sigma_0) < \frac{n}{8 \beta K}$ and that $d(\pi_u(\tilde{\sigma}_u), \sigma_0) < \frac{n}{8 \beta K}$. Therefore, $d(\tilde{\sigma}_1, \pi_u( \pi_1^{-1}(\tilde{\sigma}_u))) < \frac{n}{4 \beta K}$. Since the minimum cluster size of both $\tilde{\sigma}_1$ and $\tilde{\sigma}_u$ is $\frac{n}{2 \beta K}$, we have that $\pi_u^{-1} \cdot \pi_1 = \xi_u$ by Lemma~\ref{lem:consensus_uniqueness}.
+
+Let $\hat{\sigma}$ be the output of the consensus stage. We have that
+\begin{align*}
+P( \hat{\sigma}(u) \neq \pi_1^{-1} ( \sigma_0(u)) \given E_3) &= P( \hat{\sigma}(u) \neq \xi_u^{-1} \circ \pi_u^{-1} (\sigma_0(u)) \given E_3)\\
+   &= P( \hat{\sigma}_u(u) \neq \pi_u^{-1} (\sigma_0(u)) \given E_3) 
+\end{align*}
+
+Now we are almost done with the proof.  
+\begin{align*}
+P( \hat{\sigma}(u) \neq \pi_1^{-1} ( \sigma_0(u)) ) &\leq (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) + P(E_3^c \given E_2, E_1) + P(E_2^c) + P(E_3^c) \\
+    &\leq (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) + Ln^{-(2 + \delta_p)} + n^{-3} + Ln^{-3} \\
+    &\leq (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) + n^{-(1 + \delta_p)} + n^{-3} + n^{-2} \\
+    &\leq  (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) + n^{-(1 + \delta_p)}
+\end{align*}
+
+where $\eta'$ is some $o(1)$ sequence and where the third inequality follows because we take $L < n$. 
+
+We take then $\eta'' = \eta' + \beta \sqrt{ \frac{K}{ n I_L} } = o(1)$. 
+
+First, suppose that $ (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) \geq n^{-(1+\delta_p/2)} $. 
+
+\begin{align*}
+& P\left\{ l(\hat{\sigma}, \sigma_0) >  (K-1) \exp\left( -(1 - \eta'') \frac{n I_L}{\beta K} \right) \right\} \\
+ &\leq \frac{1}{ (K-1) \exp\left( -(1 - \eta'') \frac{n I_L}{\beta K} \right) } \frac{1}{n} \sum_{u=1}^n P(\hat{\sigma}(u) \neq \pi_1^{-1}(\sigma_0(u))) \\
+ &\leq \exp\left\{ -(\eta'' - \eta') \frac{n I_L}{\beta K} \right\} + \frac{ C n^{-(1 + \delta_p)} }{  (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right)  }\\
+ &\leq \exp \left\{ - \sqrt{ \frac{n I_L}{K} } \right\} + n^{-\delta_p/2} = o(1)
+\end{align*}
+
+Now, suppose that $ (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right) \leq n^{-(1 + \delta_p/2)}$.
+
+\begin{align*}
+& P \left\{ l(\hat{\sigma}, \sigma_0) >  (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right)  \right\} \\
+& = P( l(\hat{\sigma}, \sigma_0) > 0 ) \\
+& \leq \sum_{u=1}^n P( \hat{\sigma}(u) \neq \pi_1^{-1}(\sigma_0(u))) \\
+&\leq n  (K-1) \exp\left( -(1 - \eta') \frac{n I_L}{\beta K} \right)  + n^{-\delta_p} \leq n^{-\delta_p /2} = o(1)
+\end{align*}
+
+\end{proof}
+
+\subsubsection{Analysis of estimation error of $\hat{P}_l$ and $\hat{Q}_l$}
+
+
+\begin{proposition}
+\label{prop:estimation_consistency}
+Let $A_L$ be a labeled network with true clustering $\sigma_0$. 
+
+Suppose $\sigma$ is a random initial clustering and let us condition on the supposition that $\sigma$ has error rate at most $\gamma$, that is, $l(\sigma, \sigma_0) \leq \gamma $. \\
+
+Let $\Delta_l = | P_l - Q_l |$. Let $\hat{P}_l = \frac{\sum_{u \neq v \,:\, \sigma(u)=\sigma(v)} \mathbf{1}(A_{uv} = l) }
+                      {\sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} 1}$ and
+    $\hat{Q}_l = \frac{\sum_{u \neq v \,:\, \sigma(u) \neq \sigma(v)} \mathbf{1}(A_{uv} = l) }
+                      {\sum_{u \neq v \,:\, \sigma(u) \neq \sigma(v)} 1}$ be the MLE of $P_l$ and $Q_l$ based on $\sigma$. Let $C_{thresh}$ be an absolute constant and let $\delta_p$ be a positive, fixed, and arbitrarily small real number. Let $c$ be an absolute positive constant. \\
+
+Then, with probability at least $1 - L n^{-(3 + \delta_p)}$, the following event happens:
+
+
+For all $l$ such that $P_l \vee Q_l \geq \frac{c}{n}$ , 
+\begin{itemize}
+\item[Case 1] if $\frac{n \Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \Delta_l \\
+ | \hat{Q}_l - Q_l | &\leq \eta \Delta_l 
+\end{align*}
+\item[Case 2] if $\frac{n \Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$, then
+\begin{align*}
+ | \hat{P}_l - P_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}} \\
+ | \hat{Q}_l - Q_l | &\leq \eta \sqrt{ \frac{P_l \vee Q_l}{n}}
+\end{align*}
+\end{itemize}
+Where $\eta = 4 \left( \sqrt{2 (5 + \delta_p) K \gamma \log \frac{K}{\gamma} } + \frac{5 + \delta_p}{c} K \gamma \log \frac{K}{\gamma} + \gamma K \right)$ is independent of the color $l$. 
+\end{proposition}
+
+\begin{proof}
+
+We first analyze the estimation error for a fixed $\sigma$ and then take a union bound over all $\sigma$ that satisfies $d_H(\sigma, \sigma_0) \leq \gamma n$. 
+
+Note that there are at most $\binom{n}{\gamma n} K^{\gamma n}$ possible assignments $\sigma$'s that satisfy the error rate constraint. 
+
+\begin{align*}
+\log \binom{n}{\gamma n} K^{\gamma n} & =
+  \log \left( \frac{ n(n-1) ...(n-\gamma n+1) }{(\gamma n)!} \right) + \gamma n \log K \\
+ & \leq \log \left( \frac{ n^{\gamma n} e^{\gamma n} }
+     { (\gamma n)^{\gamma n} } \frac{1}{\sqrt{2\pi \gamma n}} \right) + \gamma n \log K \\
+ & \leq \log \left( \frac{ e^{\gamma n} }{\gamma^{\gamma n}} \right) - \frac{1}{2} \log 2 \pi \gamma n + \gamma n \log K \\
+ & \leq \gamma n \log \frac{e}{\gamma}  + \gamma n \log K \\
+ & \leq 2 \gamma n \log \frac{K}{\gamma}
+\end{align*}
+
+
+Next, we bound the bias of $\hat{P}_l$.
+
+Our estimator of $P_l$ is 
+\[
+\hat{P_l} = \frac{ \sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} \mathbf{1}(A_{uv} = l) }{
+                   \sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} }
+\]
+
+$\E \hat{P}_l$ is a convex combination of $P_l, Q_l$. 
+\begin{align}
+\E \hat{P_l} &= 
+   \frac{ \sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} 
+             \mathbf{1}(\sigma_0(u) = \sigma_0(v) ) P_l + 
+               \mathbf{1}(\sigma_0(u) \neq \sigma_0(v)) Q_l }{
+                   \sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} 1 } \nonumber \\
+  &= (1 - \lambda) P_l + \lambda Q_l  = P_l + \lambda (Q_l - P_l) \label{eqn:bias_simple_bound}
+\end{align}
+for $\lambda = \frac{\sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} 
+     \mathbf{1}(\sigma_0(u) \neq \sigma_0(v)) }{\sum_{u \neq v \,:\, \sigma(u) = \sigma(v)} 1}$.
+
+Thus, we have that 
+\[
+|\E \hat{P}_l - P_l | \leq \lambda |Q_l - P_l|
+\]
+
+We need to upper bound $\lambda$. observe that
+\begin{align*}
+\lambda 
+  &= \frac{\sum_{u \neq v \,:\, \sigma(u) = \sigma(v) }\mathbf{1}(\sigma_0(u) \neq \sigma_0(v)) }{\sum_{u \neq v} \mathbf{1}(\sigma(u) = \sigma(v)) } 
+      \\
+  &= 
+   \frac{\sum_k \sum_{u \neq v \,:\, \sigma(u)=\sigma(v)=k} \mathbf{1}(\sigma_0(u) \neq \sigma_0(v))}{\sum_k \hat{n}_k (\hat{n}_k-1)} 
+      \\
+  &\leq \frac{\sum_k \sum_{u \neq v \,:\, \sigma(u)=\sigma(v)=k} 
+       \mathbf{1}( \neg (\sigma_0(u) = \sigma_0(v) =k) )}{\sum_k \hat{n}_k (\hat{n}_k-1)} 
+      \\ 
+  &\leq \frac{ \sum_k \sum_{u \neq v \,:\, \sigma(u)=\sigma(v)=k} \mathbf{1}(\sigma_0(v)) \neq k) + \mathbf{1}(\sigma_0(u) \neq k)}
+            {\sum_k \hat{n}_k (\hat{n}_k - 1)} 
+\end{align*}
+Define $\gamma_k = \frac{1}{n} \sum_{u \,:\, \sigma(u)=k} \mathbf{1}(\sigma_0(u) \neq k)$ as the error rate within the estimated cluster $k$, and define $\hat{n}_k = \sum_u \mathbf{1}(\sigma(u) = k)$. Then, we have that $\sum_k \gamma_k = \gamma$ and also $\sum_{u \,:\, \sigma(u) = k} \sum_{v \,:\, \sigma(v) = k} \mathbf{1}(\sigma_0(v) \neq k) = \gamma_k n \hat{n}_k$. We continue the bound: 
+\begin{align*}
+\lambda  
+  &\leq \frac{ \sum_k 2 \gamma_k n \hat{n}_k }{\sum_k \hat{n}_k(\hat{n}_k - 1)} 
+     \\
+  &= \frac{n}{\sum_k \hat{n}_k (\hat{n}_k - 1) } \sum_k 2 \gamma_k \hat{n}_k 
+     \\
+  &\leq \frac{K}{n-K} n \sum_k 2 \gamma_k \frac{\hat{n}_k}{n} \\
+  &\leq 4 \gamma K
+\end{align*}
+
+In the first inequality, we used the fact that $\sum_k \frac{\hat{n}_k }{n} (\hat{n}_k - 1) = n \sum_k \left( \frac{\hat{n}_k}{n} \right)^2 - 1 \geq \frac{n}{K} - 1$ since $\sum_k \frac{\hat{n}_k}{n} = 1$. In the last inequality, we used the assumption that $K < \frac{n}{2}$. 
+
+We then have an upper bound for $\lambda \leq 4 \gamma K$. Therefore, we have that
+
+\[
+|\E \hat{P}_l - P_l | \leq 4 \gamma K \Delta_l
+\]
+
+where $\Delta_l  = |Q_l - P_l|$. To simplify presentation, we define $\eta_1 = 4 \gamma K$ so that
+\[
+|\E \hat{P}_l - P_l | \leq \eta_1 \Delta_l
+\]
+From this it is clear that $\eta_1$ becomes arbitrarily small if $\gamma$ is made arbitrarily small. 
+
+Having bounded the bias, we can now bound the variance.
+
+
+Let $ \tilde{A}_{uv} = \mathbf{1}(A_{ij} = l)$. Then, by Bernstein's inequality,
+\[
+P\left( \left| \sum_{u,v\,:\, \sigma(u) = \sigma(v)} (\tilde{A}_{uv} - \E \tilde{A}_{uv} ) \right|  > t 
+ \right) \leq 2 \exp\left( 
+    - \frac{t^2}{ 2 \sum_{u,v \, \sigma(u) = \sigma(v)} \E \tilde{A}_{uv}  + \frac{2}{3}t } 
+\right)
+\]
+
+We first bound $\sum_{u,v \, \sigma(u) = \sigma(v)} \E \tilde{A}_{uv}$:
+\begin{align*}
+\sum_{u,v \, \sigma(u) = \sigma(v)} \E \tilde{A}_{uv} &=
+  \sum_k \hat{n}_k (\hat{n}_k - 1) \E \hat{P}_l \\
+ &\leq (P_l \vee Q_l) \sum_k \hat{n}_k (\hat{n}_k - 1) \quad 
+  \trm{(by Equation~\ref{eqn:bias_simple_bound})}
+\end{align*}
+
+Therefore,
+\[
+P\left( \left| \sum_{u,v\,:\, \sigma(u) = \sigma(v)} (\tilde{A}_{uv} - \E \tilde{A}_{uv} ) \right|  > t 
+ \right) \leq 2 \exp\left( 
+    - \frac{t^2}{ 2 (P_l \vee Q_l) \sum_k \hat{n}_k (\hat{n}_k - 1)  + \frac{2}{3}t } 
+\right)
+\]
+
+Our goal is to choose an appropriate $t$ such that the probability is upper bounded by $\exp( - 2 \gamma n \log \frac{K}{\gamma} - (3+\delta_p) \log n )$. 
+
+We choose the following $t$
+\begin{align*}
+t^2 &= 4 \left\{  \left( 2 (P_l \vee Q_l) \sum_k \hat{n}_k (\hat{n}_k - 1) \right) 
+      \left( 
+    2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right) \right\} 
+      \vee 
+   4  \left\{
+   \left( 2 \gamma n \log \frac{K}{\gamma} + (3 + \delta_p) \log n \right)^2 \right\} 
+\end{align*}
+
+We now verify that regardless of which term among $\{ 2 (P_l \vee Q_l) \sum_k \hat{n}_k (\hat{n}_k - 1) ,\,  2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n\}$ is larger, the probability term is at most $2 \exp\left( -  \left( 2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right) \right)$. Let $A = 2(P_l \vee Q_l)\sum_k \hat{n}_k (\hat{n}_k - 1)$ and
+ $B =  2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n$. 
+
+\begin{itemize}
+\item Suppose $A \geq B$, then $t^2 = 4AB$ and the probability term is at most
+    $2 \exp \left( - \frac{4 AB}{A + \frac{4}{3} \sqrt{AB}} \right)  \leq 2 \exp \left( - \frac{4 AB}{A + \frac{4}{3} A} \right) \leq  2 \exp( - B )$ 
+\item Suppose $A \leq B$, then $t^2 = 4B^2$ and the probability term is at most
+       $2 \exp \left( - \frac{4 B^2}{A + \frac{4}{3} B} \right) \leq 2 \exp \left( - \frac{4 B^2}{ B + \frac{4}{3} B} \right) \leq 2 \exp( - B)$. 
+\end{itemize}
+
+Thus, with probability at most $\exp\left( -  \left( 2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right) \right)$,
+
+\begin{align*}
+| \hat{P}_l - \E \hat{P}_l | =
+\frac{\sum_{u,v \, \sigma(u) = \sigma(v)} (\tilde{A}_{uv} - \E \tilde{A}_{uv} ) }{
+  \sum_{u,v} \mathbf{1}( \sigma(u) = \sigma(v) ) } &> 
+  \frac{t}{\sum_{u,v} \mathbf{1}(\sigma(u) = \sigma(v)) } \\
+\end{align*}
+
+Now we derive a more manageable upper bound for $t$:
+
+Note that 
+\[
+t^2 \leq 4 \left\{ \sqrt{  \left(2 (P_l \vee Q_l)  \sum_k \hat{n}_k (\hat{n}_k - 1) \right) 
+               \left( 2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right)} 
+           + 
+          \left(  2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right) \right\}^2
+\]
+
+Note that we can without loss of generality assume $\gamma \geq \frac{1}{n}$. We then have that $\gamma n \log \frac{1}{\gamma} \geq \log n$. Thus, $2 \gamma n \log \frac{K}{\gamma} + (3 + \delta_p) \log n \leq (5 + \delta_p) \gamma n \log \frac{K}{\gamma}$.
+
+
+\begin{align*}
+ \frac{t}{\sum_{u,v} \mathbf{1}(\sigma(u) = \sigma(v)) } &\leq
+  2 \frac{  \sqrt{  \left( 2 (P_l \vee Q_l) \sum_k \hat{n}_k (\hat{n}_k - 1) \right) 
+                 \left( 2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n \right) }  
+          + 
+               \left(  2 \gamma n \log \frac{K}{\gamma} + (3+\delta_p) \log n\right)  }
+        { \sum_{u,v} \mathbf{1}(\sigma(u) = \sigma(v) ) }  \\
+  &\leq 2 \frac{\sqrt{2 (P_l \vee Q_l) (5+\delta_p) \gamma n \log \frac{K}{\gamma}}}
+             {\sqrt{ \sum_k \hat{n}_k (\hat{n}_k - 1)}} + 
+        2  \frac{(5+\delta_p) \gamma n \log \frac{K}{\gamma}}
+             {\sum_k \hat{n}_k (\hat{n}_k - 1)} \\
+ &\leq  2 \frac{ \sqrt{2 (P_l\vee Q_l)} \sqrt{ (5+\delta_p) \gamma K \log \frac{K}{\gamma}} }
+           {n - K} + 
+       2 \frac{(5+\delta_p) \gamma K \log \frac{1}{\delta}}{n - K} \\
+ &\leq 4 \sqrt{ \frac{P_l \vee Q_l}{n} } \sqrt{(5+\delta_p) K \gamma \log \frac{K}{\gamma}} + 
+       4 \frac{(5+\delta_p) K \gamma \log \frac{K}{\gamma}}{n} 
+\end{align*}
+
+For the second to last inequality, we used the fact that $\sum_k (\hat{n}_k - 1) \frac{\hat{n}_k}{n} = n \sum_k \left( \frac{\hat{n}_k}{n} \right)^2 - 1 \geq \frac{n}{K} - 1 $ because $\frac{\hat{n}_k}{n}$ sums to 1. In the last inequality, we used the assumption that $n-K \geq \frac{n}{2}$. 
+
+To further simplify the expression, we have that $P_l \vee Q_l \geq \frac{c}{n}$ and thus, $\sqrt{ \frac{P_l \vee Q_l}{n} } \geq \frac{c}{n}$. Therefore, we have that, with probability at least $1 - \exp( -C_1 \gamma n \log \frac{K}{\gamma} - (3 + \delta) \log n)$, 
+\begin{align}
+| \hat{P}_l - \E \hat{P}_l | \leq \sqrt{ \frac{P_l \vee Q_l}{n} } \eta_2 \label{eqn:variance_bound}
+\end{align}
+where $\eta_2 = 4 \left( \sqrt{2 (5+\delta_p) K \gamma \log \frac{K}{\gamma}} 
+      + \frac{(5+\delta_p)}{c} K \gamma \log \frac{K}{\gamma} \right)$. It is clear that $\eta_2$ can be made arbitrarily small by taking $\gamma K \log K$ to be arbitrarily small. 
+
+ Taking the union bound across all clusterings with error $\gamma$ and across all colors, we have that the probability of (\ref{eqn:variance_bound}) holding simultaneously for all colors $l$ is at least $1 - L n^{-(3+\delta_p)}$. 
+
+\end{proof}
+
+
+
+
+
+\subsubsection{Analysis of probability of error for a single node}
+
+
+As a first step toward proving proposition~\ref{prop:labeled_sbm_rate}, we first analyze the probability of error for a single node $u$. 
+
+\begin{proposition}
+\label{prop:single_node_error_bound}
+
+Let node $u$ be arbitrarily fixed and suppose that $\frac{n I_L}{L} \rightarrow \infty$ and that for all $l$, $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$.  Suppose also that $\frac{1}{2} \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \leq \frac{1}{2}$. Conditioning on the event that the result of Proposition~\ref{prop:estimation_consistency} holds with a sequence $\eta$ that satisfies $\eta \rho_L \rightarrow 0$, we have that, with probability at least $1 - (K-1)\exp \left( - (1 - o(1)) \frac{n}{\beta K} I_L \right)$, the following event holds:
+\[
+\sigma_0(u) = \argmax_k \sum_{v\,: \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
+\]
+
+\end{proposition}
+
+\begin{proof}
+
+Throughout the proof, we let $\eta'$ denote a sequence that converges to 0 and let $C$ denote a $\Theta(1)$ sequence. Their value could change from line to line. \\
+
+Let $C_{thresh}$ be an absolute constant as defined in Proposition~\ref{prop:estimation_consistency}.
+
+First, define $L_1 = \{ l \,:\, n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh} \}$. Then we claim that $C \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} = I_L ( 1 - \eta' )$. To see this, observe first that
+
+\begin{align*}
+I_L &= -2 \log \sum_l \sqrt{P_l Q_l} \\
+  &= C \sum_l (\sqrt{P_l} - \sqrt{Q_l} )^2 \\
+  &= C \sum_l \frac{\Delta_l^2}{(\sqrt{P_l} + \sqrt{Q_l})^2} \\
+  &= C \sum_l \frac{\Delta_l^2}{P_l \vee Q_l} 
+\end{align*}
+
+Therefore, we have that
+\begin{align*}
+C \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} &= I_L - 
+ C \sum_{l \notin L_1} \frac{\Delta_l^2}{P_l \vee Q_l} \\
+ &\geq I_L - C_{\epsilon, c_1, c_2} \sum_{l \notin L_1} \frac{C_{thresh}}{n} \\
+ &\geq I_L - C_{\epsilon, c_1, c_2} \frac{ L C_{thresh}}{n} \\
+ &\geq I_L - \eta' I_L
+\end{align*}
+
+The first inequality follows from the definition of $L_1$. The third inequality follows because $\frac{n I_L}{L} \rightarrow \infty$ by assumption. \\
+
+
+Now we proceed onto the main proof. Suppose without the loss of generality that $\sigma_0(u) = 1$.  We want to then control the probability that for some cluster $k$, 
+\begin{align}
+\sum_{v\,:\, \sigma_u(v)=k} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
+&\geq 
+ \sum_{v\,:\, \sigma_u(v)=1} \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l) 
+  \quad \trm{(iff)}  \nonumber \\
+\sum_{v \,:\, \sigma_u(v) = k} \bar{A}_{uv} - \sum_{v\,:\, \sigma_u(v) = 1} \bar{A}_{uv} 
+\label{eqn:bad_event1}
+&\geq 0 
+\end{align}
+where $\bar{A}_{uv} \equiv \sum_l \log \frac{\hat{P}_l}{\hat{Q}_l} \mathbf{1}(A_{uv} = l)$. 
+
+Define $m_1 = |\{ v \,:\, \sigma_u(v) = 1 \}|$ and $m_k = | \{ v \,:\, \sigma_u(v) = k \}|$ as the size of clusters $m_1, m_k$ under $\sigma_u$. Define $m_k' = \{ v \,:\, \sigma_u(v) = k,\, \sigma_0(v) = k \}$, $m_1' = \{ v \,:\, \sigma_u(v) = 1 ,\, \sigma_0(v) = 1\}$ as the points correctly clustered by $\sigma_u$. 
+
+With these definitions, the probability of the bad event Equation~\ref{eqn:bad_event1} is upper bounded by the probability of the following:
+
+\begin{align*}
+\left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m'_k} \tilde{X}_i \right) - 
+\left( \sum_{i=1}^{m_1'} \tilde{X}_i + \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) &\geq 0  \quad \trm{(iff)} \\
+\exp( t \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m_k'} \tilde{X}_i - 
+     \sum_{i=1}^{m_1'}  \tilde{X}_i - \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) ) &\geq 1 
+\end{align*}
+
+ where $\tilde{X}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $P_l$ and $\tilde{Y}_i = \log \frac{\hat{P}_l}{\hat{Q}_l}$ with probability $Q_l$. 
+
+
+
+\begin{align*}
+& P \left( \exp( t \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m_k'} \tilde{X}_i- 
+     \sum_{i=1}^{m_1'}  \tilde{X}_i - \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) ) \geq 1 \right) \\ 
+&\leq \E \left( 
+\exp( t \left( \sum_{i=1}^{m_k'} \tilde{Y}_i + \sum_{i=1}^{m_k - m_k'} \tilde{X}_i - 
+     \sum_{i=1}^{m_1'}  \tilde{X}_i - \sum_{i=1}^{m_1 - m_1'} \tilde{Y}_i  \right) )
+ \right) \\ 
+&\leq \E \left( \E[\exp( t \tilde{Y}_i) \given \hat{P}_l, \hat{Q}_l] \right)^{m_k'} 
+      \left( \E[ \exp(t \tilde{X}_i )\given \hat{P}_l, \hat{Q}_l] \right)^{m_k - m_k'}  
+    \left( \E[ \exp( - t \tilde{X}_i)\given \hat{P}_l, \hat{Q}_l] \right)^{m_1'} 
+    \left( \E[ \exp( -t \tilde{Y}_i )\given \hat{P}_l, \hat{Q}_l] \right)^{m_1 - m_1'} \\
+&\leq\E \left( \sum_l e^{t \log \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k'}  
+      \left( \sum_l e^{t \log \frac{\hat{P}_l}{\hat{Q}_l}} P_l \right)^{m_k - m_k'} 
+      \left( \sum_l e^{- t \log \frac{\hat{P}_l}{\hat{Q_l}} } P_l \right)^{m_1'}
+     \left( \sum_l e^{-t \log \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_1 - m_1'}
+\end{align*}
+
+We will set $t = \frac{1}{2}$, in which case, we have:
+\begin{align}
+& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k'}
+ \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l \right)^{m_k - m_k'}
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l \right)^{m_1 - m_1'}
+       \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1'} \nonumber \\
+=&  \left( \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l}
+                {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l}  \right)^{m_k - m_k'}
+ \left( \frac{ \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l}
+             { \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } P_l} \right)^{m_1 - m_1'}  
+   \label{eqn:excess_error_term} \\
+ & \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{m_k} 
+    \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1}
+   \label{eqn:Ihat_error_term} 
+\end{align} 
+
+We will bound term~\ref{eqn:excess_error_term} and \ref{eqn:Ihat_error_term} separately. Loosely speaking, we will show that term~\ref{eqn:excess_error_term} is bounded in magnitude by $\exp( o(I_L) \frac{n}{K} )$ and that term~\ref{eqn:Ihat_error_term} is bounded by $\exp( - \frac{n}{K} (1 + o(1) I_L)$. 
+
+
+\textbf{Bound for Term~\ref{eqn:excess_error_term}.} 
+
+Now, we can bound term~\ref{eqn:excess_error_term}:
+\begin{align*}
+\left| 1 -  \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l}
+                {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l}  \right|
+ &= \left| \frac{ \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} (P_l - Q_l) }
+     { \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l } \right| \\
+&\leq \frac{8}{\sum_l \sqrt{P_l Q_l}} 
+     \left| \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} }(P_l - Q_l) \right| \\
+&\leq 16 \left|  \sum_{l} \left( \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right) (P_l - Q_l)  \right| \\
+&\leq 16 \left| 
+     \sum_{l \in L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} - 1 \right)(P_l - Q_l) 
+     \right| + 16 \sum_{l \notin L_1} \left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} - 1 \right| |P_l - Q_l| \\
+&\leq 16 \sum_{l \in L_1} \frac{\Delta^2_l}{Q_l}(1+ \eta') + 
+      \sum_{i \notin L_1} 2 C_{thresh} \frac{\Delta_l}{\sqrt{n (P_l \vee Q_l)}} \\
+&\leq C I_L (1 + \eta') + 2 C_{thresh}^2 \frac{L}{n} \\
+&\leq C I_L (1 + \eta')
+\end{align*}
+
+
+Where the second inequality follows from lemma~\ref{lem:sqrt_ratio_times_ql},
+second to last inequality follows under the assumption that $\sum_l \sqrt{P_l Q_l} \geq \frac{1}{2}$, and the last inequality follows from Lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1}. 
+
+Identical analysis shows that
+\[
+\left| 1 - \frac{ \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l}
+             { \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } P_l} \right| 
+= O(I_L) 
+\]
+
+Now, we note that $\exp( | 1 - x | ) \geq |x|$. 
+Therefore, term~\ref{eqn:excess_error_term} can be bounded as
+\begin{align*}
+&  \left( \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } P_l}
+                {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l}  \right)^{m_k - m_k'}
+ \left( \frac{ \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } Q_l}
+             { \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l} } P_l} \right)^{m_1 - m_1'}  \\
+&\leq \exp( O(I_L) (m_k - m_k' + m_1 - m_1') ) \\
+&\leq \exp( O(I_L) \gamma n) \\
+&\leq \exp\left( \frac{n}{K} o(I_L) \right) \quad \trm{(since $\gamma K \rightarrow 0$)}
+\end{align*}
+
+\textbf{Bound for Term~\ref{eqn:Ihat_error_term}.}
+
+
+Define 
+$\hat{I} = - \log \left( \sum_l \frac{\hat{P}_l}{\hat{Q}_l} Q_l \right) \left( \sum_l \frac{\hat{Q}_l}{\hat{P}_l} P_l \right) $. 
+With this definition, 
+
+\begin{align*}
+& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \right)^{m_k} 
+       \left( \sum_l \sqrt{\frac{\hat{Q_l}}{\hat{P}_l} } P_l \right)^{m_1} \\
+&= \exp( - \hat{I} )^{\frac{m_k + m_1}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} 
+\end{align*}
+
+We claim that the following three statements are true. 
+\begin{enumerate}
+\item[Claim 1] $m_k \geq n_k -  \gamma n$ and likewise for $m_1$.
+\item[Claim 2] $\hat{I} - I_L \geq - o(1) I_L$
+\item[Claim 3] $\left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} = \exp(\frac{n}{k}  o(I_L)  $
+\end{enumerate}
+
+Let us first suppose that these statements are true and see that term~\ref{eqn:Ihat_error_term} can be bounded. 
+
+
+\begin{align*}
+& \exp( - \hat{I} )^{\frac{m_1 + m_k}{2}}  \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}}  \\
+&\leq  \exp( - (I^* + (\hat{I} - I^*) )^{\frac{m_1 + m_k}{2}}  
+ \left( \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l}
+             {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l} \right)^{\frac{m_1 - m_k}{2}}  
+  \\
+&\leq \exp \left( - (1-o(1)) I_L (n_1 - \gamma n) \right) 
+   \left( \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l}
+             {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l} \right)^{\frac{m_1 - m_k}{2}}  
+   \quad \trm{(by claim 1 and 2)}\\
+&\leq \exp \left( - (1-o(1)) \frac{n}{\beta k} I_L  \right) 
+   \quad \trm{(by claim 3)}
+\end{align*}
+
+The last inequality holds because $\gamma = o\left( \frac{1}{K \log K} \right)$. We will prove each of the three claims in the remainder of the proof.
+
+\textbf{Claim 1:} This is straightforward. $\sigma_u$ has at most $\gamma n$ errors and therefore, $m_1' \geq n_1 - \gamma n$ and $m_1 - m_1' \leq \gamma n$. 
+
+\textbf{Claim 2:} We show that the estimation error of $\hat{P}_l, \hat{Q}_l$ does not make $\hat{I}$ too small.
+
+\begin{align}
+\hat{I} - I_L &= - \log \frac{ 
+     \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)
+     \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)}{ 
+          \left( \sum_l \sqrt{P_l Q_l} \right)^2 } \label{eqn:Ihat_Istar}
+\end{align}
+
+Let us consider the numerator.
+\begin{align*}
+& \left( \sum_l \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)
+\left( \sum_l \sqrt{ \frac{\hat{Q}_l}{\hat{P}_l}} P_l \right) \\
+&= \left( \sum_l \sqrt{ P_l Q_l} \sqrt{ \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l}} \right) 
+     \left( \sum_l \sqrt{P_l Q_l} \sqrt{ \frac{P_l}{\hat{P}_l} \frac{\hat{Q}_l}{ Q_l}} \right) \\
+&= \sum_l P_l Q_l + 2\sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} + 
+   \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
+&= \left( \sum_l \sqrt{P_l Q_l} \right)^2 + \sum_{l < l'} 
+                  \sqrt{P_l Q_l P_{l'} Q_{l'}} \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) 
+\end{align*}
+
+where we define $T_{l,l'} = \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}}  $. It will be later shown that $T_{l,l'} \rightarrow 1$ and thus, continuing equation~\ref{eqn:Ihat_Istar},
+
+\begin{align}
+\hat{I} - I_L &= - \log \left( 1 + \frac{ \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)}
+    { \left( \sum_l \sqrt{ P_l Q_l} \right)^2 }  \right) \nonumber \\
+     &  \geq  - \log \left( 1 + 4 \sum_{l<l'} \sqrt{P_l Q_l P_{l'} Q_{l'}}  
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)  \right) 
+  \quad \trm{(assuming that $\sum_l \sqrt{P_l Q_l} \geq 1/2$)} \nonumber \\
+   & \geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \label{eqn:Ihat_Istar2}
+\end{align}
+
+We proceed by first bounding $|T_{l,l'} - 1|$ and then taking the second order approximation of $\left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right)$ around $1$. 
+
+\begin{align*}
+|T_{l,l'} - 1| &= \left| \frac{\hat{P}_l}{P_l} \frac{Q_l}{\hat{Q}_l} 
+      \frac{P_{l'}}{\hat{P}_{l'}} \frac{\hat{Q}_{l'}}{Q_{l'}} - 1 \right| \\
+ &= \left| \left( 1 - \frac{P_l - \hat{P}_l}{P_l} \right)
+    \left( 1 - \frac{\hat{Q}_l - Q_l}{\hat{Q}_l} \right)
+   \left( 1- \frac{\hat{P}_{l'} - P_{l'}}{\hat{P}_{l'}}\right)
+   \left( 1 -  \frac{Q_{l'}- \hat{Q}_{l'}}{Q_{l'}} \right) -1 \right| \\
+&\leq \left( \frac{|P_l - \hat{P}_l|}{P_l} +  \frac{|\hat{Q}_l - Q_l|}{\hat{Q}_l}
+           +   \frac{| \hat{P}_{l'} - P_{l'}|}{\hat{P}_{l'}} +
+               \frac{| Q_{l'} - \hat{Q}_{l'} | }{Q_{l'}} \right) \\
+& \leq 2\left( \frac{|P_l - \hat{P}_l|}{P_l} +  \frac{|\hat{Q}_l - Q_l|}{Q_l}
+           +   \frac{| \hat{P}_{l'} - P_{l'}|}{P_{l'}} +
+               \frac{| Q_{l'} - \hat{Q}_{l'} | }{Q_{l'}} \right) 
+\end{align*}
+where the last inequality follows from lemma~\ref{lem:bound_ratio_P_Pl}.
+
+Since we only work with pairs $(l, l')$ such that $l' > l$ and we can choose whatever ordering we would like. Suppose that the $l$'s are in decreasing order of $\frac{|\hat{P}_l - P_l|}{P_l} + \frac{|\hat{Q}_l - Q_l|}{Q_l}$ and therefore, we have that, for all pairs $l < l'$, 
+\[
+| T_{l,l'} - 1 | \leq 4
+    \left( \frac{|\hat{P}_l - P_l|}{P_l} + \frac{|\hat{Q}_l - Q_l|}{Q_l} \right)
+\]
+
+By proposition~\ref{prop:estimation_consistency}, we have that, for $l \in L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{\Delta_l}{P_l \vee Q_l}$ and for $l \notin L_1$, $\frac{|P_l - \hat{P}_l|}{P_l} \leq \eta \frac{1}{\sqrt{n (P_l \vee Q_l)}}$ and likewise for the $\frac{|\hat{Q}_l - Q_l|}{Q_l}$ term. We plug these bounds into the previous derivation and get that:
+\begin{align*}
+|T_{l,l'} - 1|  &\leq \eta'  \frac{\Delta_l}{P_l \vee Q_l}  \quad \trm{for $l \in L_1$}\\
+|T_{l,l'} - 1 | &\leq \eta' \frac{1}{\sqrt{ n (P_l \vee Q_l)}} \quad \trm{for $l \notin L_1$}
+\end{align*}
+Where we have used the assumption that $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$ and $\eta \rho_L \rightarrow 0$. 
+
+
+The Taylor approximation of $\sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2$ around $T_{l,l'}=1$ is:
+\begin{align*}
+\sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} -2  &\leq 
+  \frac{1}{4} (T_{l,l'} - 1)^2 + O (T_{l,l'}-1)^3 
+\end{align*}
+
+Continuing on from equation~\ref{eqn:Ihat_Istar2}, we have that
+\begin{align*}
+\hat{I} - I_L &\geq - 4 \sum_{l < l'} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
+&\geq - 4 \sum_{l \in L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) 
+     - 4 \sum_{l \notin L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+    \left( \sqrt{T_{l,l'}} + \frac{1}{\sqrt{T_{l,l'}}} - 2 \right) \\
+  &\geq - \sum_{l \in L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+             \eta' \left( \frac{\Delta_l}{P_l \vee Q_l}  \right)^2 
+        - \sum_{l \notin L_1} \sum_{l' > l} \sqrt{P_l Q_l P_{l'} Q_{l'}} 
+             \eta' \frac{1}{n (P_l \vee Q_l)} \\
+ &\geq - \eta' \left( \sum_{l \in L_1} \frac{\Delta_l^2}{P_l \vee Q_l} \right)
+         \left( \sum_{l'}  \sqrt{P_{l'}Q_{l'}} \right) 
+       - \eta' \left( \sum_{l \notin L_1} \frac{1}{n} \right) 
+          \left( \sum_{l'} \sqrt{P_{l'} Q_{l'} } \right) \\
+ &\geq - o(I_L)
+\end{align*}
+
+The last inequality follows because $\sum_{l'} \sqrt{P_{l'} Q_{l'}} \leq 1$ and because $\sum_{l \notin L_1} \frac{1}{n} \leq \frac{L}{n} = o(I_L)$. This proves claim 2.
+
+\textbf{Claim 3.} 
+
+\begin{align*}
+& \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} \\
+&= \left( \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l \right)^{\frac{m_k - m_1}{2}} 
+ \left( \sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l \right)^{\frac{m_1 - m_k}{2}} 
+   \left( \frac{\sum_l \sqrt{\hat{P}_l \hat{Q}_l}}{\sum_l \sqrt{\hat{P}_l \hat{Q}_l}} \right)^{\frac{m_1 - m_k}{2}} \\
+&=  \left( 
+   \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} Q_l}
+        {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} \hat{Q}_l} 
+     \right)^{\frac{m_k - m_1}{2}} 
+   \left( \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l}
+         {\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} \hat{P_l} } \right)^{\frac{m_1 - m_k}{2}} 
+\end{align*}
+
+Assume that $m_k \geq m_1$. The reverse case can be analyzed in the identical manner. Then,
+\begin{align*}
+&= \left( 1 + 
+   \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} (Q_l - \hat{Q}_l)}
+        {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} \hat{Q}_l} 
+     \right)^{\frac{m_k - m_1}{2}} 
+   \left( 1+ \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} (\hat{P}_l - P_l)}
+         {\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l } \right)^{\frac{m_k - m_1}{2}} 
+   \\
+\end{align*}
+
+By lemma~\ref{lem:sqrt_ratio_times_ql}, the denominators are of constant order. That is, 
+$\sum_l \sqrt{ \frac{ \hat{P}_l }{ \hat{Q}_l } \hat{Q}_l } = C$ and 
+$\sum_l \sqrt{ \frac{\hat{Q}_l}{P_l} } P_l = C$. 
+
+To bound the numerator term, we apply lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1}. 
+
+\begin{align*}
+\left| \sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} (Q_l - \hat{Q}_l) \right|  &= 
+  \left|  \sum_l \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) 
+ \right| \\
+& \leq \left| \sum_{l \in L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) \right| +  %next term
+  \left| \sum_{l \notin L_1} \left( \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} -1 \right) (Q_l - \hat{Q}_l) \right| \\
+& \leq \sum_{l \in L_1} \eta' \frac{\Delta_l^2}{Q_l} + \sum_{l \notin L_1} \eta' \frac{1}{n} \\
+& \leq \eta' I_L + \eta' \frac{L}{n}  \\
+& \leq \eta' I_L  
+\end{align*}
+
+The second inequality follows from lemma~\ref{lem:sqrt_ratio_pl_ql_minus_1} and the definition of $L_1$. 
+
+\begin{align*}
+& \left( 1 + 
+   \frac{\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} (Q_l - \hat{Q}_l)}
+        {\sum_l \sqrt{\frac{\hat{P}_l}{\hat{Q}_l}} \hat{Q}_l} 
+     \right)^{\frac{m_k - m_1}{2}} 
+   \left( 1+ \frac{\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} (\hat{P}_l - P_l)}
+         {\sum_l \sqrt{\frac{\hat{Q}_l}{\hat{P}_l}} P_l } \right)^{\frac{m_k - m_1}{2}} 
+\\
+&\leq \exp\left( (m_k - m_1) \log(1 + o(I_L) ) \right) \\
+&\leq \exp \left( \frac{n}{K} o(I_L) \right) 
+\end{align*}
+
+This proves claim 3. 
+
+Multiplying the bounds for term~\ref{eqn:Ihat_error_term} and \ref{eqn:excess_error_term} shows that the probability of misclustering $u$ into some cluster $k \neq 1$ is at most $\exp\left(( - (1 + o(1)) \frac{nI_L}{\beta K} \right)$. Taking a union bound over all clusters $k \neq $ completes the proof.
+
+
+\end{proof}
+
+
+
+\subsubsection{Lemmas}
+
+
+Here we collect various lemmas used in the proof.
+
+We often use the bound that $\frac{1}{2} P \leq \hat{P}_l \leq 2 P_l$. The following lemma justifies this.
+
+\begin{lemma}
+\label{lem:bound_ratio_P_Pl}
+Let $l$ be any color and suppose that $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$ where $\rho_L > 1$; suppose also that $P_l, Q_l \geq \frac{c}{n}$ for some absolute constant $c$.
+
+Let us condition on the event that the 
+conclusion of proposition~\ref{prop:estimation_consistency} holds with a sequence $\eta$ such that $\eta \rho_L \rightarrow 0$. 
+
+Then we have that
+\[
+\max_l \frac{|\hat{P}_l - P_l|}{P_l} \rightarrow 0
+\quad \trm{ and } \quad
+\max_l \frac{|\hat{Q}_l - Q_l|}{Q_l} \rightarrow 0
+\]
+
+In particular, for small enough $\eta$, we have that $\frac{1}{2} P \leq \hat{P}_l \leq 2P_l$ for all $l$ and likewise for $Q_l$.
+
+\end{lemma}
+
+
+\begin{proof}
+
+We prove the statement first for $P_l$; the same argument goes for $Q_l$. 
+
+By proposition~\ref{prop:estimation_consistency}, we have that either $| \hat{P}_l - P_l | \leq \eta \Delta_l$ or $| \hat{P}_l - P_l | \leq \eta \sqrt{ \frac{P_l \vee Q_l}{n} }$.
+
+Let us suppose $| \hat{P}_l - P_l | \leq \eta \Delta_l$ first. Then,
+
+\begin{align*}
+\frac{ | \hat{P}_l - P_l |}{P_l} \leq \eta \frac{\Delta_l}{P_l} \leq \eta \rho_L \rightarrow 0
+\end{align*}
+
+Now suppose that $| \hat{P}_l - P_l | \leq \eta \sqrt{ \frac{P_l \vee Q_l}{n} }$. Then,
+
+\begin{align*}
+\frac{| \hat{P}_l - P_l |}{P_l} \leq \eta \sqrt{ \frac{\rho_L}{ P_l n}} \leq \eta \rho_L \sqrt{ \frac{1}{c}} \rightarrow 0
+\end{align*}
+
+\end{proof}
+
+
+
+\begin{lemma}
+\label{lem:sqrt_ratio_pl_ql_minus_1}
+Suppose that $\frac{1}{\rho_L} \leq \frac{P_l}{Q_l} \leq \rho_L$ for $\rho_L > 1$ and that $P_l, Q_l \geq \frac{c}{n}$ for some absolute constant $c$.\\ 
+
+Let us condition on the event that the 
+conclusion of proposition~\ref{prop:estimation_consistency} holds with a sequence $\eta$ such that $\eta \rho_L \rightarrow 0$. 
+
+Let $C_{thresh}$ be the constant defined in proposition~\ref{prop:estimation_consistency}. Then, the following are true:
+\begin{enumerate}
+\item 
+Suppose $l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$. Then, we have that 
+\[
+\left| \sqrt{ \frac{\hat{P}_l }{\hat{Q}_l} } - 1 \right|
+                    \leq \left| \frac{P_l - Q_l}{Q_l} \right| (1 + \eta') 
+\]
+where $\eta' \rightarrow 0$ and does not depend on the color $l$. 
+
+\item
+Suppose $l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$. Then, we have that
+\[
+\left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right| \leq
+ 2 C_{thresh} \frac{1}{\sqrt{n  (P_l \vee Q_l) } }
+\]
+
+\end{enumerate}
+And the same conclusion follows for $\sqrt{ \frac{\hat{Q}_l}{\hat{P}_l}} - 1$.
+
+\end{lemma}
+
+
+
+\begin{proof}
+First, suppose that $l$ satisfies $n \frac{\Delta_l^2}{P_l \vee Q_l} \geq C_{thresh}$. 
+
+Note that 
+\begin{align*}
+ \frac{P_l}{Q_l} - 1 &= \frac{P_l - Q_l}{Q_l}  
+\end{align*}
+
+We will show that $\frac{\hat{P}}{\hat{Q}}$ behaves similarly. 
+
+As a preliminary step, we note that, by lemma~\ref{lem:bound_ratio_P_Pl}, $ \frac{\hat{Q}_l - Q_l}{Q_l} = \eta'$ where $\max_l |\eta'| \rightarrow 0$.
+
+In the following derivation, we use $\eta'$ to denote a sequence such that $\max_l |\eta'| = o(1)$; the actual value of $\eta'$ may change from instance to instance. 
+We use $\eta$ to denote a sequence where $\max_l |\eta \rho_L| = o(1)$.
+
+\begin{align*}
+\frac{\hat{P}_l}{\hat{Q}_l} - 1 &= 
+     \frac{ \hat{P}_l - P_l + P_l }{ \hat{Q}_l - Q_l + Q_l} -1  \\
+  &=  \frac{  \frac{\hat{P}_l - P_l}{Q_l} + \frac{P_l}{Q_l}}
+       { \frac{\hat{Q}_l - Q_l}{Q_l} + 1} - 1 \\
+ &= \left( \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} \right)
+    \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta')  \right) -1  \\
+ &= \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} 
+     - \frac{P_l}{Q_l} \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta') 
+     - \frac{\hat{P}_l - P_l}{Q_l} \frac{\hat{Q}_l - Q_l}{Q_l}(1+ \eta') 
+   - 1  \\
+ &= \frac{P_l}{Q_l} + \eta \frac{\Delta_l}{Q_l}
+     + \eta \rho_L \frac{\Delta_l}{Q_l}
+   - 1  \\
+ &= \frac{P_l - Q_l}{Q_l} ( 1 + \eta')
+\end{align*}
+For the second to last equality, we used the fact that $| \hat{P}_l - P_l| \leq \eta \Delta_l$ by the conclusion of proposition~\ref{prop:estimation_consistency}.
+
+If $P_l \geq Q_l$, then, for small enough value of $\eta'$, we have that $\frac{\hat{P}_l}{\hat{Q}_l} \geq 1$. Hence,
+
+\begin{align*}
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 &\leq \frac{\hat{P}_l}{\hat{Q}_l} - 1 \\
+   &\leq \frac{P_l - Q_l}{Q_l} (1 + \eta')
+\end{align*}
+If $P_l \leq Q_l$, then, for small enough value of $\eta'$, we have that $\frac{\hat{P}_l}{\hat{Q}_l} \leq 1$. Hence,
+
+\begin{align*}
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 &\geq \frac{\hat{P}_l}{\hat{Q}_l} - 1 \\
+   &\geq \frac{P_l - Q_l}{Q_l} (1 + \eta')
+\end{align*}
+
+
+
+
+Symmetry yields that 
+
+\begin{align*}
+\sqrt{ \frac{\hat{Q}_l}{\hat{P}_l} } - 1  &
+   \left\{ \begin{array}{cc}
+      \leq \frac{Q_l - P_l}{P_l} (1 + \eta') & \trm{(if $Q_l \geq P_l$)} \\
+      \geq \frac{Q_l - P_l}{P_l} (1 + \eta') & \trm{(if $Q_l \leq P_l$)} 
+     \end{array} \right. \\
+\end{align*}
+
+This proves the first case. \\
+
+The proof of the second case is almost identical. Let us assume that $l$ is such that $n \frac{\Delta_l^2}{P_l \vee Q_l} \leq C_{thresh}$. In this case, we have that
+
+\begin{align*}
+| \hat{P}_l - P_l | &= \eta \sqrt{ \frac{P_l \vee Q_l}{n} } \\
+| \hat{Q}_l - Q_l | &= \eta \sqrt{ \frac{P_l \vee Q_l}{n} }
+\end{align*}
+
+where $\max_l |\eta \rho_L| \rightarrow 0$. 
+
+By lemma~\ref{lem:bound_ratio_P_Pl}, $\frac{\hat{Q}_l - Q}{Q_l} = \eta'$ where $\max_l |\eta'| = o(1)$.
+
+In the following derivation, we use $\eta'$ to denote a sequence such that $\max_l |\eta'| = o(1)$; the actual value of $\eta'$ may change from instance to instance. 
+\begin{align*}
+\frac{\hat{P}_l}{\hat{Q}_l} - 1 &= 
+     \left( \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} \right)
+     \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} ( 1 + \eta') \right) - 1 \\
+ &= \frac{P_l}{Q_l} + \frac{\hat{P}_l - P_l}{Q_l} 
+     - \frac{P_l}{Q_l} \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta') 
+     - \frac{\hat{P}_l - P_l}{Q_l} \frac{\hat{Q}_l - Q_l}{Q_l}(1+ \eta') 
+   - 1  \\
+ &= \frac{P_l - Q_l}{Q_l} + \eta' \sqrt{ \frac{1}{ n (P_l \vee Q_l)} } 
+\end{align*}
+
+and, because $\frac{\hat{P}_l}{\hat{Q}_l} > 0$,  it is clear that $\eta'$ satisfies the condition that $\frac{P_l - Q_l}{Q_l} + \eta'\sqrt{ \frac{1}{n (P_l \vee Q_l)} } + 1 > 0$. 
+
+
+
+\begin{align*}
+\left| \sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } - 1 \right| &= 
+ \left|  \sqrt{ 1 + \frac{P_l - Q_l}{Q_l} + \eta' \frac{1}{\sqrt{n (P_l \vee Q_l)} }}
+   -1  \right| \\
+  &\leq \left| \frac{P_l - Q_l}{Q_l} + \eta' \frac{1}{\sqrt{ n (P_l \vee Q_l)}}        \right| \\
+ &\leq 2 C_{thresh} \frac{1}{\sqrt{n (P_l \vee Q_l)} } 
+\end{align*}
+
+The first inequality follows because $ \sqrt{1 + x} - 1 \leq x$ for $x \geq 0$ and $\sqrt{ 1 + x} - 1 \geq x$ for $-1 < x < 0$. 
+The second inequality follows because $\left| \frac{P_l - Q_l}{Q_l} \right| \leq C_{thresh} \frac{1}{\sqrt{n (P_l \vee Q_l)}} $. 
+
+\end{proof}
+
+
+
+
+The following lemma bounds $\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l$. 
+\begin{lemma}
+\label{lem:sqrt_ratio_times_ql}
+Suppose that
+\[
+\frac{|\hat{Q}_l - Q_l|}{Q_l} = \eta' \quad 
+\frac{|\hat{P}_l - P_l|}{P_l} = \eta'
+\]
+where $\max_l |\eta'| = o(1)$. 
+
+
+Then, we have that for all small enough $\eta$, 
+\[
+\sqrt{ \frac{\hat{P}_l}{\hat{Q}_l} } Q_l \geq \frac{1}{2} \sqrt{\hat{P}_l \hat{Q}_l} \geq
+  \frac{1}{8} \sqrt{P_l Q_l}
+\]
+\end{lemma}
+
+
+\begin{proof}
+
+\begin{align*}
+& \sqrt{\frac{\hat{P}_l}{\hat{Q}_l} } Q_l \\
+&= \sqrt{ \hat{P}_l \hat{Q}_l} \frac{Q_l}{\hat{Q}_l} \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} \frac{1}{ \frac{Q_l - \hat{Q}_l}{Q_l} + 1 } \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} 
+  \left( 1 - \frac{\hat{Q}_l - Q_l}{Q_l} (1 + \eta') \right)  \\
+&= \sqrt{\hat{P}_l \hat{Q}_l} (1 - \eta)
+\end{align*}
+
+where in the second to last equality, we used the fact that $\frac{\hat{Q}_l - Q_l}{Q_l} = \eta' \rightarrow 0$. 
+
+Clearly then, for small enough $\eta$, we continue the bound as 
+\begin{align*}
+&\geq \frac{1}{2} \sqrt{ \hat{P}_l \hat{Q}_l} 
+\end{align*}
+
+Also, for small enough $\eta$, we have that $\hat{P}_l \geq \frac{1}{2} P_l$ and $\hat{Q}_l \geq \frac{1}{2} Q_l$ and thus, we have the final bound
+\[
+\frac{1}{8} \sqrt{ P_l Q_l}
+\]
+as desired. 
+
+\end{proof}
+
+
+
+
+
+
+We state Lemma 4 from~\cite{gao2015achieving} which analyzes the consensus step of the algorithm.
+
+\begin{lemma} 
+\label{lem:consensus_analysis}
+Let $\sigma, \sigma'$ be two clusters such that, for some constant $C \geq 1$, the minimum cluster size is at least $ \frac{n}{Ck}$. \\
+
+Define a map $\xi \,:\, [k] \rightarrow [k]$ as $\xi(k) = \argmax_{k'} | \{ v \,:\, \sigma(v) = k \} \cap \{ v \,:\, \sigma'(v) = k' \} |$.\\
+
+Then, if $\min_{\pi \in S_k} l(\pi(\sigma), \sigma') < \frac{1}{Ck}$, we have that $\xi \in S_k$ and $l(\xi(\sigma), \sigma') = \min_{\pi \in S_k} l(\pi(\sigma), \sigma')$. 
+\end{lemma}
+
+We include a simple additional lemma.
+\begin{lemma}
+\label{lem:consensus_uniqueness}
+Let $\sigma, \sigma' \,:\, [n] \rightarrow [k]$ be two clusterings where the minimum cluster size of $\sigma$ is $T$. Let $\pi, \xi \in S_k$ be such that
+\[
+d(\pi(\sigma), \sigma') < T/2 \qquad \qquad d(\xi(\sigma), \sigma') < T/2
+\]
+Then it must be that $\pi = \xi$.
+\end{lemma}
+
+\begin{proof}
+Suppose not, then choose any $k$ such that $\pi(k) \neq \xi(k)$. 
+
+\begin{align*}
+| \{ \sigma(u) = k \} \cap \{ \sigma'(u) \neq \pi(k) \} | < d(\pi(\sigma), \sigma') < T/2
+\end{align*}
+
+So, then, we have that $| \{ \sigma(u) = k \} \cap \{ \sigma'(u) = \pi(k) \}| > T/2$. 
+
+But then,
+\begin{align*}
+d(\xi(\sigma), \sigma') &\geq | \{ \sigma(u) = k \} \cap \{\sigma'(u) \neq \xi(k) \} | \\
+   &\geq | \{ \sigma(u) = k\} \cap \{ \sigma'(u) = \pi(k) \}| \\ 
+   &\geq T/2
+\end{align*}
+
+\end{proof}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper_all_in_one"
+%%% End:
+

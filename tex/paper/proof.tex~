@@ -1,0 +1,24 @@
+
+\section{Proofs}
+
+
+\input{proofs/labeled_sbm_proof}
+\newpage
+\input{proofs/discretize_proof}
+\newpage
+\input{proofs/transformation_proof}
+\newpage
+\input{proofs/initial_spectral_proof}
+\newpage
+\input{proofs/examples_proof}
+\newpage
+\input{proofs/lower_bound_proof}
+\newpage
+\input{proofs/thresh_proof}
+\newpage
+\input{proofs/useful_lemmas}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

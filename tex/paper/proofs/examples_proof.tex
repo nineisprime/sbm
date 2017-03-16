@@ -1,0 +1,382 @@
+
+
+\section{Proof of Proposition~\ref{prop:theta_rate}}
+\label{sec:theta_rate_proof}
+
+%We first review the setting of proposition~\ref{prop:theta_rate}.
+
+%Let $p(x)$ and $q(x)$ be two members of a family of distributions parametrized by $\theta$. We write
+
+%\[
+%p(x) = \exp( f_{\theta_1}(x)) \quad q(x) = \exp(f_{\theta_0}(x))
+%\]
+
+%We restrict $\theta_1, \theta_0$ to be in some compact set $\Theta \subset \R^{d_\Theta}$. 
+
+%Define the Fisher Information
+%\[
+%G_{\theta} = \int_{-\infty}^{\infty} (\nabla_{\theta} f_{\theta}(x)) 
+%                                    (\nabla_{\theta} f_{\theta}(x))^\tran 
+%                      \exp( f_{\theta}(x)) dx
+%\]
+
+%\begin{enumerate}
+%\item[B1] For all $\theta \in \Theta$, $\liminf_{|x| \rightarrow \infty} \left( g(x) - f_\theta(x) \right) > -\infty$. 
+%\item[B2] We require that Fisher Information is full-ranked.
+%   \[
+% 0<   c_{\min} <  \inf_{\theta} \lambda_{min}(G_\theta) \leq \sup_{\theta} \lambda_{max}(G_{\theta}) < c_{\max} < \infty
+%  \]
+%\item[B3] There is some constant $c > 0$ such that, $\sup_\theta$ $\| \nabla_{\theta} f_{\theta} (x) \|$ is monotonically non-decreasing in $|x|$ for $|x| \geq c$.
+%\item[B4] The following integrability condition holds.
+%  \[
+%   \int_{-\infty}^\infty \sup_{\theta} \| \nabla_{\theta} f_\theta(x) \|^{r \vee \frac{2t}{1-t}} \phi(x) dx < \infty
+%  \] 
+%  \[
+%  \sup_{\theta} \int_{-\infty}^\infty \| \nabla_{\theta} f'_\theta(x) \|^{2t/(1-t)} \phi(x) dx < \infty
+%  \]
+%  \begin{align*}
+%  \sup_{\theta} \int_{-\infty}^\infty | f'_{\theta}(x) |^{2t/(1-t)} \phi(x) &< \infty   \\
+%        \int_{-\infty}^\infty | g'(x) |^{2t/(1-t)} \phi(x) &< \infty   
+%  \end{align*}
+%\item[B5] There is some constant $c' > 0$ such that, for all $\theta$, $f'_\theta(x) \geq g'(x) > 0$ for all $x \leq -c'$ and 
+%          $f'_\theta(x) \leq g'(x) < 0$ for all $x \geq c'$. 
+%\end{enumerate}
+
+%%%%%
+
+First suppose $\| \theta_1 - \theta_0 \| \rightarrow 0$. Then $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \rightarrow 0$ by Lemma~\ref{lem:hellinger_theta_equivalence}. Note that condition A1 follows directly from condition B1 and condition A5 follows directly from condition B5. In Propositions~\ref{prop:interval_existence}, \ref{prop:theta_A3_bound}, ~\ref{prop:theta_A4_bound} below, we establish conditons A2, A3, and A4, respectively.
+
+Now suppose that $\| \theta_1 - \theta_0 \| = \Theta(1)$. Then $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \Theta(1)$ by Lemma~\ref{lem:hellinger_theta_equivalence}. Condition A1' follows directdly from B1, while condition A4' follows directly from condition B5. In Propositions~\ref{prop:interval_existence} with $\rho = \exp(L^{1/r})$, we derive condition A2'. In Proposition~\ref{prop:theta_A4_bound}, we derive condition A3'.
+
+\subsection{Supporting propositions}
+
+\begin{proposition}
+\label{prop:interval_existence}
+Suppose assumption B3, B4 holds. There exists an interval $R \subset \{ x \,:\, \frac{1}{\rho} \leq \left| \frac{p(x)}{q(x)} \right| \leq \rho \}$ such that
+\[
+\Phi \{ R^c \} \leq C \frac{ \| \theta_1 - \theta_0 \|^r }{ (\log \rho)^r } \leq \frac{H^r}{ (\log \rho)^r}
+\]
+where $H \equiv \int (\sqrt{p(x)} - \sqrt{q(x)} )^2 dx$. 
+\end{proposition}
+
+\begin{proof}
+We start with the observation that
+\begin{align*}
+\log \frac{p(x)}{q(x)} &= f_{\theta_1}(x) - f_{\theta_0}(x)\\
+           &= (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}} (x) \\
+| \log \frac{p(x)}{q(x)} | &\leq \| \theta_1 - \theta_0 \| \| \nabla_{\theta} f_{\bar{\theta}} (x) \| \\
+                &\leq  \| \theta_1 - \theta_0 \| \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \|
+\end{align*}
+where $\bar{\theta}$ is some convex combination of $\theta_0, \theta_1$. 
+
+Therefore,  
+$ \{ x \,:\, \frac{1}{\rho} \leq \left| \frac{p(x)}{q(x)} \right| \leq \rho \} 
+         \supset
+   \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \| \leq \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}$ and we take the latter quantity to be $R$. 
+
+$R$ is an interval by B3 for small enough $\| \theta_1 - \theta_0 \|$ or large enough $\rho$.
+
+Since we have that
+
+\[
+ \int_{-\infty}^{\infty} \sup_\theta \| \nabla_{\theta} f_{\theta}(x) \|^{r} \phi(x) dx < \infty
+\]
+
+
+By Markov's inequality, we have
+
+\[
+\Phi \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta}(x) \|  > \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}
+    \leq C \frac{\| \theta_1 - \theta_0 \|^{r}}{(\log \rho)^{r}}
+\]
+
+An application of lemma~\ref{lem:hellinger_theta_equivalence} finishes the proof.
+
+\end{proof}
+
+
+
+
+\begin{proposition}
+\label{prop:theta_A3_bound}
+Suppose assumptions B1-B4 are satisfied. Let $R \subset \R$ be the interval in proposition~\ref{prop:interval_existence}.
+
+Then, we have that,
+
+\[
+\int_R \frac{1}{\alpha} \left| \frac{p(x)}{q(x)} - 1 \right|^r q(x) dx \leq \infty
+\]
+
+\end{proposition}
+
+\begin{proof}
+
+By lemma~\ref{lem:chi_square_theta_equivalence}, we have that $\alpha \asymp \| \theta_1 - \theta_0 \|$. Thus, we need only show that
+\[
+\int_R \frac{1}{\| \theta_0 - \theta_1 \|} \left| \frac{p(x)}{q(x)} - 1 \right|^r q(x) dx \leq \infty
+\]
+
+
+
+
+\begin{align*}
+\frac{1}{\| \theta_1 - \theta_0\|}  \left| \frac{p(x)}{q(x)} - 1 \right| &=
+    \frac{1}{\| \theta_1 - \theta_0\|}  
+        \left| \exp( f_{\theta_1}(x) - f_{\theta_0}(x) ) - 1 \right| \\
+   &=  \frac{1}{\| \theta_1 - \theta_0\|} \Big|(\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x)  \Big|
+      \exp( f_{\bar{\theta}}(x) - f_{\theta_0}(x)) \\
+  &\leq \| \nabla_{\theta} f_{\bar{\theta}}(x) \|   \exp( f_{\bar{\theta}}(x) - f_{\theta_0}(x)) \\
+  &= \|  \nabla_{\theta} f_{\bar{\theta}}(x) \| 
+       \exp\Big( (\bar{\theta} - \theta_1)^\tran \nabla_{\theta} f_{\tilde{\theta}}(x) \Big) \\
+  &\leq  \|  \nabla_{\theta} f_{\bar{\theta}}(x) \| 
+        \exp\Big( \| \theta_1 - \theta_0\| \| \nabla_{\theta} f_{\tilde{\theta}}(x) \| \Big)
+\end{align*}
+
+Where $\bar{\theta}, \tilde{\theta}$ are some convex combinations of $\theta_0, \theta_1$.
+
+Therefore, 
+
+\begin{align*}
+\int_R \left( \frac{1}{\| \theta_1 - \theta_0\|} \left| \frac{p(x)}{q(x)} - 1 \right| \right)^r q(x) dx &\leq
+    \int_R  \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+        \exp\Big( r \| \theta_1 - \theta_0\| \| \nabla_{\theta} f_{\tilde{\theta}}(x) \| \Big)  q(x) dx \\
+  &\leq   \int_R  \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+        e^{r \log \rho}  q(x) dx \\
+  &= \int_{R}  \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+       \rho^r  q(x) d x \\
+  &\leq \rho^r  \int_{-\infty}^{\infty} \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+        q(x) d x  < \infty
+\end{align*}
+
+
+
+\end{proof}
+
+
+
+
+\begin{proposition}
+\label{prop:theta_A4_bound}
+Suppose assumptions B1-B4 are satisfied. Let $R \subset \R$ be the interval in proposition~\ref{prop:interval_existence}.
+
+Then, we have that,
+
+\[
+\int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx < \infty
+\]
+
+\end{proposition}
+
+\begin{proof}
+
+Again, using the fact that $\alpha \asymp \| \theta_1 - \theta_0 \|$, we need only prove that
+\[
+\int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx < \infty
+\]
+
+
+Note that
+\begin{align*}
+\frac{1}{\| \theta_0 - \theta_1 \|} \frac{p'(x) - q'(x)}{q(x)}& = 
+   \frac{1}{\| \theta_0 - \theta_1 \|} \left[
+           f'_{\theta_1} \frac{p(x)}{q(x)} - f_{\theta_0}'(x) \right] \\
+  &= \frac{1}{\|\theta_0 - \theta_1\|} \left\{ 
+          ( f'_{\theta_1}(x) - f'_{\theta_0}(x) ) \frac{p(x)}{q(x)} 
+       + f'_{\theta_0} \left( \frac{p(x)}{q(x)} - 1 \right) \right\} \\
+  &= \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} 
+         + \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right) \\
+\end{align*}
+where $\bar{\theta}$ is some convex combination of $\theta_1, \theta_0$. 
+
+Therefore, we have:
+\begin{align*}
+& \int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx \\
+& =  \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} 
+         + \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{t/(1-t)} \phi(x)dx
+\end{align*}
+
+
+To show that this integral is finite, we need only show, regardless of the value of $t/(1-t)$, that the two components have finite integrals:
+
+\[
+ \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx \quad \trm{ and } \quad
+         \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{t/(1-t)} \phi(x)dx
+\]
+
+
+We bound the first integral.
+
+\begin{align*}
+ \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx &\leq 
+            \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \right|^{t/(1-t)} \rho \phi(x) dx  < \infty
+\end{align*}
+         
+And then the second.
+\begin{align*}
+&  \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{t/(1-t)} \phi(x)dx \\
+    &\leq \int_R | f'_{\theta_0}(x) | 
+             \left|  \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{t/(1-t)} \phi(x) dx \\
+    &\leq \left\{ \int_R  | f'_{\theta_0}(x) |^{2t/(1-t)} \phi(x) dx \right\}^{1/2} 
+         \left\{
+            \int_R
+             \left| \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{2t/(1-t)} \phi(x) dx 
+         \right\}^{1/2} 
+\end{align*}
+
+The first quantity is finite by assumption. A bound for the second quantity follows from proposition~\ref{prop:theta_A3_bound}.
+
+\end{proof}
+
+
+
+\subsection{Supporting lemmas}
+
+\begin{lemma}
+\label{lem:chi_square_theta_equivalence}
+Suppose assumptions B1-B4 hold.
+Let $R$ be the interval in Proposition~\ref{prop:interval_existence}. Define $\alpha = \int_R q(x) \left( \frac{p(x)}{q(x)} - 1 \right)^2 dx$. Then we have that
+\[
+\alpha \asymp \| \theta_1 - \theta_0 \|
+\]
+
+\end{lemma}
+
+\begin{proof}
+
+\begin{align*}
+\alpha^2 &= \int_R \left( \frac{p(x)}{q(x)} - 1 \right)^2 q(x) dx \\
+ &= \int_{R} \left| \exp\Big( f_{\theta_1}(x) - f_{\theta_0}(x) \Big) - 1 \right| 
+            q(x dx \\
+ &= \int_{R} \left( (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x) 
+                            \exp\Big( f_{\bar{\theta}}(x) - f_{\theta_0}(x) \Big) \right)^2 q(x) 
+             dx 
+\end{align*}
+
+First for the upper bound:
+\begin{align*}
+& \leq \int_{R} \| \theta_1 - \theta_0 \|^2 \| \nabla_{\theta} f_{\bar{\theta}}(x)\|^2
+                            \exp\Big( f_{\bar{\theta}}(x) - f_{\theta_0}(x) \Big)
+              \exp( f_{\bar{\theta}}(x) ) dx\\
+& \leq  \int_{R} \| \theta_1 - \theta_0 \|^2 \| \nabla_{\theta} f_{\bar{\theta}}(x)\|^2
+                            \exp\Big( \| \theta_1 - \theta_0\| \|\nabla_{\theta} f_{\tilde{\theta}}(x) \| \Big) 
+              \exp( f_{\bar{\theta}}(x) ) dx
+\end{align*}
+
+Since we are in $R$, we have that $\| \theta_1 - \theta_0\| \sup_\theta \| \nabla_\theta f_{\theta}(x) \| \leq \log \rho$. We can thus continue the bound:
+
+\begin{align*}
+& \leq   \| \theta_1 - \theta_0 \|^2 \int_{R} \| \nabla_{\theta} f_{\bar{\theta}}(x)\|^2
+                           e^{\log \rho}
+              \exp( f_{\bar{\theta}}(x) ) dx\\
+& \leq  \| \theta_1 - \theta_0 \|^2 \rho \int_{-\infty}^\infty \| \nabla_{\theta} f_{\bar{\theta}}(x)\|^2
+              \exp( f_{\bar{\theta}}(x) ) dx \\
+& \lesssim \| \theta_1 - \theta_0 \|^2
+\end{align*}
+
+Now for the lower bound:
+
+\begin{align*}
+\alpha^2 &\geq  \int_{R} \left( (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x) \right)^2
+                            \exp\Big( - |f_{\bar{\theta}}(x) - f_{\theta_0}(x)| \Big)  \exp(f_{\bar{\theta}}(x))
+             dx \\
+  &\geq \int_{R} \left( (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x) \right)^2
+                            \exp\Big( - \|\theta_1 - \theta_0\| \| \nabla_{\theta} f_{\bar{\theta}}(x) \| \Big)  
+          \exp(f_{\bar{\theta}}(x)) dx \\
+  &\geq e^{- C_R}  (\theta_1 - \theta_0)^\tran 
+                \left( \int_{R} ( \nabla_{\theta} f_{\bar{\theta}}(x) ) 
+                                      ( \nabla_{\theta} f_{\bar{\theta}}(x) )^\tran
+                          \exp(f_{\bar{\theta}}(x)) dx \right) (\theta_1 - \theta_0)
+\end{align*}
+
+Define 
+\[
+\tilde{G}_{\theta} =  \int_{R} ( \nabla_{\theta} f_{\bar{\theta}}(x) ) 
+                                      ( \nabla_{\theta} f_{\bar{\theta}}(x) )^\tran
+                          \exp(f_{\bar{\theta}}(x)) dx
+\]
+
+For increasing $\rho$ or as $\| \theta_1 - \theta_0 \| \rightarrow 0$, $R \rightarrow \mathbb{R}$, therefore,
+$\lambda_{min}(\tilde{G}_{\theta}) \rightarrow \lambda_{min}(G_{\theta}) > 0$. 
+
+Hence, $\alpha^2 \gtrsim \| \theta_1 - \theta_0 \|^2$
+
+
+\end{proof}
+
+
+
+
+\begin{lemma}
+\label{lem:hellinger_theta_equivalence}
+Under assumption $D2$, we have that 
+\[
+\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = c \| \theta_0 - \theta_1 \|_2^2
+\]
+where $ c_{\min} \leq c \leq \frac{1}{4} c_{\max} d_{\Theta} $.
+\end{lemma}
+
+\begin{proof}
+
+
+\begin{align*}
+& \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \\
+& = \int q(x) \left(
+        \sqrt{ \frac{p(x)}{q(x)} } - 1 \right)^2 dx \\
+&= \int q(x)
+       \Big( \exp\Big( f_{\theta_1}(x)/2 - f_{\theta_0}(x)/2 \Big) - 1 \Big)^2 dx \\
+\end{align*}
+
+Now, let's look at the exponential term $\exp( f_{\theta_1}(x)/2 - f_{\theta_0}(x)/2 ) - 1$. 
+
+Define $h(\theta) = \exp(f_{\theta}(x)/2 - f_{\theta_0}(x)/2 )$. It is clear that $h(\theta_0) = 1$ and that we wish to bound $h(\theta_1) - h(\theta_0)$. 
+
+\begin{align*}
+h(\theta_1) - h(\theta_0) &= (\theta_1 - \theta_0)^\tran \nabla_{\theta} h(\bar{\theta}) \\
+   &= \frac{1}{2} (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x) 
+             \exp( f_{\bar{\theta}}(x)/2 - f_{\theta_0}(x)/2 )  \\
+| h(\theta_1) - h(\theta_0) | &\leq \frac{1}{2} \| \theta_1 - \theta_0 \| 
+                  \| \nabla_{\theta} f_{\bar{\theta}}(x) \| \exp( f_{\bar{\theta}}(x)/2 - f_{\theta_0}(x)/2 ) 
+\end{align*}
+
+where $\bar{\theta} \in \Theta$ is some convex combination of $\theta_1, \theta_0$.
+
+
+
+Thus, we have that
+\begin{align*}
+\int q(x)
+       \Big( \exp\Big( f_{\theta_1}(x)/2 - f_{\theta_0}(x)/2 \Big) - 1 \Big)^2 dx 
+  &\leq 
+  \int q(x) \frac{1}{4} \| \theta_1 - \theta_0 \|^2 \| \nabla_{\theta} f_{\bar{\theta}}(x) \|^2 
+               \exp( f_{\bar{\theta}}(x) - f_{\theta_0}(x)) dx \\
+  &\leq \frac{1}{4} \| \theta_1 - \theta_0 \|^2 \int  \| \nabla_{\theta} f_{\bar{\theta}}(x) \|^2  
+            \exp( f_{\bar{\theta}} (x)) d x \\
+  &\leq \frac{1}{4}  \| \theta_1 - \theta_0 \|^2 \tr( G_{\bar{\theta}} ) \\
+  &\leq \frac{1}{4}  \| \theta_1 - \theta_0 \|^2 c_{\max} d_{\Theta}
+\end{align*}
+
+
+
+
+
+\begin{align*}
+\int q(x)
+       \Big( \exp\Big( f_{\theta_1}(x)/2 - f_{\theta_0}(x)/2 \Big) - 1 \Big)^2 dx 
+   &= \int \Big( (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}}(x) \Big)^2 
+               \exp(f_{\bar{\theta}}(x))  dx \\
+   &= (\theta_1 - \theta_0)^\tran G_{\bar{\theta}} (\theta_1 - \theta_0)  \\
+   &\geq c_{\min} \| \theta_1 - \theta_0 \|^2
+\end{align*}
+
+
+
+\end{proof}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

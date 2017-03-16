@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: paper.aux
+The style file: plain.bst
+Database file #1: paper.bib
+Warning--empty year in MosEtal12
+You've used 34 entries,
+            2118 wiz_defined-function locations,
+            726 strings with 9406 characters,
+and the built_in function-call counts, 11272 in all, are:
+= -- 1115
+> -- 557
+< -- 4
++ -- 221
+- -- 184
+* -- 804
+:= -- 1912
+add.period$ -- 105
+call.type$ -- 34
+change.case$ -- 189
+chr.to.int$ -- 0
+cite$ -- 35
+duplicate$ -- 416
+empty$ -- 841
+format.name$ -- 184
+if$ -- 2316
+int.to.chr$ -- 0
+int.to.str$ -- 34
+missing$ -- 37
+newline$ -- 174
+num.names$ -- 68
+pop$ -- 176
+preamble$ -- 1
+purify$ -- 158
+quote$ -- 0
+skip$ -- 299
+stack$ -- 0
+substring$ -- 682
+swap$ -- 77
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 130
+warning$ -- 1
+while$ -- 109
+width$ -- 36
+write$ -- 369
+(There was 1 warning)

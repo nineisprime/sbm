@@ -1,0 +1,206 @@
+\section{Proof of Theorem~\ref{thm:lower_bound}}
+\label{sec:lower_bound_proof}
+
+We first state a lemma that gives an alternative characterization of the Renyi divergence. 
+
+\begin{lemma}
+\label{lem:information_equivalence}
+
+Let $P, Q$ be two probability measures on $\R$ absolutely continuous with respect to each other. Suppose that part of $P,Q$ singular to the Lebesgue measure is a point mass at zero, denoted $P_0, Q_0$. 
+
+Define
+\[
+I = - 2 \log \int \left( \frac{dP}{dQ} \right)^{1/2} dQ \qquad 
+D = \inf_{Y \in \mathcal{P}} \max \left\{ \int \log \frac{dY}{dP} dY, \, \int \log \frac{dY}{dQ} dY \right\}
+\]
+where we use $\mathcal{P}$ to denote probability measures absolutely continuous to $P$ (and thus $Q$).
+
+Then, we have that
+\[ 
+I = 2 D 
+\]
+\end{lemma}
+
+
+\begin{proof} 
+
+First, we note that $D$ must be finite since we can substitute $Y = P$ or $Y= Q$. We claim that $D$ is equivalent to the following:
+\begin{align*}
+\inf_{Y \in \mathcal{P}} & \int \log \frac{dY}{dP} dY \\
+  & \int \log \frac{dP}{dQ} dY = 0
+\end{align*}
+
+This is because for any $Y \in \mathcal{P}$ such that $\int \log \frac{dP}{dQ} dY \neq 0$, 
+we have that $\int \log \frac{dY}{dP} dY \neq \int \log \frac{dY}{dQ} dY$. 
+Suppose without loss of generality that the former quantity is larger. 
+Therefore, it is possible to take $\tilde{Y} = (1 - \epsilon) Y + \epsilon P$ for $\epsilon$ small enough such that 
+$ \max \left\{ \int \log \frac{d\tilde{Y}}{dP} d\tilde{Y}, \, \int \log \frac{d\tilde{Y}}{dQ} d\tilde{Y} \right\}$ strictly decreases. 
+
+Since the new optimization is convex in $Y$, we can solve and get $Y_0 = \frac{P_0^{1/2} Q_0^{1/2}}{Z}$ and $(1-Y_0) y(x) = \frac{((1-P_0) \cdot p(x))^{1/2} ((1-Q_0) \cdot q(x))^{1/2}}{Z}$. Here, we denote by $(1-Y_0) y(x), (1-P_0)p(x), (1-Q_0)q(x)$ the Radon-Nikodym derivative of the continuous part of $Y, P, Q$ with respect to the Lebesgue measure. $Z$ is the normalization term: $Z = P_0^{1/2} Q_0^{1/2} + \int \sqrt{ (1-P_0) p(x) (1-Q_0) q(x)} dx$. 
+
+\begin{align*}
+\int \log \frac{dY}{dP} dY  &= \log \frac{1}{Z} \left\{ 
+           \left( \frac{Q_0}{P_0} \right)^{1/2}  Y_0 + \int \left(\frac{(1-P_0) p(x)}{(1-Q_0)q(x)} \right)^{1/2} (1-Y_0) y(x) dx \right\} \\
+  &= \log \frac{dP}{dQ} dY - \log Z \\
+  &= - \log Z 
+\end{align*}
+
+It is straightforward to verify that $-2 \log Z = I$. 
+
+\end{proof}
+
+
+
+
+
+\begin{proof}(of Theorem~\ref{thm:lower_bound})\\
+Throughout this proof, we let $C$ denote a constant whose value may change from line to line. 
+
+Without loss of generality, let us suppose that node 1 was placed in cluster 1, i.e, $\sigma_0(1) = 1$. 
+
+Let $\Phi$ denote the measure on the graph described by the colored SBM. Let $\Psi$ denote a measure on the graph defined as follows:
+
+\begin{enumerate}
+\item If $u,v \neq 1$, then $A_{uv}$ is distributed just as in $\Phi$. 
+\item If $u = 1$ and $v \notin C_1 \cup C_2$, then $A_{1v}$ is distributed just as in $\Phi$.
+\item If $u = 1$ and $v \in C_1 \cup C_2$, then $A_{1v}$ is distributed as $Y$, where $Y$ is the distribution that minimizes $D$ in lemma~\ref{lem:information_equivalence}. ($Y_0 \propto (P_0 Q_0)^{1/2}$ and $(1-Y_0) y(x) \propto \sqrt{(1-P_0)p(x)(1-Q_0) q(x)}$)
+\end{enumerate}
+
+The log-likelihood ratio $\log \frac{d P_{\Psi} }{d P_{\Phi}}$ is 
+\[
+\mathcal{Q} = \sum_{v \neq 1,\, v \in C_1} \log \frac{Y(A_{1v})}{P(A_{1v})} + \sum_{v \neq 1,\, v \in C_2} \log \frac{Y(A_{1v})}{Q(A_{1v})} 
+\]
+
+where we use the notation $P(A_{1v}) = P_0$ if $A_{1v} = 0$ and $P(A_{1v}) = (1-P_0)p(A_{1v})$ if $A_{1v} \neq 0$.
+
+Let $f(n)$ be an arbitrary function and $\hat{\sigma}$ be an arbitrary clustering algorithm. Let $\mathcal{E} = \mathcal{E}(\hat{\sigma}(G))$ and let $v_1$ denote node $1$. 
+
+\[
+P_{\Psi}( \mathcal{Q} \leq f(n) ) = P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) +
+ P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \notin \mathcal{E} )
+\]
+
+The first term can be bounded.
+
+\begin{align*}
+P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) &= \int_{\mathcal{Q} \leq f(n), v_1 \in \mathcal{E}} d P_{\Psi} \\
+    &= \int_{\mathcal{Q} \leq f(n), v_1 \in \mathcal{E}} \exp(\mathcal{Q}) d P_{\Phi} \\
+    &\leq \exp(f(n)) P_{\Phi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) \\
+    &\leq \exp(f(n)) P_{\Phi}(v_1 \in \mathcal{E}) \\
+    &\leq \exp(f(n)) \E_{\Phi}  l(\hat{\sigma}, \sigma_0)
+\end{align*}
+The last inequality follows because  $\E l(\hat{\sigma}(G), \sigma_0) = \frac{1}{n} \sum_{v=1}^n P( v \in \mathcal{E}(\hat{\sigma}(G)) ) = P(v_1 \in \mathcal{E}(\hat{\sigma}(G))$ since the nodes are exchangeable when $\sigma_0$ is drawn uniformly at random. 
+
+
+To bound the second term, note that under $P_{\Psi}$, any clustering algorithm has at most $\frac{1}{K}$ chance of clustering $v_1$ correctly. Thus
+\[
+P_{\Psi}(\mathcal{Q} \leq f(n), v_1 \notin \mathcal{E}) \leq P_{\Psi}(v_1 \notin \mathcal{E}) \leq \frac{1}{2}
+\]
+
+Combining these two bounds, we have that
+\[
+P_{\Psi}(\mathcal{Q} \leq f(n)) \leq \exp(f(n)) \E_{\Phi} l(\hat{\sigma}, \sigma_0) + \frac{1}{2}
+\]
+
+Let $f(n) = \log \frac{1}{4 \E_{\Phi} l(\hat{\sigma}, \sigma_0)}$, then 
+
+\[
+P_{\Psi}\left(\mathcal{Q} \leq \log \frac{1}{4 \E_{\Phi} l(\hat{\sigma}, \sigma_0)} \right) \leq \frac{3}{4}
+\]
+
+From Chebyshev's inequality, we also have that
+\[
+P_{\Psi}\left( \mathcal{Q} \leq \E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})} \right) \geq 4/5
+\]
+
+Hence, we get that $\log \frac{1}{4 \E_{\Phi} l(\hat{\sigma},\sigma_0)} \leq \E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})}$.
+\[
+\E_{\Phi} l(\hat{\sigma}, \sigma_0) \geq \frac{1}{4} \exp\Big( - (\E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})} ) \Big)
+\]
+
+We now just need to compute $\E_{\Psi} \mathcal{Q}$ and $V_{\Psi}(\mathcal{Q})$.
+
+\begin{align*}
+\E_{\Psi} \mathcal{Q} &= \E_{\Psi}  \sum_{v \neq 1,\, v \in C_1} \log \frac{Y(A_{1v})}{P(A_{1v})} + \sum_{v \neq 1,\, v \in C_2} \log \frac{Y(A_{1v})}{Q(A_{1v})}  \\
+     &= (n/K - 1) \int \log \frac{dY}{dP} dY + (n/K) \int \log \frac{dY}{dQ} dY \\
+     &= (n/K - 1/2) 2 D\\
+     &= (n/K - 1/2) I \\
+     &= \frac{nI}{K} (1 + o(1)) 
+\end{align*}
+
+Moving onto the variance term:
+
+\begin{align*}
+V_{\Psi}(\mathcal{Q}) &= \sum_{v \neq 1, v\in C_1} V_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right) +
+                        \sum_{v \neq 1, v\in C_2} V_{\Psi} \left( \log \frac{Y(A_{1v})}{Q(A_{1v})} \right)  \\
+   &\leq (n/K - 1) \E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 + 
+        (n/K) \E_{\Psi} \left( \log \frac{Y(A_{1v})}{Q(A_{1v})} \right)^2 
+\end{align*}
+
+Here, we have that
+\begin{align*}
+\E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 &= 
+    \int \left( \log \frac{dY}{dP} \right)^2 dY \\
+  &= Y_0 \log^2 \frac{Y_0}{P_0} + (1-Y_0) \int y(x) \log^2 \frac{(1-Y_0) y(x)}{(1-P_0)p(x)} dx \\
+\end{align*}
+
+For the first term, observe that $Y_0 = \frac{\sqrt{P_0 Q_0}}{Z} \rightarrow 1$ because $Z \rightarrow 1$ (we assumed that $I = -2\log Z$ is going to 0) and because $P_0, Q_0 \rightarrow 1$.
+
+\begin{align*}
+\left| \log \frac{Y_0}{P_0} \right|&= \left| \frac{1}{2} \log \frac{Q_0}{P_0} - \log Z \right| \\
+    &\leq \frac{1}{2} \left| \log \left( 1 - \frac{P_0 - Q_0}{P_0} \right) \right| + I/2 \\ 
+  &\leq \frac{1}{2} \Delta_0 (1 + o(1)) + I/2 
+\end{align*}
+
+Here, $\Delta_0 = | P_0 - Q_0|$. The last inequality follows because $P_0 \rightarrow 1$ and $P_0 - Q_0 \rightarrow 0$. 
+
+Therefore, 
+\begin{align*}
+Y_0 \log^2 \frac{Y_0}{Q_0}  &\leq \frac{1}{4} ( \Delta_0 + I)^2 (1 + o(1))
+\end{align*}
+
+Suppose $I \leq \Delta_0$, then $(\Delta_0 + I)^2 \leq 4 \Delta_0^2 \leq 4 (\sqrt{P_0} - \sqrt{Q_0})^2 (1 + o(1)) \leq 4 I (1 + o(1))$. The last inequality follows because $I = (\sqrt{P_0} - \sqrt{Q_0})^2 +  (\sqrt{1-P_0} - \sqrt{1-Q_0})^2 + \sqrt{(1-P_0)(1-Q_0)} \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx$. 
+Suppose $I \geq \Delta_0$, then $(\Delta_0 + I)^2 \leq 4 I^2 \leq 4 I ( 1+ o(1))$ because $I \rightarrow 0$. 
+
+Thus, the first term is always bounded by $4 I ( 1 + o(1))$. 
+
+Now we turn our attention to the second term:
+\begin{align*}
+ (1-Y_0) \int y(x) \log^2 \frac{(1-Y_0) y(x)}{(1-P_0)p(x)} dx 
+    &\leq (1 - Y_0) C  \\
+    &\leq (1 - \sqrt{P_0 Q_0})C (1 + o(1)) \\
+    &\leq (1 - P_0) C (1 + o(1))
+\end{align*}
+
+The first inequality follows because $\left| \log \frac{(1-Y_0)y(x)}{(1-P_0)p(x)} \right|$ is bounded by a constant. The second inequality follows because $Y_0 = \frac{\sqrt{P_0 Q_0}}{Z}$ and $Z \rightarrow 1$. The third inequality follows from the assumption that $1 - P_0 \asymp 1 - Q_0$. 
+
+Therefore, we have that
+\begin{align*}
+\E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 \leq C (I + (1- P_0))(1 + o(1)) 
+\end{align*}
+
+\begin{align*}
+\sqrt{ V_{\Psi}( \mathcal{Q}) } \leq \left(\sqrt{\frac{nI}{K}} + \sqrt{ (1 - P_0) \frac{n}{K}} \right) C (1+o(1)) 
+\end{align*}
+
+Suppose $nI/K \rightarrow 0$, then $\sqrt{ nI/K} = o(nI/K)$. Under the assumption in the theorem statement that $H = \omega(\sqrt{ K/n })$ and the fact that 
+ $I = (1+o(1)) \{ (\sqrt{P_0} - \sqrt{Q_0})^2 +  (\sqrt{1-P_0} - \sqrt{1-Q_0})^2 + \sqrt{(1-P_0)(1-Q_0)}H \}$, we have that $\sqrt{\frac{(1-P_0) n}{K}} = o( nI / K)$ as well. Thus, $\sqrt{ 5 V_{\Psi}(\mathcal{Q})}$ is $o( n I/ K)$. 
+
+If $nI/K \rightarrow c < \infty$, then $\E_{\Psi} l(\hat{\sigma}, \sigma_0) > c' > 0$. 
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:
+

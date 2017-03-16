@@ -1,0 +1,186 @@
+\section{Proofs of Theorems~\ref{thm:weighted_sbm_rate1} and Theorem~\ref{thm:weighted_sbm_rate2}}
+\label{sec:transformation_proof}
+
+We now outline the proofs of Theorems~\ref{thm:weighted_sbm_rate1} and~\ref{thm:weighted_sbm_rate2}, with proofs of supporting propositions in the succeeding subsections.
+
+\subsection{Main argument: Proof of Theorem~\ref{thm:weighted_sbm_rate1}}
+\label{AppThmRate1}
+
+First, we claim that the divergence $I$ and $H$ between $p(x), q(x)$ does not change after we apply the transformation $\Phi$. To see this, note that the transformed density $p_{\Phi}(z)$ and $q_{\Phi}(z)$, now supported over $[0,1]$, have the following form:
+\[
+p_{\Phi}(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))} \qquad
+q_{\Phi}(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}
+\]
+
+Therefore, we have, by a change of variable $z = \Phi^{-1}(x)$, that
+\begin{align*}
+\int_\R \sqrt{p(x) q(x)} dx &= \int_0^1 \sqrt{p_{\Phi}(z) q_{\Phi}(z)} dz \\
+\int_\R (\sqrt{p(x)} - \sqrt{q(x)})^2 dx &= \int_0^1 (\sqrt{p_{\Phi}(z)} - \sqrt{ q_{\Phi}(z)})^2 dz 
+\end{align*}
+
+Under A1-A5, Proposition~\ref{prop:transformation1} shows that conditions C1-C5 are also satisfied. Also, under our assumption that $L = o(\frac{1}{H})$, it must be that $L \leq \frac{2}{H}$ for large enough $L$. Therefore, Proposition~\ref{prop:discretization1} applies and we can conclude that after transformation and discretization, the label probabilities $P_l, Q_l$'s satisfy 
+\[
+\frac{1}{2c_0 \rho} \leq \frac{P_l}{Q_l} \leq 2c_0 \rho
+\]
+for all $l$. 
+
+Under our assumption that $L = o(nI)$ and the conclusion from Proposition~\ref{prop:discretization1} that $I_L = I (1 + o(1))$, we know that $L = o(n I_L)$ as well and thus, we can use Proposition~\ref{prop:labeled_sbm_rate} (with $\rho_L = 2 c_0 \rho$) to get that
+
+\[
+\lim_{n \rightarrow \infty} P \left( l(\hat{\sigma}, \sigma_0) \leq \exp \left( - \frac{ n I_L}{ \beta K} (1 + o(1)) \right) \right) \rightarrow 1
+\]
+
+The theorem then follows from the fact that $I_L = I(1+o(1))$. 
+
+\subsection{Main argument: Proof of Theorem~\ref{thm:weighted_sbm_rate2}}
+\label{AppThmRate2}
+
+The proof mirrors that of Theorem~\ref{thm:weighted_sbm_rate2}. First we note again that the divergence $I$ and $H$ does not change after we transform the densities $p(x), q(x)$ into $p_{\Phi}(z)$ and $q_{\Phi}(z)$ with $\Phi$.
+
+Proposition~\ref{prop:transformation2} then shows that assumptions A1'-A4' implies C1'-C4'. Therefore, Proposition~\ref{prop:discretization1} applies and we can conclude that after transformation and discretization, the label probabilities $P_l, Q_l$'s satisfy 
+\[
+\frac{1}{2c_0 \exp(L^{1/r})} \leq \frac{P_l}{Q_l} \leq 2c_0 \exp(L^{1/r})
+\]
+for all $l$ and that $I_L = I(1+o(1))$.
+
+Therefore, we can again use Proposition~\ref{prop:labeled_sbm_rate} (with $\rho_L = 2 c_0 \exp(L^{1/r})$) to conclude that
+\[
+\lim_{n \rightarrow \infty} P \left( l(\hat{\sigma}, \sigma_0) \leq \exp \left( - \frac{ n I_L}{ \beta K} (1 + o(1)) \right) \right) \rightarrow 1
+\]
+The theorem follows from the fact that $I_L = I(1+o(1))$. 
+
+\subsection{Transformation Analysis}
+
+\begin{proposition}
+\label{prop:transformation1}
+Let $p(x), q(x)$ be densities over $\R$ and let $\Phi \,:\, \R \rightarrow [0,1]$ be a CDF. Suppose $p(x), q(x), \Phi$ satisfy the following conditions:
+
+\begin{enumerate}
+\item[A1] Suppose $p(x), q(x) \leq C$ are absolutely continuous.  $\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty$
+\item[A2] There exists $R$ a subinterval of $\R$ such that $\frac{1}{\rho} \leq \frac{p(x)}{q(x)} \leq \rho $ and $\Phi\{R^c\} = o(H)$.
+
+\item[A3] Define $\alpha^2 = \int_R q(x) \left( \frac{p(x) - q(x)}{q(x)} \right)^2 dx$ and $\gamma(x) = \frac{q(x) - p(x)}{\alpha}$. Suppose $\int_R q(x) \left| \frac{\gamma(x)}{q(x)} \right|^r dx  \leq M$ for constants $M, r \geq 4$.
+\item[A4] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{\gamma'(x)}{q(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|  \right\} $. Let $\int_R |h(x)|^{4t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
+\item[A5]  $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$ for a constant $c' > 0$.
+\end{enumerate}
+
+Now we let $p(z), q(z)$ be the $\Phi$-transformed densities over $[0,1]$.
+Then, we have that the following conditions are satisfied for $p(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$ and $q(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$:
+
+\begin{enumerate}
+\item[C1] Suppose $p(z), q(z) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2] There exists $R$ a subinterval of $[0,1]$ such that $\frac{1}{\rho} \leq \left| \frac{p(z)}{q(z)} \right| \leq \rho$ and $\mu\{R^c\} = o(H)$ where $\mu$ is the Lebesgue measure.
+\item[C3] Define $\alpha^2 = \int_R \frac{(p(z) - q(z))^2}{q(z)} dz$ and $\gamma(z) = \frac{q(z) - p(z)}{\alpha}$. Suppose $\int_R q(z) \left| \frac{\gamma(z)}{q(z)} \right|^r dz  \leq M$ for constants $M, r \geq 4$.
+\item[C4] Let $h(z) \geq \sup_n \max \left\{  \left|\frac{\gamma'(z)}{q(z)} \right|, 
+ \left|\frac{q'(z)}{q(z)}\right|  \right\} $. Suppose $\int_R |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C5] For all large enough $L$, we have that for all $z \leq \frac{1}{L}$, $p'(z), q'(z) \geq 0$ and for all $z \geq \Phi(1 - \frac{1}{L})$, we have that $p'(z), q'(z) \leq 0$.
+\end{enumerate}
+
+\end{proposition}
+
+
+\begin{proof}
+
+The first and second claim directly follow from A1 and A2 respectively. The third claim follows from A3 with a change of variable. Therefore, we need only prove the fourth and fifth claim. 
+
+Note that 
+\begin{align*}
+p'(z) = \frac{ p'(\Phi^{-1}(z))  - 
+                     p(\Phi^{-1}(z)) \frac{\phi'(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))} }
+           { \phi^2(\Phi^{-1}(z))}
+\end{align*}
+
+Therefore, $p'(z) \geq 0$ if and only if $p'(x) \geq p(x) \frac{\phi'(x)}{\phi(x)}$. Likewise for $q'(z)$. The fifth claim follows.
+For the fourth claim, note that 
+
+\begin{align*}
+\frac{q'(z)}{q(z)} = \frac{ q'(\Phi^{-1}(z)) }{q(\Phi^{-1}(z))} \frac{1}{ \phi(\Phi^{-1}(z))} - 
+                     \frac{ \phi'(\Phi^{-1}(z)) }{\phi(\Phi^{-1}(z))} \frac{1}{ \phi(\Phi^{-1}(z))} 
+\end{align*}
+By a change of variables, we have that
+
+\begin{align*}
+\int_R \left| \frac{q'(z)}{q(z)} \right|^t dz 
+          &= \int_R \left| \frac{ q'(x) }{q(x)} \frac{1}{ \phi(x)} - 
+                     \frac{ \phi'(x) }{\phi(x)} \frac{1}{ \phi(x)} \right|^t \phi(x) dx \\
+   &\leq  \int_R \left| \frac{ q'(x) }{q(x)} \frac{1}{ \phi(x)} \right|^t \phi(x) dx + 
+         \int_R  \left| \frac{ \phi'(x) }{\phi(x)} \frac{1}{ \phi(x)} \right|^t \phi(x) dx 
+\end{align*}
+
+This is finite since 
+\begin{align*}
+ \int_R \left| \frac{ q'(x) }{q(x)} \frac{1}{ \phi(x)} \right|^t \phi(x) dx &\leq 
+       \left\{ \int_R \left| \frac{ q'(x) }{q(x)} \right|^{\frac{2t}{1-t}} \phi(x) dx \right \}^{(1-t)/2}
+       \left\{ \int_R \phi(x)^{\frac{1-t}{1+t}} dx \right\}^{(1+t)/2} dx
+\end{align*}
+Likewise for the second term.
+
+Finally, we also have
+\begin{align*}
+ \int_R \left| \frac{\gamma'(z)}{q(z)} \right|^t dz &= 
+    \int_R \left| \frac{1}{\alpha} \frac{p'(x) - p(x) \frac{\phi'(x)}{\phi(x)} - q'(x) + q(x) \frac{\phi'(x)}{\phi(x)} }
+                                       {q(x) \phi(x) } \right|^t \phi(x) dx \\
+  &= \int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} 
+                       - \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)} \frac{\phi'(x)}{\phi(x)}\right|^t \left| \frac{1}{\phi(x)} \right|^t \phi(x) dx 
+\end{align*}
+
+By Holder's inequality again, we have 
+\begin{align*}
+\leq \left\{  \int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} 
+                       - \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)} \frac{\phi'(x)}{\phi(x)}\right|^{2t/(1-t)} \phi(x) dx \right\}^{(1-t)/2} 
+ \left\{ \int_R \phi(x)^{\frac{1-t}{1+t}} dx \right\}^{(1+t)/2} 
+\end{align*}
+      
+The latter quantity is finite by assumption. To show that the former quantity is finite, we need only show that
+\[
+ \int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx 
+\] 
+is finite, which is known, and that
+\[
+\int_R \frac{1}{\alpha} \left| \frac{p(x) - q(x)}{q(x)}  \frac{\phi'(x)}{\phi(x)}\right|^{2t/(1-t)} \phi(x) dx
+\]
+is finite, which follows from an application of Cauchy-Schwartz.  
+
+
+
+
+\end{proof}
+
+
+
+\begin{proposition}
+\label{prop:transformation2}
+Suppose that the following assumptions hold:
+\begin{enumerate}
+\item[A1'] Suppose $p(x), q(x) \leq C$ are absolutely continuous.  $\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty$
+\item[A2'] For all large enough $\kappa > 0$, there exists $R$ a subinterval of $\R$ that satisfies $\exp(-\kappa^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(\kappa^{1/r})$ and $\Phi \{ R^c \} \leq \frac{1}{2\kappa}$, where $r > 2$ is a constant.
+\item[A3'] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{p'(x)}{p(x)} \right|, 
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|  \right\} $. Suppose $\int_R |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
+\item[A4']  $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$ for a constant $c' > 0$.
+\end{enumerate}
+
+Now we let $p(z), q(z)$ be the $\Phi$-transformed densities over $[0,1]$.
+Then, we have that the following conditions are satisfied for $p(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$ and $q(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$:
+
+Let $L$ be a sequence such that $L \rightarrow \infty$.
+\begin{enumerate}
+\item[C1'] Suppose $p(z), q(z) \leq C$ on $[0,1]$ and are absolutely continuous.
+\item[C2'] There exists $R$ a subinterval of $\R$ that satisfies $\exp(-L^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(L^{1/r})$ and $\mu \{ R^c \} \leq \frac{1}{2\kappa}$, where $r > 2$ is a constant.
+\item[C3'] Let $h(z) \geq \sup_n \max \left\{  \left|\frac{p'(z)}{p(z)} \right|, 
+ \left|\frac{q'(z)}{q(z)}\right|  \right\} $. Suppose $\int |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K$ intervals for all large enough $\kappa$.  
+\item[C4']  $p'(z), q'(z) \geq 0$ for all $z < \frac{1}{L}$ and $p'(z), q'(z) \leq 0$ for all $z > 1-\frac{1}{L}$. 
+\end{enumerate}
+
+\end{proposition}
+
+\begin{proof}
+
+The proof is identical to that of Proposition~\ref{prop:transformation1}.
+\end{proof}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:
