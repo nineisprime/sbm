@@ -1,12 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  29 APR 2016 14:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  12 JAN 2017 17:28
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**note
-(./note.tex
-LaTeX2e <2014/05/01>
-Babel <3.9k> and hyphenation patterns for 21 languages loaded.
-(/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/article.cls
+**\input note.tex
+(./note.tex (/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
@@ -224,34 +222,58 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutvoffset=\dimen125
 \Gm@dimlist=\toks31
 )
-(./note.aux)
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/algorithmicx/algpseudocode.s
+ty
+Package: algpseudocode 
+
+(/usr/local/texlive/2014basic/texmf-dist/tex/latex/algorithmicx/algorithmicx.st
+y
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count116
+\c@ALG@rem=\count117
+\c@ALG@nested=\count118
+\ALG@tlm=\skip50
+\ALG@thistlm=\skip51
+\c@ALG@Lnr=\count119
+\c@ALG@blocknr=\count120
+\c@ALG@storecount=\count121
+\c@ALG@tmpcounter=\count122
+\ALG@tmplength=\skip52
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (./note.aux
+
+LaTeX Warning: Label `lem:fprime_theta_bound' multiply defined.
+
+)
 \openout1 = `note.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-
-(/usr/local/texlive/2014basic/texmf-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+ (/usr/local/texlive/2014basic/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
+\scratchcounter=\count123
 \scratchdimen=\dimen126
 \scratchbox=\box30
-\nofMPsegments=\count117
-\nofMParguments=\count118
+\nofMPsegments=\count124
+\nofMParguments=\count125
 \everyMPshowfont=\toks32
-\MPscratchCnt=\count119
+\MPscratchCnt=\count126
 \MPscratchDim=\dimen127
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
+\MPnumerator=\count127
+\makeMPintoPDFobject=\count128
 \everyMPtoPDFconversion=\toks33
 ) (/usr/local/texlive/2014basic/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -330,11 +352,11 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 8.
+LaTeX Font Info:    Try loading font information for U+msa on input line 9.
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 8.
+LaTeX Font Info:    Try loading font information for U+msb on input line 9.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -345,165 +367,426 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write3
 \openout3 = `note.toc'.
 
- [2]
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
+ [2] (./sections/intro_sections.tex
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
 
  []
 
-[5] [6]
-Overfull \hbox (39.87277pt too wide) detected at line 273
+[5]) [6] (./sections/discrete_estimation.tex
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--17
+
+ []
+
+
+Overfull \hbox (39.87277pt too wide) detected at line 55
 [] []\OML/cmm/m/it/10 k[] \OMS/cmsy/m/n/10 ^^T [] [] \OT1/cmr/m/n/10 + \OML/cmm
 /m/it/10 ^^Mn [] k \OMS/cmsy/m/n/10 ^^T [] [] \OT1/cmr/m/n/10 + \OML/cmm/m/it/1
 0 ^^Mn [] k \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 C[]^^Mn [] []
  []
 
 [7] [8]
-Overfull \hbox (8.8643pt too wide) in paragraph at lines 379--379
+Overfull \hbox (8.8643pt too wide) in paragraph at lines 162--162
 [] 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 384.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 167.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 384.
- [9] [10]
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 531--532
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 167.
+ [9] [10])
+[11] (./sections/discrete_clustering.tex
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 551--552
+Underfull \hbox (badness 10000) in paragraph at lines 12--13
 
  []
 
-[12] [13] [14] [15]
-Overfull \hbox (23.52202pt too wide) in paragraph at lines 737--737
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+[13] [14] [15] [16]
+Overfull \hbox (23.52202pt too wide) in paragraph at lines 296--296
 [] 
  []
 
-[16]
-Overfull \hbox (46.58806pt too wide) in paragraph at lines 794--794
+[17]
+Overfull \hbox (46.58806pt too wide) in paragraph at lines 353--353
 [] 
  []
 
-[17] [18]
-Overfull \hbox (6.2198pt too wide) in paragraph at lines 884--885
+[18] [19]
+Overfull \hbox (6.2198pt too wide) in paragraph at lines 443--444
 []\OT1/cmr/m/n/10 The fol-low-ing lemma bounds the quan-tity $[] \OMS/cmsy/m/n/
 10 ^^@ \OT1/cmr/m/n/10 1$ for ei-ther the case that $^^A[] \OMS/cmsy/m/n/10 ^^U
  \OML/cmm/m/it/10 C[][]$
  []
 
-[19] [20]
-Underfull \hbox (badness 10000) in paragraph at lines 965--966
+
+Underfull \hbox (badness 10000) in paragraph at lines 447--448
 
  []
 
-[21] [22] [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 1214--1215
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 522--523
 
  []
 
-[25]
-Underfull \hbox (badness 10000) in paragraph at lines 1221--1222
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--536
 
  []
 
-[26]
-Overfull \hbox (4.0306pt too wide) in paragraph at lines 1278--1280
+[22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 626--627
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 628--629
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 662--663
+
+ []
+
+[24]
+Overfull \hbox (26.24097pt too wide) in paragraph at lines 692--693
+[]\OT1/cmr/m/n/10 Since there ex-ists per-mu-ta-tion $\OML/cmm/m/it/10 ^^Y[]$ \
+OT1/cmr/m/n/10 such that $\OML/cmm/m/it/10 d\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^
+^Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^[[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; 
+^^[[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^T []$ \OT1/cmr/m/n/10 and $\OML/cmm/m
+/it/10 ^^Y[]$ \OT1/cmr/m/n/10 such that $\OML/cmm/m/it/10 d\OT1/cmr/m/n/10 (\OM
+L/cmm/m/it/10 ^^Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^[[]\OT1/cmr/m/n/10 )\OML
+/cmm/m/it/10 ; ^^[[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 696--697
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 698--699
+
+ []
+
+) [25] (./sections/initial_clustering.tex [26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 158--159
+
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+[29]) [30] (./sections/compact_continuous.tex
+Overfull \hbox (4.0306pt too wide) in paragraph at lines 19--21
 []\OT1/cmr/bx/n/10 Proposition 8.1. []\OT1/cmr/m/it/10 (Or-a-cle Set-ting Up-pe
 r Bound for Con-tin-u-ous Dis-tri-bu-tions) As-sume $[] \OMS/cmsy/m/n/10 !
  []
 
-[27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 1407--1408
-
- []
-
-[29] [30]
-Underfull \hbox (badness 10000) in paragraph at lines 1487--1488
-
- []
-
-[31] [32] [33] [34] [35]
-Underfull \hbox (badness 10000) in paragraph at lines 1755--1756
+[31] [32]
+Underfull \hbox (badness 10000) in paragraph at lines 125--128
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1783--1785
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
+
+ []
+
+[33] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
+
+ []
+
+[35] [36] [37] [38] [39] [40] [41]
+Underfull \hbox (badness 10000) in paragraph at lines 590--593
 
  []
 
 
-Overfull \hbox (57.9924pt too wide) in paragraph at lines 1798--1798
+Underfull \hbox (badness 10000) in paragraph at lines 631--633
+
+ []
+
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 670--672
+
+ []
+
+[43] [44]
+Overfull \hbox (28.34053pt too wide) detected at line 741
+\OML/cmm/m/it/10 B[] [] \OMS/cmsy/m/n/10 ^^T [] [][] [] j\OML/cmm/m/it/10 x \OM
+S/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 dx \OM
+S/cmsy/m/n/10 ^^T [] [][] [] j\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^@ \OML/cmm/
+m/it/10 x[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 dx \OMS/cmsy/m/n/10 ^^T [] [][] \
+OML/cmm/m/it/10 L[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^@ \O
+ML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 dx \OMS/cmsy/m/n/10 ^^T []
+\OML/cmm/m/it/10 C[]L[]
+ []
+
+
+Overfull \hbox (0.56027pt too wide) in paragraph at lines 754--756
+[]\OT1/cmr/m/n/10 where $\OML/cmm/m/it/10 ^^X[] \OT1/cmr/m/n/10 = [] [][] \OML/
+cmm/m/it/10 ^^M[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c[]\OT1/cmr/m/n/10 )(\OML/cm
+m/m/it/10 x \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 )\OML/cmm/
+m/it/10 dx$\OT1/cmr/m/n/10 . It is straight-for-ward to ver-ify that $\OML/cmm/
+m/it/10 B[] [] \OMS/cmsy/m/n/10 ^^T []\OML/cmm/m/it/10 C[]L[]$\OT1/cmr/m/n/10 .
+ 
+ []
+
+[45]
+Overfull \hbox (14.90858pt too wide) in paragraph at lines 780--780
 [] 
  []
 
-[36] [37] [38] [39] [40]
-Overfull \hbox (37.0046pt too wide) in paragraph at lines 2046--2046
+
+Overfull \hbox (2.04305pt too wide) in paragraph at lines 783--785
+[]\OT1/cmr/m/n/10 We again note that $[] \OMS/cmsy/m/n/10 ^^T []\OML/cmm/m/it/1
+0 L[]$ \OT1/cmr/m/n/10 and $[] \OMS/cmsy/m/n/10 ^^T []\OML/cmm/m/it/10 L[]$\OT1
+/cmr/m/n/10 . Sup-pose $\OML/cmm/m/it/10 L \OMS/cmsy/m/n/10 ^^U [][]$
+ []
+
+[46] [47] [48]
+Underfull \hbox (badness 10000) in paragraph at lines 954--955
+
+ []
+
+[49] [50]
+Underfull \hbox (badness 10000) in paragraph at lines 1084--1085
+
+ []
+
+
+Overfull \hbox (66.33963pt too wide) in paragraph at lines 1121--1121
 [] 
  []
 
-[41]
-Underfull \hbox (badness 10000) in paragraph at lines 2057--2058
+[51]
+
+LaTeX Warning: Reference `prop:full_discretization' on page 52 undefined on inp
+ut line 1135.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1135--1138
 
  []
 
-[42] [43] [44] [45] [46] [47] [48] (./note.bbl) [49] (./note.aux) ) 
+[52]
+Overfull \hbox (39.76105pt too wide) in paragraph at lines 1196--1196
+[] 
+ []
+
+[53]) [54] (./sections/noncompact_continuous.tex [55] [56]
+Overfull \hbox (18.82983pt too wide) in paragraph at lines 152--152
+[] 
+ []
+
+[57] [58] [59]
+Overfull \hbox (59.31886pt too wide) in paragraph at lines 336--336
+[] 
+ []
+
+[60]
+Underfull \hbox (badness 10000) in paragraph at lines 385--386
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 387--388
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 415--416
+
+ []
+
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 436--438
+
+ []
+
+[62] [63] [64] [65] [66]
+Underfull \hbox (badness 10000) in paragraph at lines 783--785
+
+ []
+
+[67]
+Underfull \hbox (badness 10000) in paragraph at lines 879--880
+
+ []
+
+[68]
+Underfull \hbox (badness 10000) in paragraph at lines 933--934
+
+ []
+
+[69] [70] [71]
+Overfull \hbox (57.31139pt too wide) in paragraph at lines 1156--1156
+[] 
+ []
+
+[72]
+Underfull \hbox (badness 10000) in paragraph at lines 1190--1191
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1194--1195
+
+ []
+
+[73] [74]) [75] (./sections/multidistributional.tex
+Overfull \hbox (36.21785pt too wide) in paragraph at lines 41--42
+[]\OT1/cmr/m/n/10 We will let $\OML/cmm/m/it/10 P$ \OT1/cmr/m/n/10 de-note $\OM
+L/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 h\OT1/cmr/m/n/10 )$ and $\OML/
+cmm/m/it/10 Q$ \OT1/cmr/m/n/10 de-note $\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML
+/cmm/m/it/10 h[]\OT1/cmr/m/n/10 )$ so that we have dis-tri-bu-tions $(\OML/cmm/
+m/it/10 P[]; Q[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; :::; \OT1/cmr/m/n/10 (\OML/
+cmm/m/it/10 P[]; Q[]\OT1/cmr/m/n/10 )$.
+ []
+
+
+Overfull \hbox (36.72446pt too wide) in paragraph at lines 41--42
+\OT1/cmr/m/n/10 Un-der this short-hand, we write $\OML/cmm/m/it/10 D[]\OT1/cmr/
+m/n/10 (\OML/cmm/m/it/10 ; P; Q\OT1/cmr/m/n/10 ) = [][] [] []$.
+ []
+
+[76]
+Overfull \hbox (93.2798pt too wide) in paragraph at lines 70--71
+[]\OT1/cmr/m/n/10 Let $\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 p[]\OT1/cmr/m/n/10 (\
+OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; q[]\OT1/cmr/m/n/10 (\OML/c
+mm/m/it/10 x\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 g$ \OT1/cmr/m/n/10 be a se-quence
+ of dis-tri-bu-tions and, for $\OML/cmm/m/it/10 ^^U \OMS/cmsy/m/n/10 2 \OT1/cmr
+/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1)$, de-fine $\OML/cmm/m/it/10 I[]
+ \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [][] \OML/cmm/m/it/10 [] [] [] p[]\OT1
+/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 q[]\OT1/cmr/
+m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 dx$\OT1/cmr/m/n/1
+0 . 
+ []
+
+[77] [78] [79]) [80] (./sections/degree_correct.tex [81]
+Overfull \hbox (84.34767pt too wide) in paragraph at lines 115--115
+[] 
+ []
+
+[82]
+Underfull \hbox (badness 10000) in paragraph at lines 142--145
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--149
+
+ []
+
+
+Overfull \hbox (24.02245pt too wide) in paragraph at lines 187--187
+[] 
+ []
+
+[83] [84]) [85] (./sections/technical.tex [86] [87] [88]) [89] (./note.bbl)
+[90] (./note.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3819 strings out of 494522
- 50842 string characters out of 6167205
- 133640 words of memory out of 5000000
- 6994 multiletter control sequences out of 15000+600000
- 14132 words of font info for 53 fonts, out of 8000000 for 9000
+ 4347 strings out of 494522
+ 59020 string characters out of 6167205
+ 143285 words of memory out of 5000000
+ 7482 multiletter control sequences out of 15000+600000
+ 17812 words of font info for 66 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 38i,19n,37p,690b,299s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/
-texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/lo
-cal/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><
-/usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pf
-b></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxt
-i10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmex10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfont
-s/cmextra/cmex7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014basic/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014basic/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014basic/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014basic/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014basic/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014basic/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014bas
-ic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014
-basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
-2014basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on note.pdf (49 pages, 434085 bytes).
+ 38i,19n,37p,733b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
+0.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx9.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbxti10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/
+public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2014basic/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014basic/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2014basic/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2014basic/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014basic/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014basi
+c/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014b
+asic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/20
+14basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive
+/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texli
+ve/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/tex
+live/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
+exlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local
+/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/lo
+cal/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
+r/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><
+/usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pf
+b></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
+0.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/symb
+ols/msam10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsf
+onts/symbols/msbm10.pfb>
+Output written on note.pdf (90 pages, 613601 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 174 compressed objects within 2 object streams
+ 399 PDF objects out of 1000 (max. 8388607)
+ 278 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
