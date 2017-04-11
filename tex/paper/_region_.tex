@@ -6,7 +6,7 @@
 %Change the tau and other stuff in algorithm descriptions
 
 \RequirePackage[OT1]{fontenc}
-\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb, bbm}
 \RequirePackage{hypernat}
 \usepackage[ruled,section]{algorithm}
 %\usepackage[noend]{algorithmic}
@@ -54,12 +54,15 @@
 
 \begin{document}
 
-\message{ !name(paper_all_in_one.tex) !offset(542) }
+\message{ !name(paper_all_in_one.tex) !offset(2878) }
 
+To prove \textbf{A2'}, we note from previous derivation that
+\[
+\left | \log \frac{p(x)}{q(x)} \right | 
+                &\leq  \| \theta_1 - \theta_0 \| \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \|,
+\]
 
-In this section, we give a lower bound on the performance of any clustering algorithms on the weighted stochastic block model. For technical reasons, we require the likelihood ratio $\frac{p(x)}{q(x)}$ to be bounded instead of approximately bounded as in Assumption A2 or A2'; we conjecture that the bounded likelihood ratio condition can be relaxed but leave its verification to future works. We also take the true clustering $\sigma_0$ to be random in the sense that $\sigma_0 = \sigma'_0 \circ \pi$ where $\sigma'_0 : [n] \rightarrow [K]$ is any fixed clustering and $\pi \in S_n$ is a random permutation on $[n]$. We take $\sigma_0$ to be random so that a clustering algorithm cannot use any prior information on $\sigma_0$; if $\sigma_0$ were fixed, then the algorithm that trivially outputs $\sigma_0$ would have error 0 for example.
-
-\message{ !name(paper_all_in_one.tex) !offset(3456) }
+\message{ !name(paper_all_in_one.tex) !offset(3809) }
 
 \end{document}
 

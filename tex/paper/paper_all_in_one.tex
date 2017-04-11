@@ -6,7 +6,7 @@
 %Change the tau and other stuff in algorithm descriptions
 
 \RequirePackage[OT1]{fontenc}
-\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb, bbm}
 \RequirePackage{hypernat}
 \usepackage[ruled,section]{algorithm}
 %\usepackage[noend]{algorithmic}
@@ -519,9 +519,9 @@ We now state the assumptions we require in the case $H = \Theta(1)$.
 \begin{enumerate}
 \item[A1'] There exists a constant $C >0$ such that $0 \leq p(x), q(x) \leq C$, and $p(x)$ and $q(x)$ are absolutely continuous.  Moreover, we assume that 
 $$\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty.$$
-\item[A2'] For all large enough $\kappa > 0$, there exists a subinterval $R$ of $\R$, and a constant $r > 2$ such that: (a) $\exp(-\kappa^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(\kappa^{1/r})$, and (b) $\Phi \{ R^c \} \leq \frac{1}{2\kappa}.$
+\item[A2'] For some $r > 2$, $\sup_n \int \left| \log \frac{p(x)}{q(x)} \right|^r \phi(x) dx < \infty$.
 \item[A3'] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{\gamma'(x)}{q(x)} \right|, 
- \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|, \left | \frac{\gamma(x)}{q(x)} \right|  \right\} $. Let $\int_R |h(x)|^{4t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|  \right\} $. Let $\int |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.
 \item[A4']  There exists a constant $c'>0$ such that $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$.
 \end{enumerate}
 
@@ -575,9 +575,9 @@ $$G_{\theta} = \int_{-\infty}^{\infty} (\nabla_{\theta} f_{\theta}(x))
 \item[B3] There is some constant $c$ such that $\sup_\theta$ $\| \nabla_{\theta} f_{\theta} (x) \|$ is monotonically non-decreasing in $|x|$ for $|x| \geq c$.
 \item[B4] The following four integrability conditions hold:
   \begin{align*}
-  \int_{-\infty}^\infty \sup_{\theta \in \Theta} \| \nabla_{\theta} f_\theta(x) \|^{r \vee \frac{2t}{1-t}} \phi(x) dx &< \infty\\
-   \sup_{\theta \in \Theta} \int_{-\infty}^\infty \| \nabla_{\theta} f'_\theta(x) \|^{2t/(1-t)} \phi(x) dx &< \infty\\
-  \sup_{\theta \in \Theta} \int_{-\infty}^\infty | f'_{\theta}(x) |^{2t/(1-t)} \phi(x) &< \infty   \\
+  \int_{-\infty}^\infty \sup_{\theta \in \Theta} \| \nabla_{\theta} f_\theta(x) \|^{r \vee \frac{8t}{1-t}} \phi(x) dx &< \infty\\
+   \sup_{\theta \in \Theta} \int_{-\infty}^\infty \| \nabla_{\theta} f'_\theta(x) \|^{4t/(1-t)} \phi(x) dx &< \infty\\
+  \sup_{\theta \in \Theta} \int_{-\infty}^\infty | f'_{\theta}(x) |^{8t/(1-t)} \phi(x) &< \infty   \\
         \int_{-\infty}^\infty | (\log \phi)'(x) |^{2t/(1-t)} \phi(x) &< \infty.  
   \end{align*}
 \item[B5] There is some constant $c' > 0$ such that, for all $\theta$, $f'_\theta(x) \geq (\log \phi)'(x) > 0$ for all $x \leq -c'$ and 
@@ -682,17 +682,17 @@ and that $\frac{1}{4\rho c_0} \leq \frac{P_l}{Q_l} \leq 4\rho c_0$ for all $l$.
 
 \begin{proposition}
 \label{prop:discretization2}
-Let $p(z), q(z)$ be two densities supported on $[0,1]$. Suppose that $H \equiv \int (\sqrt{p(z)} - \sqrt{q(z)})^2 dz = \Theta(1)$. Let $L$ be a sequence such that $L \rightarrow \infty$.
+Let $p(z), q(z)$ be two densities supported on $[0,1]$. Suppose that $H \equiv \int (\sqrt{p(z)} - \sqrt{q(z)})^2 dz = \Theta(1)$.
 \begin{enumerate}
 \item[C1'] Suppose $p(z), q(z) \leq C$ on $[0,1]$ and are absolutely continuous.
-\item[C2'] There exists $R$ a subinterval of $[0,1]$ such that $\exp(-L^{1/r}) \leq \frac{p(z)}{q(z)} \leq \exp(L^{1/r})$ and $\mu\{ R^c \} \leq \frac{1}{2L}$.
+\item[C2'] For some $r > 2$, $sup_n \int \left| \log \frac{p(z)}{q(z)} \right| dz < \infty$.
 \item[C3'] Let $h(z) \geq \sup_n \max \left\{  \left|\frac{p'(z)}{p(z)} \right|, 
  \left|\frac{q'(z)}{q(z)}\right|  \right\} $. Suppose $\int |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$.  
-\item[C4']  $p'(z), q'(z) \geq 0$ for all $z < \frac{1}{L}$ and $p'(z), q'(z) \leq 0$ for all $z > 1-\frac{1}{L}$. 
+\item[C4']  $p'(z), q'(z) \geq 0$ for all $z < c'$ and $p'(z), q'(z) \leq 0$ for all $z > 1-c'$. 
 \end{enumerate}
-Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $\bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(z) dz$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(z) dz$. Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(z) q(z)} dz \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. Then, we have that
- $$\left| \frac{I - I_L}{I} \right| = o(1),$$ 
-and that $\frac{1}{4\rho_L c_0} \leq \frac{P_l}{Q_l} \leq 4\rho_L c_0$ for all $l$. 
+Let $L$ be a sequence such that $L \rightarrow \infty$. Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $\bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $P_l = (1- P_0) \int_{a_l}^{b_l} p(z) dz$ and $Q_l = (1-Q_0)\int_{a_l}^{b_l} q(z) dz$. Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(z) q(z)} dz \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{P_l Q_l} \right)$. Then, we have that
+ $$ \left| \frac{I - I_L}{I} \right| = o(1),$$ 
+and that $\frac{1}{4c_0} \exp(-L^{1/r}) \leq \frac{P_l}{Q_l} \leq 4 c_0 \exp(L^{1/r})$ for all $l$. 
 \end{proposition}
 
 
@@ -1913,7 +1913,7 @@ Let $\sigma, \sigma'$ be two clusters such that, for some constant $C \geq 1$, t
 We include a simple additional lemma.
 \begin{lemma}
 \label{lem:consensus_uniqueness}
-Let $\sigma, \sigma' \,:\, [n] \rightarrow [k]$ be two clusterings where the minimum cluster size of $\sigma$ is $T$. Let $\pi, \xi \in S_k$ be such that
+Let $\sigma, \sigma' \,:\, [n] \rightarrow [K]$ be two clusterings where the minimum cluster size of $\sigma$ is $T$. Let $\pi, \xi \in S_K$ be such that
 \[
 d(\pi(\sigma), \sigma') < T/2 \qquad \text{ and }  \qquad d(\xi(\sigma), \sigma') < T/2
 \]
@@ -2536,18 +2536,34 @@ Suppose $p(x), q(x)$ are supported on $[0,1]$.
 
 \begin{enumerate}
 \item[C1'] Suppose $p(x), q(x) \leq C$ on $[0,1]$ and are absolutely continuous.
-\item[C2'] There exists $R$ a subinterval of $[0,1]$ such that $\exp(-L^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(L^{1/r})$ and $\mu\{ R^c \} \leq \frac{1}{2L}$.
+\item[C2'] For some $r > 2$, $\sup_n \int \left| \log \frac{p(x)}{q(x)} \right|^r dx < \infty$.
 \item[C3'] Let $h(x) \geq \sup_n \max \left\{  \left|\frac{p'(x)}{p(x)} \right|, 
  \left|\frac{q'(x)}{q(x)}\right|  \right\} $. Suppose $\int |h(x)|^t dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$.  
-\item[C4']  $p'(x), q'(x) \geq 0$ for all $x < \frac{1}{L}$ and $ p'(x), q'(x) \leq 0$ for all $x > 1-\frac{1}{L}$. 
+\item[C4']  $p'(x), q'(x) \geq 0$ for all $x < c'$ and $ p'(x), q'(x) \leq 0$ for all $x > 1-c'$ for some $c' > 0$. 
 \end{enumerate}
-Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $\bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $\tilde P_l = (1- P_0) \int_{a_l}^{b_l} p(x) dx$ and $\tilde Q_l = (1-Q_0)\int_{a_l}^{b_l} q(x) dx$. Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{\tilde P_l \tilde Q_l} \right)$. Then, we have that
+Let $L$ be a sequence such that $L \rightarrow \infty$. Suppose $\frac{1}{c_0} \leq \frac{1 - P_0}{1-Q_0} \leq c_0$. Let $\bin_l = [a_l, b_l]$ for $l=1,...,L$ be a uniformly spaced binning of the interval $[0,1]$ and let $\tilde P_l = (1- P_0) \int_{a_l}^{b_l} p(x) dx$ and $\tilde Q_l = (1-Q_0)\int_{a_l}^{b_l} q(x) dx$. Define $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and $I_L = -2 \log \left( \sqrt{P_0 Q_0} + \sum_{l=1}^L \sqrt{\tilde P_l \tilde Q_l} \right)$. Then, we have that
  $$\left| \frac{I - I_L}{I} \right| = o(1),$$ 
-and that $\frac{1}{4\rho_L c_0} \leq \frac{\tilde P_l}{\tilde Q_l} \leq 4\rho_L c_0$ for all $l$. 
+and that $ \exp(-C L^{1/r}) \leq \frac{\tilde P_l}{\tilde Q_l} \leq \exp(C L^{1/r})$ for all $l$. 
 \end{repproposition}
 
 \begin{proof}
-The proof of bounds on $\frac{\tilde P_l}{\tilde Q_l}$ is exactly as in Proposition~\ref{prop:discretization2}, and we omit it here. The rest of the proof also follows that of Proposition~\ref{prop:discretization1}, except the final step where we need to show that
+
+
+First we prove the bounds on $\frac{\tilde P_l}{\tilde Q_l}$. Define 
+
+$$R = \left \{ x \in [0,1] \,:\, \left| \log \frac{p(x)}{q(x)} \right| \leq C (2L)^{1/r} \right \}$$. 
+
+where $C = \left( \int \left| \log \frac{p(x)}{q(x)} \right|^r dx \right)^{1/r}$ is a constant. 
+
+Since $\int \left| \log \frac{p(x)}{q(x)} \right|^r dx < \infty$, we have, by Markov Inequality, that
+\[
+\mu\{ R^c \} \leq \frac{1}{2L} 
+\]
+
+The rest of the proof proceeds exactly as in Proposition~\ref{prop:discretization2}, and we omit it here. 
+
+
+The proof  also follows that of Proposition~\ref{prop:discretization1}, except the final step where we need to show that
 $$\left| \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \right| = o(\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx) = o(1).$$
 We establish this fact in Proposition~\ref{prop:H_HL_convergence2} in Appendix~\ref{appendix: another saturday}.
 \end{proof}
@@ -2556,7 +2572,7 @@ We establish this fact in Proposition~\ref{prop:H_HL_convergence2} in Appendix~\
 \subsection{Appendix for Proposition~\ref{prop:discretization2}} \label{appendix: another saturday}
 \begin{proposition}
 \label{prop:H_HL_convergence2}
-Let assumptions C1, C3 be satisfied. Let $\bin_l = [a_l, b_l]$ be a uniform binning of $[0,1]$ for $l=1,..,L$ and let $P_l = \int_{\bin_l} p(x) dx$ and $Q_l = \int_{\bin_l} q(x) dx$. Then, we have that
+Let assumptions C1', C3' be satisfied. Let $\bin_l = [a_l, b_l]$ be a uniform binning of $[0,1]$ for $l=1,..,L$ and let $P_l = \int_{\bin_l} p(x) dx$ and $Q_l = \int_{\bin_l} q(x) dx$. Then, we have that
 \[
 \left| \int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx - \sum_l (\sqrt{P_l} - \sqrt{Q_l})^2 \right| \rightarrow 0.
 \]
@@ -2578,15 +2594,15 @@ the exponent $\tau$ will be chosen later to balance two error terms. We will now
 \sum_{l \in \left \{ l \,:\, \sup_{x \in \bin_l} |h(x)| 
            \geq L^\tau \right \}}  B_l &\leq 
    \mu \left( \left\{x \,:\, \sup_{x \in \bin_l} |h(x)|
-         \geq L^\tau \right\} \right) + 2 K C_\bin L^{-1} \\
-  &\leq M' L^{-\tau t}  + 2K C_\bin L^{-1} \\
-  & \leq C_{M', K} L^{ - \tau t}. 
+         \geq L^\tau \right\} \right) + 2 K_h C_\bin L^{-1} \\
+  &\leq M' L^{-\tau t}  + 2K_h C_\bin L^{-1} \\
+  & \leq C_{M', K_h} L^{ - \tau t}.  
 \end{align*}
 The last inequality follows because $t \leq 1$ and thus $\tau t < 1$ and so the first term dominates. The second inequality follows from the assumption C3'. We can now bound the number of bad bins: 
 \begin{align*}
 \# \{ l \,:\, |h(x)| \geq L^\tau \} \leq \frac{C_{M', K} L^{- \tau t} L}{C_\bin}  \leq C_{M',K} L^{1 - \tau t}.
 \end{align*}
-For a bad bin, we can bound $P_l, Q_l \leq C_\bin C L^{-1}$ and $\int_{\bin_l} (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \leq 2 L^{-1} C C_\bin $.
+For a bad bin, we can bound $P_l, Q_l \leq C C_\bin L^{-1}$ and $\int_{\bin_l} (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \leq 2 L^{-1} C C_\bin  $.
 
 Now we consider a good bin $l$. Let $x_l$ be $\argmax_{x \in \bin_l} p(x)$. The argmax is attainable since $p$ is continuous and $p(x_l) < \infty$ since $p$ is bounded.
 \begin{align*}
@@ -2608,7 +2624,7 @@ Q_l = B_l q(x'_l) + B_l^2 \xi'_l,
 \]
 where $\xi'_l = \frac{1}{B_l} \int_{a_l}^{b_l} q'(c_x) (x - x'_l) dx$. We can also bound 
 \[
-B_l \left| \frac{\xi'_l}{q(x'_l)} \right| \leq \frac{1}{2} C_\bin L^{\tau - 1}.
+B_l \left| \frac{\xi'_l}{q(x'_l)} \right| \leq \frac{1}{2}  L^{\tau - 1}.
 \]
 Thus, we have that
 \begin{align*}
@@ -2623,13 +2639,13 @@ By our bounds on $ B_l \frac{\xi_l}{p(x_l)} $ and $B_l  \frac{\xi'_l}{q(x'_l)}$,
 \begin{align*}
  \sqrt{ (1 + B_l \frac{\xi_l}{p(x_l)} ) 
          (1 + B_l \frac{\xi'_l}{q(x'_l)} ) } &\leq \sqrt{ 1 + C_\bin L^{\tau - 1} (1+o(1))} \\
-   &\leq 1 + \frac{1}{2} C_\bin L^{\tau - 1} (1 + o(1)).
+   &\leq 1 + \frac{1}{2}  L^{\tau - 1} (1 + o(1)).
 \end{align*}
 It is clear that $B_l \sqrt{p(x_l)q(x'_l)} \leq B_l C$. Therefore, we have that
 \begin{align}
 \label{eqn:discrete_riemann_bound2}
 \left| \sqrt{ P_l Q_l} -  \sqrt{ p(x_l) q(x'_l)} B_l \right| \leq 
-     B_l C C_\bin L^{\tau - 1}(1 + o(1))
+     B_l C  L^{\tau - 1}(1 + o(1))
 \end{align}
 Likewise, we have that 
 \begin{align*}
@@ -2642,11 +2658,11 @@ Likewise, we have that
 \end{align*}
 We have that 
 \begin{align*}
-\left| (x - x_l) \frac{p'(c_x)}{p(x_l)} \right| \leq B_l \left| \frac{ p'(c_x)}{p(c_x)} \right| &\leq C_\bin L^{\tau - 1}, 
+\left| (x - x_l) \frac{p'(c_x)}{p(x_l)} \right| \leq B_l \left| \frac{ p'(c_x)}{p(c_x)} \right| &\leq L^{\tau - 1}, 
 \end{align*}
 and
 \begin{align*}
-\left| (x - x_l) \frac{q'(c'_x)}{q(x_l)} \right| \leq B_l \left| \frac{ q'(c'_x)}{q(c'_x)} \right| \leq C_\bin L^{\tau - 1} .
+\left| (x - x_l) \frac{q'(c'_x)}{q(x_l)} \right| \leq B_l \left| \frac{ q'(c'_x)}{q(c'_x)} \right| \leq L^{\tau - 1} .
 \end{align*}
 Therefore, we can bound the nuisance term:
 \begin{align*}
@@ -2745,7 +2761,7 @@ Then, we have that the following conditions are satisfied for $p_\Phi(z) = \frac
 
 \begin{enumerate}
 \item[C1] We have $p_\Phi(z), q_\Phi(z) \leq C$ on $[0,1]$ and are absolutely continuous.
-\item[C2] There exists $R$ a subinterval of $[0,1]$ such that $\frac{1}{\rho} \leq \left| \frac{p_\Phi(z)}{q_\Phi(z)} \right| \leq \rho$ and $\mu\{R^c\} = o(H)$ where $\mu$ is the Lebesgue measure.
+\item[C2] There exists $R_\Phi$ a subinterval of $[0,1]$ such that $\frac{1}{\rho} \leq \frac{p_\Phi(z)}{q_\Phi(z)} \leq \rho$ for all $z \in \R_\Phi$ and $\mu\{R_\Phi^c\} = o(H)$ where $\mu$ is the Lebesgue measure.
 \item[C3] Define $\alpha^2 = \int_R \frac{(p_\Phi(z) - q_\Phi(z))^2}{q_\Phi(z)} dz$ and $\gamma_\Phi(z) = \frac{q_\Phi(z) - p_\Phi(z)}{\alpha}$. Then $\int_R q_\Phi(z) \left| \frac{\gamma_\Phi(z)}{q_\Phi(z)} \right|^r dz  \leq M$ for constants $M, r \geq 4$.
 \item[C4] Let $h(z) = \sup_n \max \left\{  \left|\frac{\gamma'_\Phi(z)}{q_\Phi(z)} \right|, 
  \left|\frac{q'_\Phi(z)}{q_\Phi(z)}\right|  \right\} $. Then $\int_R |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Additionally, the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$.  
@@ -2757,13 +2773,24 @@ Then, we have that the following conditions are satisfied for $p_\Phi(z) = \frac
 
 \begin{proof}
 
-The first and second claim directly follow from A1 and A2 respectively. The third claim follows from A3 with a change of variable. Therefore, we need only prove the fourth and fifth claim. We prove that C5 holds first. Note that 
+\textbf{C1} follows from A1 and the condition that $\phi$ is positive and continuous. \\
+
+To prove \textbf{C2}, assume A2 is true and let $R$ be a subinterval of $\R$ such that $\frac{1}{\rho} \leq \frac{p(x)}{q(x)} \leq \rho$. Define $R_{\Phi} = \left\{ z \in [0,1] \,:\, \Phi^{-1}(z) \in R \right\}$, that is, $\mathbf{1}_{R_\Phi}(z) = \mathbf{1}_R(\Phi^{-1}(z))$. It is then clear that $R_{\Phi}$ is an interval and that $\Phi\{ R^c \} = \mu\{ R_{\Phi}^c \}$ where $\mu$ is the Lebesgue measure. 
+
+ 
+\textbf{C3} follows from A3 with a change of variable. 
+
+
+Therefore, we need only prove C4 and C5. We prove that \textbf{C5} holds first. Note that 
 \begin{align*}
 p'_\Phi(z) = \frac{ p'(\Phi^{-1}(z))  - 
                      p(\Phi^{-1}(z)) \frac{\phi'(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))} }
            { \phi(\Phi^{-1}(z))}.
 \end{align*}
-Therefore, $p'_\Phi(z) \geq 0$ if and only if $p'(x) \geq p(x) \frac{\phi'(x)}{\phi(x)}$. Likewise for $q'_\Phi(z)$. Claim C5 follows. For C4, note that 
+Therefore, $p'_\Phi(z) \geq 0$ if and only if $p'(x) \geq p(x) \frac{\phi'(x)}{\phi(x)}$. Likewise for $q'_\Phi(z)$. Claim C5 follows. 
+
+
+For \textbf{C4}, note that 
 \begin{align*}
 \frac{q'_\Phi(z)}{q_\Phi(z)} = \frac{ q'(\Phi^{-1}(z)) }{q(\Phi^{-1}(z))} \frac{1}{ \phi(\Phi^{-1}(z))} - 
                      \frac{ \phi'(\Phi^{-1}(z)) }{\phi(\Phi^{-1}(z))} \frac{1}{ \phi(\Phi^{-1}(z))}.
@@ -2793,7 +2820,7 @@ and each of the two terms in the product are finite by A4. Finally, we also have
                        - \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)} \frac{\phi'(x)}{\phi(x)}\right|^{2t/(1-t)} \phi(x) dx \right\}^{(1-t)/2} 
  \left\{ \int_R \phi(x)^{\frac{1-t}{1+t}} dx \right\}^{(1+t)/2}, 
 \end{align*}
-where we use Holder's inequality in step $(a)$. Using A4 again, we see that it is enough to show the finiteness of
+where we use Holder's inequality in step $(a)$. The second term is finite by A4. To show that the first term is finite, we need only show the finiteness of
 \[
  \int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx, 
 \] 
@@ -2801,7 +2828,17 @@ and
 \[
 \int_R  \left| \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)}  \frac{\phi'(x)}{\phi(x)}\right|^{2t/(1-t)} \phi(x) dx.
 \]
-The former is finite by A4, and the latter is finite by Cauchy-Schwartz and A4.
+
+The former follows from A4. To bound the latter term, we use Cauchy-Schwartz inequality:
+\begin{align*}
+& \int_R  \left| \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)}  \frac{\phi'(x)}{\phi(x)}\right|^{2t/(1-t)} \phi(x) dx \\
+& =  \left\{ \int_R  \left| \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)}  \right|^{4t/(1-t)} \phi(x) dx 
+     \right\}
+   \left\{    \int_R \left| \frac{\phi'(x)}{\phi(x)}\right|^{4t/(1-t)} \phi(x) dx \right\}
+\end{align*}
+
+Both of the decomposed terms are finite by A4.
+
 \end{proof}
 
 
@@ -2811,27 +2848,27 @@ The former is finite by A4, and the latter is finite by Cauchy-Schwartz and A4.
 Suppose that the following assumptions hold:
 \begin{enumerate}
 \item[A1'] Suppose $p(x), q(x) \leq C$ are absolutely continuous.  $\lim_{|x| \rightarrow \infty} \sup_n \frac{p(x) \vee q(x)}{\phi(x)} < \infty$
-\item[A2'] For all large enough $\kappa > 0$, there exists $R$ a subinterval of $\R$ that satisfies $\exp(-\kappa^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(\kappa^{1/r})$ and $\Phi \{ R^c \} \leq \frac{1}{2\kappa}$, where $r > 2$ is a constant.
+\item[A2'] For some $r > 2$, $\sup_n \int \left| \log \frac{p(x)}{q(x)} \right|^r \phi(x) dx < \infty$.
 \item[A3'] {Let $h(x) \geq \sup_n \max \left\{  \left|\frac{p'(x)}{p(x)} \right|, 
- \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right|, \left| \frac{\gamma(x)}{q(x)}\right| \right\} $. Suppose $\int_R |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.}
+ \left|\frac{q'(x)}{q(x)}\right|, \left| \frac{\phi'(x)}{\phi(x)}\right| \right\} $. Suppose $\int |h(x)|^{2t/(1-t)} \phi(x) dx \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Suppose also that the level set $\{x \,:\, |h(x)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$. Suppose $\int \phi(x)^{\frac{1-t}{1+t}} dx < \infty$.}
 \item[A4']  $(\log p)'(x), (\log q)'(x) \geq (\log \phi)'(x) \geq 0$ for all $x < -c'$ and $ (\log p)'(x), (\log q)'(x) \leq (\log \phi)'(x) \leq 0$ for all $x > c'$ for a constant $c' > 0$.
 \end{enumerate}
 
 Now we let $p_\Phi(z), q_\Phi(z)$ be the $\Phi$-transformed densities over $[0,1]$.
-Then, we have that the following conditions are satisfied for $p_\Phi(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$ and $q_\Phi(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$, for a sequence $L$ such that $L \rightarrow \infty$:
+Then, we have that the following conditions are satisfied for $p_\Phi(z) = \frac{p(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$ and $q_\Phi(z) = \frac{q(\Phi^{-1}(z))}{\phi(\Phi^{-1}(z))}$:
 \begin{enumerate}
 \item[C1'] We have $p_\Phi(z), q_\Phi(z) \leq C$ on $[0,1]$ and are absolutely continuous.
-\item[C2'] There exists $R$ a subinterval of $\R$ that satisfies $\exp(-L^{1/r}) \leq \frac{p(x)}{q(x)} \leq \exp(L^{1/r})$ and $\mu \{ R^c \} \leq \frac{1}{2L}$, where $r > 2$ is a constant.
+\item[C2'] For some $r > 2$, $\sup_n \int \left| \log \frac{p_\Phi(z)}{q_\Phi(z)} \right|^r dz < \infty$.
 \item[C3'] Let $h(z) = \sup_n \max \left\{  \left|\frac{p'_\Phi(z)}{p_\Phi(z)} \right|, 
  \left|\frac{q'_\Phi(z)}{q_\Phi(z)}\right|  \right\} $. Then $\int |h(z)|^t dz \leq M'$ for some constant $M'$ and $1 \geq t \geq 2/r$. Additionally, the level set $\{z \,:\, |h(z)| \geq \kappa\}$ is a union of at most $K_h$ intervals for all large enough $\kappa$.  
-\item[C4']  We have that $p'_\Phi(z), q'_\Phi(z) \geq 0$ for all $z < \frac{1}{L}$ and $p'_\Phi(z), q'_\Phi(z) \leq 0$ for all $z > 1-\frac{1}{L}$. 
+\item[C4']  We have that $p'_\Phi(z), q'_\Phi(z) \geq 0$ for all $z < c'$ and $p'_\Phi(z), q'_\Phi(z) \leq 0$ for all $z > 1-c'$ for a constant $1/2 > c' > 0$. 
 \end{enumerate}
 
 \end{proposition}
 
 \begin{proof}
-
 The proof is identical to that of Proposition~\ref{prop:transformation1}.
+
 \end{proof}
 
 
@@ -2855,64 +2892,17 @@ The proof is identical to that of Proposition~\ref{prop:transformation1}.
 \section{Proof of Proposition~\ref{prop:theta_rate}}
 \label{sec:theta_rate_proof}
 
-%We first review the setting of proposition~\ref{prop:theta_rate}.
 
-%Let $p(x)$ and $q(x)$ be two members of a family of distributions parametrized by $\theta$. We write
+First suppose $\| \theta_1 - \theta_0 \| \rightarrow 0$. In Lemma~\ref{lem:hellinger_theta_equivalence}, we show that in this case $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \rightarrow 0$. Condition \textbf{A1} follows directly from condition B1 and condition \textbf{A5} follows directly from condition B5. 
 
-%\[
-%p(x) = \exp( f_{\theta_1}(x)) \quad q(x) = \exp(f_{\theta_0}(x))
-%\]
+We now prove \textbf{A2}. Let $\rho$ be an constant and define 
+\begin{align}
+R = \left\{ x \,:\, \sup_\theta \| \nabla_\theta f_\theta(x) \| 
+      \leq \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}  \label{eqn:parametric_R_defn}
+\end{align}
 
-%We restrict $\theta_1, \theta_0$ to be in some compact set $\Theta \subset \R^{d_\Theta}$. 
+From B3, we conclude that, for large enough $\rho$, $R$ is an interval. 
 
-%Define the Fisher Information
-%\[
-%G_{\theta} = \int_{-\infty}^{\infty} (\nabla_{\theta} f_{\theta}(x)) 
-%                                    (\nabla_{\theta} f_{\theta}(x))^\tran 
-%                      \exp( f_{\theta}(x)) dx
-%\]
-
-%\begin{enumerate}
-%\item[B1] For all $\theta \in \Theta$, $\liminf_{|x| \rightarrow \infty} \left( g(x) - f_\theta(x) \right) > -\infty$. 
-%\item[B2] We require that Fisher Information is full-ranked.
-%   \[
-% 0<   c_{\min} <  \inf_{\theta} \lambda_{min}(G_\theta) \leq \sup_{\theta} \lambda_{max}(G_{\theta}) < c_{\max} < \infty
-%  \]
-%\item[B3] There is some constant $c > 0$ such that, $\sup_\theta$ $\| \nabla_{\theta} f_{\theta} (x) \|$ is monotonically non-decreasing in $|x|$ for $|x| \geq c$.
-%\item[B4] The following integrability condition holds.
-%  \[
-%   \int_{-\infty}^\infty \sup_{\theta} \| \nabla_{\theta} f_\theta(x) \|^{r \vee \frac{2t}{1-t}} \phi(x) dx < \infty
-%  \] 
-%  \[
-%  \sup_{\theta} \int_{-\infty}^\infty \| \nabla_{\theta} f'_\theta(x) \|^{2t/(1-t)} \phi(x) dx < \infty
-%  \]
-%  \begin{align*}
-%  \sup_{\theta} \int_{-\infty}^\infty | f'_{\theta}(x) |^{2t/(1-t)} \phi(x) &< \infty   \\
-%        \int_{-\infty}^\infty | g'(x) |^{2t/(1-t)} \phi(x) &< \infty   
-%  \end{align*}
-%\item[B5] There is some constant $c' > 0$ such that, for all $\theta$, $f'_\theta(x) \geq g'(x) > 0$ for all $x \leq -c'$ and 
-%          $f'_\theta(x) \leq g'(x) < 0$ for all $x \geq c'$. 
-%\end{enumerate}
-
-%%%%%
-
-First suppose $\| \theta_1 - \theta_0 \| \rightarrow 0$. In Lemma~\ref{lem:hellinger_theta_equivalence}, we show that in this case $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx \rightarrow 0$. Condition A1 follows directly from condition B1 and condition A5 follows directly from condition B5. In Propositions~\ref{prop:interval_existence}, \ref{prop:theta_A3_bound}, ~\ref{prop:theta_A4_bound} below, we establish conditions A2, A3, and A4, respectively.
-
-When $\| \theta_1 - \theta_0 \| = \Theta(1)$, Lemma~\ref{lem:hellinger_theta_equivalence} implies that $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \Theta(1)$. Condition A1' follows directdly from B1, while condition A4' follows directly from condition B5. In Proposition~\ref{prop:interval_existence} with $\rho = \exp(L^{1/r})$, we derive condition A2'. In Proposition~\ref{prop:theta_A4_bound}, we derive condition A3'.
-
-\subsection{Supporting propositions}
-
-\begin{proposition}
-\label{prop:interval_existence}
-Suppose assumptions B1-B5 hold. There exists an interval $R \subset \{ x \,:\, \frac{1}{\rho} \leq \left| \frac{p(x)}{q(x)} \right| \leq \rho \}$ such that
-\[
-\Phi \{ R^c \} \leq C \frac{ \| \theta_1 - \theta_0 \|^r }{ (\log \rho)^r } \leq \frac{H^r}{ (\log \rho)^r},
-\]
-where $H \equiv \int (\sqrt{p(x)} - \sqrt{q(x)} )^2 dx$. 
-\end{proposition}
-
-\begin{proof}
-We start with the observation that
 \begin{align*}
 \log \frac{p(x)}{q(x)} &= f_{\theta_1}(x) - f_{\theta_0}(x)\\
            &= (\theta_1 - \theta_0)^\tran \nabla_{\theta} f_{\bar{\theta}} (x).
@@ -2922,27 +2912,43 @@ This implies
 \left | \log \frac{p(x)}{q(x)} \right | &\leq \| \theta_1 - \theta_0 \| \| \nabla_{\theta} f_{\bar{\theta}} (x) \| \\
                 &\leq  \| \theta_1 - \theta_0 \| \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \|,
 \end{align*}
-where $\bar{\theta}$ is some convex combination of $\theta_0, \theta_1$. Therefore,  
-$ \{ x \,:\, \frac{1}{\rho} \leq \left| \frac{p(x)}{q(x)} \right| \leq \rho \} 
-         \supset
-   \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \| \leq \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}$ and we take the latter quantity to be $R$. By B3, this set $R$ is an interval for small enough $\| \theta_1 - \theta_0 \|$ or large enough $\rho$. Since we have that
+where $\bar{\theta}$ is some convex combination of $\theta_0, \theta_1$. Therefore, for all $ x \in
+  \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \| \leq \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}$, we have that $\frac{1}{\rho} \leq \frac{p(x)}{q(x)} \leq \rho$.
+
+Since we have, from assumption B4, that
 \[
  \int_{-\infty}^{\infty} \sup_\theta \| \nabla_{\theta} f_{\theta}(x) \|^{r} \phi(x) dx < \infty,
 \]
 by Markov's inequality, we have
+\begin{align*}
+\Phi(R^c) &= \Phi \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta}(x) \|  
+    > \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\} 
+    \leq C \frac{\| \theta_1 - \theta_0 \|^{r}}{(\log \rho)^{r}} 
+    \stackrel{(a)}= \Theta( H^{r/2} ) = o(H)
+\end{align*}
+where $(a)$ follows from Lemma~\ref{lem:hellinger_theta_equivalence}. The last equality follows from the assumption that $r > 2$. This proves A2.
+
+Proposition~\ref{prop:theta_A3_bound} proves \textbf{A3}. 
+
+Proposition~\ref{prop:theta_A4_bound} proves \textbf{A4}.\\
+
+Now suppose $\| \theta_1 - \theta_0 \| = \Theta(1)$. Lemma~\ref{lem:hellinger_theta_equivalence} implies that $\int (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = \Theta(1)$. Condition \textbf{A1'} follows directdly from B1, while condition \textbf{A4'} follows directly from condition B5. 
+
+To prove \textbf{A2'}, we note from previous derivation that
 \[
-\Phi(R^c) = \Phi \left\{ x \,:\, \sup_\theta \| \nabla_{\theta} f_{\theta}(x) \|  > \frac{\log \rho}{\| \theta_1 - \theta_0 \|} \right\}
-    \leq C \frac{\| \theta_1 - \theta_0 \|^{r}}{(\log \rho)^{r}} \stackrel{(a)}= o(H),
+\left | \log \frac{p(x)}{q(x)} \right | 
+                \leq  \| \theta_1 - \theta_0 \| \sup_\theta \| \nabla_{\theta} f_{\theta} (x) \|,
 \]
-where $(a)$ follows $r \geq 4$, $\rho > 1$,  and from Lemma~\ref{lem:hellinger_theta_equivalence}.
-\end{proof}
+A2' directly follows from B4.
 
+\textbf{A3'} follows from proposition~\ref{prop:theta_A4_bound2}
 
+\subsection{Supporting propositions}
 
 
 \begin{proposition}
 \label{prop:theta_A3_bound}
-Suppose assumptions B1-B5 are satisfied. Let $R \subset \R$ be the interval in Proposition~\ref{prop:interval_existence}. Then, we have that,
+Suppose assumptions B1-B5 are satisfied. Let $R \subset \R$ be defined in equation~\ref{eqn:parametric_R_defn}. Then, we have that,
 \[
 \int_R \frac{1}{\alpha^r} \left| \frac{p(x)}{q(x)} - 1 \right|^r q(x) dx \leq \infty.
 \]
@@ -2979,27 +2985,50 @@ Where $\bar{\theta}, \tilde{\theta}$ are some convex combinations of $\theta_0, 
   &= \int_{R}  \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
        \rho^r  q(x) d x \\
   &\leq \rho^r  \int_{-\infty}^{\infty} \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
-        q(x) d x \\
-   &\stackrel{(b)} < \infty,
+        q(x) d x \\ 
+  &\lesssim \int_{-\infty}^{\infty} \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+        \frac{q(x)}{\phi(x)} \phi(x) d x \\
+  &\stackrel{(b)} \lesssim  \int_{-\infty}^{\infty} \|  \nabla_{\theta} f_{\bar{\theta}}(x) \|^r
+          \phi(x) d x
 \end{align*}
-where $(a)$ follows from the definition of $R$ and $(b)$ follows from assumptions B1 and B4.
+where $(a)$ follows from the definition of $R$. $(b)$ follows because of B1, which implies that $\frac{q(x)}{\phi(x)}$ is bounded. 
+
 \end{proof}
 
 
 
 \begin{proposition}
 \label{prop:theta_A4_bound}
-\textcolor{red}{Suppose assumptions B1-B4 are satisfied. Let $R \subset \R$ be the interval in Proposition~\ref{prop:interval_existence}. Then, we have that,
-\[
-\int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} \right|^{t/(1-t)} \phi(x) dx < \infty.
-\]
-}
+Suppose assumptions B1-B4 are satisfied. Let $R \subset \R$ be defined in equation~\ref{eqn:parametric_R_defn}. Then, we have that,
+\begin{align*}
+\int_R \left| \frac{1}{\alpha} \frac{p(x) - q(x)}{q(x)} \right|^{8t/(1-t)} \phi(x) dx &< \infty \\
+\int_R \left| \frac{1}{\alpha} \frac{p'(x) - q'(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx &< \infty.
+\end{align*}
+
 \end{proposition}
+
 \begin{proof}
-\textcolor{red}{Something's wrong here. Exponent needs to be $4t/(1-t)$, which leads to changes in assumptions B1-B5. Also, assumption A4 was modified. That also needs to be incorporated into the proof.}
-Note that we only need to prove assumption A4 for functions $\left| \frac{\gamma'(x)} {q(x)}\right|$ and $\left| \frac{\gamma(x)}{q(x)} \right|$, since assumption B4 takes care of the rest. We first consider $\left| \frac{\gamma'(x)} {q(x)}\right|$. Using the fact that $\alpha \asymp \| \theta_1 - \theta_0 \|$, we need only prove that
+The proof of the first inequality follows that of proposition~\ref{prop:theta_A3_bound}. By lemma~\ref{lem:chi_square_theta_equivalence}, we have that $\alpha \asymp \| \theta_0 - \theta_1 \|$. Thus, we need only bound
 \[
-\int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx < \infty.
+\int_R \left( \frac{1}{\| \theta_1 - \theta_0\|} 
+        \left| \frac{p(x)}{q(x)} - 1 \right| \right)^{8t/(1-t)} \phi(x) dx
+\]
+
+Following the proof of proposition~\ref{prop:theta_A3_bound}, we have that
+
+\begin{align*}
+\int_R \left( \frac{1}{\| \theta_1 - \theta_0\|} 
+        \left| \frac{p(x)}{q(x)} - 1 \right| \right)^{8t/(1-t)} \phi(x) dx
+  &\leq \rho^{8t/(1-t)} \int_{-\infty}^\infty \| \nabla_\theta f_{\bar{\theta}}(x) \|^{8t/(1-t)} \phi(x) dx\\
+  & \stackrel{(a)} \leq \infty.
+\end{align*}
+
+where $(a)$ follows from B4. 
+
+
+We now consider the second inequality. Using the fact that $\alpha \asymp \| \theta_1 - \theta_0 \|$, we need only prove that
+\[
+\int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx < \infty.
 \]
 Note that
 \begin{align*}
@@ -3014,34 +3043,59 @@ Note that
 \end{align*}
 where $\bar{\theta}$ is some convex combination of $\theta_1, \theta_0$. Therefore, we have:
 \begin{align*}
-& \int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx \\
+& \int_R \left| \frac{1}{\| \theta_1 - \theta_0\| } \frac{p'(x) - q'(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx \\
 & =  \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} 
-         + \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{2t/(1-t)} \phi(x)dx.
+         + \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{4t/(1-t)} \phi(x)dx.
 \end{align*}
 To show that this integral is finite, we need only show, regardless of the value of $2t/(1-t)$, that the two components have finite integrals:
 \[
- \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx < \infty \quad \trm{ and } \quad
-         \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{2t/(1-t)} \phi(x)dx < \infty.
+ \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx < \infty \quad \trm{ and } \quad
+         \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{4t/(1-t)} \phi(x)dx < \infty.
 \]
 We bound the first integral as follows:
 \begin{align*}
- \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{2t/(1-t)} \phi(x) dx &\leq 
-            \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \right|^{2t/(1-t)} \rho \phi(x) dx  \stackrel{(a)}< \infty,
+ \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \frac{p(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx &\leq 
+            \int_R \left|  \nabla_{\theta} f'_{\bar{\theta}}(x) \right|^{4t/(1-t)} \rho \phi(x) dx  \stackrel{(a)}< \infty,
 \end{align*}
 where $(a)$ follows from assumption B4.  For the second term, we simplify as follows:
 \begin{align*}
-&  \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{2t/(1-t)} \phi(x)dx \\
-    &\leq \int_R | f'_{\theta_0}(x) |^{2t/(1-t)}
-             \left|  \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{2t/(1-t)} \phi(x) dx \\
-    &\leq \left\{ \int_R  | f'_{\theta_0}(x) |^{4t/(1-t)} \phi(x) dx \right\}^{1/2} 
+&  \int_R \left| \frac{1}{\| \theta_1 - \theta_0\|} f'_{\theta_0}(x) \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{4t/(1-t)} \phi(x)dx \\
+    &\leq \int_R | f'_{\theta_0}(x) |^{4t/(1-t)}
+             \left|  \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{4t/(1-t)} \phi(x) dx \\
+    &\leq \left\{ \int_R  | f'_{\theta_0}(x) |^{8t/(1-t)} \phi(x) dx \right\}^{1/2} 
          \left\{
             \int_R
-             \left| \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{4t/(1-t)} \phi(x) dx 
+             \left| \frac{1}{\| \theta_1 - \theta_0\|}  \left( \frac{p(x)}{q(x)} - 1 \right)  \right|^{8t/(1-t)} \phi(x) dx 
          \right\}^{1/2} 
 \end{align*}
 
 The first quantity is finite by assumption. A bound for the second quantity follows from proposition~\ref{prop:theta_A3_bound}.
 \end{proof}
+
+
+\begin{proposition}
+\label{prop:theta_A4_bound2}
+Suppose assumption B4 is satisfied. Then, we have that,
+
+\begin{align*}
+\int \left| \frac{q'(x)}{q(x)} \right|^{4t/(1-t)} \phi(x) dx &< \infty \\
+\int \left| \frac{\phi'(x)}{\phi(x)} \right|^{4t/(1-t)} \phi(x) dx &< \infty 
+\end{align*}
+
+\end{proposition}
+
+\begin{proof}
+
+The second bound follows directly from assumption B4.
+
+\begin{align*}
+\frac{q'(x)}{q(x)} = f'_{\theta}(x)
+\end{align*}
+
+Therefore, the first bound also follows from assumption B4. 
+
+\end{proof}
+
 
 
 
@@ -3162,8 +3216,110 @@ where $\Theta \subset \mathbb R^{d_\Theta}$. To get an upper bound,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Proof of Theorem~\ref{thm:lower_bound}}
+\section{Appendix for Theorem~\ref{thm:lower_bound}}
 \label{sec:lower_bound_proof}
+
+
+\subsection*{Properties of Permutation Invariant Estimators}
+
+Permutation invariant estimators possess symmetry properties. The next lemma formalizes one symmetry property useful for the proof of theorem~\ref{thm:lower_bound}. 
+
+We will need to define new notation first. Let $\hat{\sigma}$ be a clustering algorithm and $A$ be a weighted network so that $\hat{\sigma}(A) \,:\, [n] \rightarrow [K]$ is the clustering outputted by $\hat{\sigma}$ when given $A$ as input. 
+
+Define 
+\[
+S_K[ \hat{\sigma}(A), \sigma_0] = \argmin_{\rho \in S_K} d_H(\rho \circ \hat{\sigma}(A), \sigma_0) 
+\] 
+as the set of permutations over the $K$ cluster labels that minimize the Hamming distance between $\hat{\sigma}(A)$ and $\sigma_0$ and define
+
+\begin{align}
+\mathcal{E}[ \hat{\sigma}(A), \sigma_0] = \Big\{ v \,:\, (\rho \circ \hat{\sigma}(A))(v) \neq  \sigma_0(v),\, 
+          \exists \rho \in S_K[\hat{\sigma}(A), \sigma_0]   \Big\} \label{eqn:error_set_defn}
+\end{align}
+When $S_K[\hat{\sigma}(A), \sigma_0]$ is a singleton, $\mathcal{E}[\hat{\sigma}(A), \sigma_0]$ represent the set of nodes mis-clustered by $\hat{\sigma}(A)$ where we use $\sigma_0$ as the true clustering. However, when $S_K[\hat{\sigma}(A), \sigma_0]$ contains multiple elements, the notion of whether a node is mis-clustered or not becomes ambiguous. We choose, for simplicity, to call node $v$ mis-clustered if for any $\rho \in S_K[\hat{\sigma}(A), \sigma_0$, $(\rho \circ \hat{\sigma}(A))(v) \neq \sigma_0(v)$.
+
+
+
+
+
+\begin{lemma}
+\label{lem:permutation_invariance_symmetry}
+Let the true clustering $\sigma_0$ be arbitrary, the weighted matrix $A$ be drawn from an arbitrary probability measure, $\hat{\sigma}$ be any permutation invariant estimator. Let $u,v$ be two nodes such that there exists a permutation $\pi \in S_n$ where (1) $\pi(u) = v$ , (2) $\pi$ is measure preserving, i.e., $A$ and $\pi(A)$ have the same measure, and (3) $\pi$ preserves true clustering, i.e., there exists $\tau \in S_K$ such that $\tau \circ \sigma_0 \circ \pi^{-1} = \sigma_0$. Then, we have that
+
+\[
+P( u \in \mathcal{E}[\hat{\sigma}(A), \sigma_0]) = P( v \in \mathcal{E}[\hat{\sigma}(A), \sigma_0] )
+\]
+\end{lemma}
+
+\begin{proof}
+
+Since $A$ and $\pi A$ follow the same distribution, we have that
+\[
+P \Big(v \in \mathcal{E}[\hat{\sigma}(A), \sigma_0 ] \Big) = 
+       P \Big(v \in \mathcal{E}[\hat{\sigma}(\pi A), \sigma_0] \Big) 
+\]
+
+Now, let $A$ be arbitrarily fixed. Let $\tau$ be the permutation in $S_K$ such that $\tau \circ \sigma_0 \circ \pi^{-1} = \sigma_0$. Let $\xi \in S_K$ be the permutation such that $\hat{\sigma}(\pi A) = \xi \circ \hat{\sigma}(A) \circ \pi^{-1}$. Let $\rho \in S_K$ be an arbitrary permutation. Then, 
+\begin{align*}
+d_H(\rho \circ \hat{\sigma}(A), \sigma_0) &= 
+      d_H( \tau \circ \rho \circ \xi^{-1} \circ \xi \circ \hat{\sigma}(A) \circ \pi^{-1}, \tau \circ \sigma_0 \circ \pi^{-1} ) \\
+  &= d_H( \tau \circ \rho \circ \xi^{-1} \circ \hat{\sigma}(\pi A), \sigma_0)
+\end{align*}
+where the second equality follows from the assumption that $\hat{\sigma}$ is permutation invariant.
+
+Therefore, we have that if $\rho^* \in \argmin_{\rho \in S_K} d_H(\rho \circ \hat{\sigma}(A), \sigma_0)$, 
+then $\tau \circ \rho^* \circ \xi^{-1} \in \argmin_{\rho \in S_K} d_H( \rho \circ \hat{\sigma}(\pi A), \sigma_0)$.
+
+Without loss of generality, let $\argmin_{\rho \in S_K} d(\rho \circ \hat{\sigma}(A), \sigma_0)$ include the identity map so that $\tau \circ \xi^{-1} \in \argmin_{\rho \in S_K} d( \rho \circ \hat{\sigma}( \pi A), \sigma_0)$.
+
+Suppose $v \in \mathcal{E}[\hat{\sigma}(\pi A), \sigma_0]$, which, by definition, means that $\tau \circ \xi^{-1} \circ \hat{\sigma}(\pi A)(v) \neq \sigma_0(v)$. 
+
+\begin{align*}
+\hat{\sigma}(A)(u) &= \hat{\sigma}(A)(\pi^{-1}(v)) \\
+   &= \tau^{-1} \circ \tau \circ \xi^{-1} \circ \xi \circ \hat{\sigma}(A) \circ \pi^{-1} (v) \\
+   &\stackrel{(a)} = \tau^{-1} \circ \tau \circ \xi^{-1} \circ \hat{\sigma}( \pi A) (v) \\
+   &\neq \tau^{-1} \circ \sigma_0(v) \\
+   &= \tau^{-1} \circ \sigma_0( \pi( u )) \\
+   &\stackrel{(b)} = \sigma_0(u)
+\end{align*}
+where $(a)$ follows from the assumption that $\hat{\sigma}$ is permutation-invariant, and $(b)$ follows because $\tau \circ \sigma_0 \circ \pi^{-1} = \sigma_0$ implies that $\sigma_0 = \tau^{-1} \circ \sigma_0 \circ \pi$.
+
+Thus, $v \in \mathcal{E}[ \hat{\sigma}(\pi A), \sigma_0]$ implies that $\hat{\sigma}(A)(u) \neq \sigma_0(u)$ and $u \in \mathcal{E}[ \hat{\sigma}(A), \sigma_0]$. 
+Same reasoning shows that if $u \in \mathcal{E}[ \hat{\sigma}(A), \sigma_0]$ implies that $v \in \mathcal{E}[\hat{\sigma}(\pi A), \sigma_0]$.
+
+Therefore, 
+\begin{align*}
+P( u \in \mathcal{E}[\hat{\sigma}(A), \sigma_0] ) &= P( v \in \mathcal{E}[ \hat{\sigma}(\pi A), \sigma_0] ) \\
+     &= P( v \in \mathcal{E}[\hat{\sigma}(A), \sigma_0] 
+\end{align*}
+
+\end{proof}
+
+
+\begin{corollary}
+\label{cor:permutation_invariance_symmetry_sbm}
+
+Let the true cluster assignment $\sigma_0$ be arbitrary, the weighted matrix $A$ be drawn from the weighted SBM, and $\hat{\sigma}$ be any permutation invariant estimator. Let $u,v$ be two nodes such that $u$ and $v$ are in equally sized clusters. Then,
+\[
+P( u \in \mathcal{E}[\hat{\sigma}(A), \sigma_0]) = P( v \in \mathcal{E}[\hat{\sigma}(A), \sigma_0] )
+\]
+\end{corollary}
+
+\begin{proof}
+
+By Lemma~\ref{lem:permutation_invariance_symmetry}, we just have to produce a permutation $\pi \in S_n$ such that $\pi(u) = v$, $A$ and $\pi A$ are identically distributed, and that there exists $\tau \in S_K$ such that $\tau \circ \sigma_0 \circ \pi^{-1} = \sigma_0$.
+
+In the first case, let us suppose that $u, v$ are in the same cluster. Then we let $\pi$ be the permutation that swaps only $u$ and $v$, i.e., $\pi(u) = v$, $\pi(v) = u$, $\pi(v') = v'$ for all $v' \neq u,v$. The 3 necessary properties are easily verified with $\tau$ as the identity.
+
+In the second case, let us suppose that, without loss of generality, $u$ is in cluster 1 and $v$ is in cluster 2 where cluster 1 and 2 are equally sized. Then we let $\pi$ be the permutation that swaps all the nodes in cluster 1 with all the nodes in cluster 2 leaving every other nodes unchanged. The 3 necessary properties are also easily verified with $\tau$ as the permutation that swaps only label 1 and 2. 
+
+\end{proof}
+
+
+\subsection*{Properties of the Renyi Divergence}
+
+
+
 
 We first state a lemma that gives an alternative characterization of the Renyi divergence. 
 
@@ -3201,77 +3357,277 @@ It is straightforward to verify that $-2 \log Z = I$.
 \end{proof}
 
 
-Throughout this proof, we let $C$ denote a $\Theta(1)$ sequence whose value may change from instance to instance. Without loss of generality, let us suppose that cluster 1 and 2 are the two smallest clusters, each of size $\frac{n}{\beta K}$. 
-Let us condition on the event that node 1 was placed in cluster 1, i.e, $\sigma_0(1) = 1$. Let $C_i = \{x : \sigma_0(x) = i\}$ be the $i$-th community. Let $\Phi$ denote the measure on the graph described by the weighted SBM. Let $\Psi$ denote a measure on the graph defined as follows:
+
+
+\subsection*{Proof of Theorem~\ref{thm:lower_bound}}
+\label{sec:actual_lower_bound_proof}
+Throughout this proof, we let $C$ denote a $\Theta(1)$ sequence whose value may change from instance to instance. 
+
+
+Define
+\[
+\tilde{l}(\hat{\sigma}(A), \sigma_0) = \frac{1}{n} 
+     \sum_{v=1}^n \mathbbm{1}\{ v \in \mathcal{E}[\hat{\sigma}(A), \sigma_0 \},
+\]
+where $\mathcal{E}[\hat{\sigma}(A), \sigma_0]$ is defined in equation~\ref{eqn:error_set_defn}. Suppose the following are true:
+
+\begin{align}
+\trm{if $\frac{nI}{K} \rightarrow \infty$}, & \quad 
+       \E \tilde{l}(\hat{\sigma}(A), \sigma_0) \geq \exp \left( - (1+o(1)) \frac{nI}{\beta K} \right) 
+    \label{eqn:tilde_l_bound1} \\
+\trm{if $\frac{nI}{K} \leq c < \infty$}, &\quad 
+       \E \tilde{l}(\hat{\sigma}(A), \sigma_0) \geq c' > 0 \quad \trm{ for some constants $c, c'$}
+    \label{eqn:tilde_l_bound2}
+\end{align}
+
+then, we claim that the theorem holds. To see this, suppose first that equation~\ref{eqn:tilde_l_bound1} is true and suppose that $\frac{nI}{K} \rightarrow \infty$. We perform case analysis on the probability that $l(\hat{\sigma}(A), \sigma_0)$ is large.
+
+\textbf{Case 1:} $P\left( l(\hat{\sigma}(A), \sigma_0) \geq \frac{1}{2\beta K} \right) \geq \frac{1}{2} \E \tilde{l}(\hat{\sigma}(A), \sigma_0)$. In this case, we have that
+\begin{align*}
+\E l(\hat{\sigma}(A), \sigma_0) &\geq \frac{1}{2 \beta K} P\left( l(\hat{\sigma}(A), \sigma_0) \geq \frac{1}{2\beta K} \right) \\
+     & \geq \frac{1}{2 \beta K}  \E \tilde{l}(\hat{\sigma}(A), \sigma_0) \\
+     &\geq \frac{1}{2 \beta K} \exp \left( - (1+o(1)) \frac{nI}{\beta K} \right) \\
+     &\geq \exp \left( - (1+o(1)) \frac{nI}{\beta K} \right) 
+\end{align*}
+\textbf{Case 2:}  $P\left( l(\hat{\sigma}(A), \sigma_0) \geq \frac{1}{2\beta K} \right) < \frac{1}{2} \E \tilde{l}(\hat{\sigma}(A), \sigma_0)$. In this case, we have that
+\begin{align*}
+\E l(\hat{\sigma}(A), \sigma_0) &\geq \E\left[ l(\hat{\sigma}(A), \sigma_0) 
+       \given l(\hat{\sigma}(A), \sigma_0) < \frac{1}{2 \beta K} \right] 
+         P\left(  l(\hat{\sigma}(A), \sigma_0) < \frac{1}{2 \beta K} \right) \\
+  &= \E\left[ \tilde{l}(\hat{\sigma}(A), \sigma_0) 
+       \given l(\hat{\sigma}(A), \sigma_0) < \frac{1}{2 \beta K}\right]
+         P\left(  l(\hat{\sigma}(A), \sigma_0) < \frac{1}{2 \beta K} \right) \\
+  &= \E \tilde{l}(\hat{\sigma}(A), \sigma_0) -  
+      \E\left[ \tilde{l}(\hat{\sigma}(A), \sigma_0) 
+       \given l(\hat{\sigma}(A), \sigma_0) \geq \frac{1}{2 \beta K} \right] 
+         P\left(  l(\hat{\sigma}(A), \sigma_0) \geq \frac{1}{2 \beta K} \right) \\
+  &\geq \E \tilde{l}(\hat{\sigma}(A), \sigma_0) - \frac{1}{2}  \E \tilde{l}(\hat{\sigma}(A), \sigma_0) \\
+  &= \frac{1}{2}  \E \tilde{l}(\hat{\sigma}(A), \sigma_0) \\
+  &\geq \exp\left( - (1 + o(1)) \frac{nI}{\beta K} \right)
+\end{align*}
+
+
+
+
+Without loss of generality, let us suppose that cluster 1 and 2 are the two smallest clusters, where cluster 1 is of size $\frac{n}{\beta K} + 1$ and cluster 2 is of size $\frac{n}{\beta K}$. Let us suppose that node $1$ is assigned to cluster $1$, i.e., $\sigma_0(1)= 1$ and $\sigma_0(2) = 2$. Let $C_i = \{u : \sigma_0(u) = i\}$ denote the $i$-th community. For convenience, let us use $v_1$ to denote node 1.\\
+
+
+Let $\sigma_0^1  = \sigma_0$ and $\sigma_0^2 \,:\, [n] \rightarrow [K]$ be a cluster assignment that differ with $\sigma_0$ only on node $v_1$. That is, $\sigma_0^2(v) = \sigma_0(v)$ for all $v \neq v_1$ and $\sigma_0^2(v_1) = 2$. 
+
+
+Let $\sigma^*$ be a random cluster assignment where 
+\[
+\sigma^* = \left \{
+     \begin{array}{cc}
+     \sigma^1_0  &  \trm{ with $1/2$ probability} \\
+     \sigma^2_0 & \trm{with $1/2$ probability}
+    \end{array} \right.
+\]
+
+
+Let $\Phi$ denote the probability measure on $(\sigma^*, A, \hat{\sigma}(A))$ defined as
+\[
+P_{\Phi}(\sigma^*, A, \hat{\sigma}(A)) = P(\sigma^*) P_{SBM}(A \given \sigma^*) P_{alg}( \hat{\sigma}(A) \given A) 
+\]
+where $P_{SBM}( A \given \sigma^*)$ is the measure on the weighted graph defined by the weighted SBM treating $\sigma^*$ as the true cluster assignment, and $P_{alg}$ represent any randomness in the clustering algorithm.
+
+
+Let $\Psi$ denote an alternative probability measure as such:
+\[
+P_{\Psi} (A, \hat{\sigma}(A)) = P(\sigma^*) P_{\Psi}(A  \given \sigma^*) P_{alg}( \hat{\sigma}(A) \given A) 
+\]
+where $P_{\Psi}( A \,;\, \sigma_0)$ is defined as such:
 \begin{enumerate}
-\item If $u,v \neq 1$, then $A_{uv}$ is distributed just as in $\Phi$. 
-\item If $u = 1$ and $v \notin C_1 \cup C_2$, then $A_{1v}$ is distributed just as in $\Phi$.
-\item If $u = 1$ and $v \in C_1 \cup C_2$, then $A_{1v}$ is distributed as $Y$, where $Y$ is the distribution that minimizes $D$ in Lemma~\ref{lem:information_equivalence}; i.e., $Y_0 \propto (P_0 Q_0)^{1/2}$ and $(1-Y_0) y(x) \propto \sqrt{(1-P_0)p(x)(1-Q_0) q(x)}$.
+\item If $u,v \neq v_1$, then $A_{uv}$ is distributed just as in $P_{SBM}( A \given \sigma^*)$. 
+\item If $v = v_1$ and $u \notin C_1 \cup C_2$, then $A_{uv}$ is distributed just as in $P_{SBM}( A \given \sigma^*)$.
+\item If $v = v_1$ and $u \in C_1 \cup C_2$, then $A_{uv}$ is distributed as $Y$, where $Y$ is the distribution that minimizes $D$ in Lemma~\ref{lem:information_equivalence}; i.e., $Y_0 \propto (P_0 Q_0)^{1/2}$ and $(1-Y_0) y(x) \propto \sqrt{(1-P_0)p(x)(1-Q_0) q(x)}$.
 \end{enumerate}
+
+Note that $P_{\Psi}(A \given \sigma^*) = P_{\Psi}(A)$ actually does not depend on the outcome of $\sigma^*$. 
+
+
+
 The log-likelihood ratio $\log \frac{d P_{\Psi} }{d P_{\Phi}}$ is 
-\[
-\mathcal{Q} = \sum_{v \neq 1,\, v \in C_1} \log \frac{Y(A_{1v})}{P(A_{1v})} + \sum_{v \neq 1,\, v \in C_2} \log \frac{Y(A_{1v})}{Q(A_{1v})} 
-\]
-where we use the notation $P(A_{1v}) = P_0$ if $A_{1v} = 0$ and $P(A_{1v}) = (1-P_0)p(A_{1v})$ if $A_{1v} \neq 0$. Let $f(n)$ be an arbitrary function and $\hat{\sigma}$ be an arbitrary clustering algorithm. Let $\mathcal{E} = \mathcal{E}(\hat{\sigma}(G))$ be the set of vertices which are incorrectly clustered by $\hat \sigma$, and let $v_1$ denote node $1$. We have the equality
-\[
-P_{\Psi}( \mathcal{Q} \leq f(n) ) = P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) +
- P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \notin \mathcal{E} )
-\]
+\begin{align*}
+\mathcal{Q} =& \log \frac{d P_{\Psi}}{d P_{\Phi}} \\
+      = & \log \frac{ d P_{SBM}(A \given \sigma^*)}{ d P_{\Psi} (A \given \sigma^*)} \\
+      =& \sum_{u \in C_{\sigma^*(v_1)}} \log \frac{Y(A_{u v_1})}{P(A_{u v_1})} + \sum_{u \in C_1 \cup C_1 - C_{\sigma^*(v_1)}  } \log \frac{Y(A_{u v_1})}{Q(A_{u v_1})}  
+\end{align*}
+
+where we use the notation $P(A_{uv_1}) = P_0$ if $A_{uv_1} = 0$ and $P(A_{uv_1}) = (1-P_0)p(A_{uv_1})$ if $A_{uv_1} \neq 0$. 
+
+Let $f(n)$ be an arbitrary function. Also, define $E$ as the event
+ 
+$$E = \Big\{ v_1 \notin\mathcal{E}[\hat{\sigma}(A), \sigma^*] \trm{ and } \tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} \Big\}$$ 
+where $\mathcal{E}[\hat{\sigma}(A), \sigma^*]$ is the set of vertices which are incorrectly clustered by $\hat \sigma(A)$. We have the equality
+\begin{align}
+P_{\Psi}( \mathcal{Q} \leq f(n) ) =& P_{\Psi}( \mathcal{Q} \leq f(n),\, \neg E) + P_{\Psi}( \mathcal{Q} \leq f(n),\, E)  \nonumber\\
+  =&
+  \underbrace{P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}[\hat{\sigma}(A), \sigma^*] 
+       \trm{ or } \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K}    )}_{\textrm{First term}} \nonumber \\
+& +  
+ \underbrace{P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma^*] 
+        \trm{ and } \tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} )}_{\textrm{Second term}} \label{eqn:psi_Q_bound}
+\end{align}
 We first bound the first term as follows:
 \begin{align*}
-P_{\Psi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) &= \int_{\mathcal{Q} \leq f(n), v_1 \in \mathcal{E}} d P_{\Psi} \\
-    &= \int_{\mathcal{Q} \leq f(n), v_1 \in \mathcal{E}} \exp(\mathcal{Q}) d P_{\Phi} \\
-    &\leq \exp(f(n)) P_{\Phi}( \mathcal{Q} \leq f(n), v_1 \in \mathcal{E}) \\
-    &\leq \exp(f(n)) P_{\Phi}(v_1 \in \mathcal{E}) \\
-    &\leq \exp(f(n)) \E_{\Phi}  l(\hat{\sigma}, \sigma_0).
+P_{\Psi}( \mathcal{Q} \leq f(n), \neg E) &= \int_{\mathcal{Q} \leq f(n), \neg E} d P_{\Psi} \\
+    &= \int_{\mathcal{Q} \leq f(n), \neg E} \exp(\mathcal{Q}) d P_{\Phi} \\
+    &\leq \exp(f(n)) P_{\Phi}( \mathcal{Q} \leq f(n), \neg E) \\
+    &\leq \exp(f(n)) P_{\Phi}(\neg E) \\
+    &= \exp(f(n)) P_{\Phi}\Big(v_1 \in \mathcal{E}[\hat{\sigma}(A), \sigma^*] 
+       \trm{ or } \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K} \Big)  \\
+    &\leq \exp(f(n)) \Big( P_{\Phi}(v_1 \in \mathcal{E}[\hat{\sigma}(A), \sigma^*]) + 
+               P_{\Phi} \left( \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K}  \right) \Big)    \qquad \mathbf{(*)}
 \end{align*}
-The last inequality follows because  $\E l(\hat{\sigma}(G), \sigma_0) = \frac{1}{n} \sum_{v=1}^n P( v \in \mathcal{E}(\hat{\sigma}(G)) ) = P(v_1 \in \mathcal{E}(\hat{\sigma}(G))$ since the nodes are exchangeable when $\sigma_0$ is drawn uniformly at random. 
 
-To bound the second term, note that under $P_{\Psi}$, any clustering algorithm has at most $\frac{1}{2}$ chance of clustering $v_1$ correctly. Thus
+By lemma~\ref{lem:permutation_invariance_symmetry}, we have
+\begin{align*}
+ \E_{\Phi}  \tilde{l}(\hat{\sigma}(A), \sigma^*) &= 
+    \frac{1}{n} \sum_{v=1}^n P_{\Phi}( v \in \mathcal{E}[\hat{\sigma}(A), \sigma^*]) \\
+  &\geq \frac{1}{n} \sum_{v \in C_{\sigma^*(v_1)}} P_{\Phi}( v \in \mathcal{E}[\hat{\sigma}(A), \sigma^*]) \\
+  &\stackrel{(a)}= \frac{|C_{\sigma^*(v_1)}|}{n} P_{\Phi}( v_1 \in \mathcal{E}[\hat{\sigma}(A), \sigma^*]) \\
+  &\geq \frac{1}{ \beta K} P_{\Phi}( v_1 \in \mathcal{E}[\hat{\sigma}(A), \sigma^*])
+\end{align*}
+
+where $(a)$ follows from corollary~\ref{cor:permutation_invariance_symmetry_sbm}. Also,
+
+\begin{align*}
+\E_{\Phi} \tilde{l}(\hat{\sigma}(A), \sigma^*) &\geq  
+         \E_{\Phi}\Big[ \tilde{l}(\hat{\sigma}(A), \sigma^*) \,\Big|\, 
+        \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K}\Big] 
+              P\left( \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K} \right) \\
+    &\geq \frac{1}{4\beta K} P\left( \tilde{l}(\hat{\sigma}(A), \sigma^*) \geq \frac{1}{4\beta K} \right)
+\end{align*}
+
+Therefore, continuing on from $\mathbf{(*)}$ where we left off, we have:
+
+\begin{align*}
+P_{\Psi}( \mathcal{Q} \leq f(n), \neg E) &\leq 
+     \exp( f(n)) \cdot 5 \beta K \cdot \E_{\Phi} \tilde{l}(\hat{\sigma}(A), \sigma^*)
+\end{align*}
+
+
+Now we turn to the second term in equation~\ref{eqn:psi_Q_bound}. We observe that under $\Psi$, the distribution over $A$ does not depend on $\sigma^*$. Therefore, we have that
+
+\begin{align*}
+&P_{\Psi}\left(   v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma^*]   
+    \trm{ and }  \tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} \right) \\
+&=   P_{\Psi}\left( v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma^*] 
+     \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} 
+        \given \sigma^* = \sigma_0^1 \right) \frac{1}{2}  \\
+ &\quad +    P_{\Psi}\left( v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma^*]
+       \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} 
+       \given \sigma^* = \sigma_0^2 \right) \frac{1}{2} \\
+      &=  P_{\Psi}\left( v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^1] 
+                 \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^1)  \leq \frac{1}{4\beta K} \right) \frac{1}{2} \\
+  &\quad +  
+          P_{\Psi}\left( v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^2]  
+          \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^2)  \leq \frac{1}{4\beta K}  \right) \frac{1}{2} 
+\end{align*}
+
+
+Because $l(\hat{\sigma}(A), \sigma_0^1) \leq \tilde{l}(\hat{\sigma}(A), \sigma_0^1) \leq \frac{1}{4 \beta K}$, we know, by lemma \ref{lem:consensus_uniqueness}, that $S_K[\hat{\sigma}(A), \sigma_0^1]$ has only one element--let's call it $\rho$. Because $d_H(\sigma_0^1, \sigma_0^2) = 1$, it must be that $\frac{1}{n} d_H(\rho \circ \hat{\sigma}(A), \sigma_0^2) \leq \frac{1}{4 \beta K} + \frac{1}{n} \leq \frac{1}{2 \beta K}$ and therefore, $\rho \in S_K[\hat{\sigma}(A), \sigma_0^2]$ as well. Because $(\rho \circ \hat{\sigma}(A) )(v_1) $ cannot both be $\sigma_0^1(v_1) = 1$ and $\sigma_0^2(v_1) = 2$ at the same time, it must be that $v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^1]$ and $v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^2]$ cannot both be true.
+
+Therefore, we have that
 \[
-P_{\Psi}(\mathcal{Q} \leq f(n), v_1 \notin \mathcal{E}) \leq P_{\Psi}(v_1 \notin \mathcal{E}) \leq \frac{1}{2}.
+\mathbbm{1}\left\{  v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^1]  
+   \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^1)  \leq \frac{1}{4\beta K}  \right\} +  
+\mathbbm{1}\left\{ v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^2] 
+   \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^2)  \leq \frac{1}{4\beta K}  \right\} + 
+ \leq 1.
 \]
+
+This implies that
+\[
+P_{\Psi}\left\{  v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^1]  
+   \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^1)  \leq \frac{1}{4\beta K}  \right\} +  
+P_{\Psi}\left\{ v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma_0^2] 
+   \trm{ and }\tilde{l}(\hat{\sigma}(A), \sigma_0^2)  \leq \frac{1}{4\beta K}  \right\}
+ \leq 1.
+\]
+
+
+And therefore, 
+\[
+P_{\Psi}(E) = P_{\Psi}\left(  v_1 \notin \mathcal{E}[\hat{\sigma}(A), \sigma^*]   
+    \trm{ and }  \tilde{l}(\hat{\sigma}(A), \sigma^*) \leq \frac{1}{4\beta K} \right) \leq \frac{1}{2}
+\]
+
+Thus
+\[
+P_{\Psi}(\mathcal{Q} \leq f(n), E) 
+             \leq P_{\Psi}(E) \leq \frac{1}{2}.
+\]
+
+
+
+
 Combining these two bounds, we have that
 \[
-P_{\Psi}(\mathcal{Q} \leq f(n)) \leq \exp(f(n)) \E_{\Phi} l(\hat{\sigma}, \sigma_0) + \frac{1}{2}.
+P_{\Psi}(\mathcal{Q} \leq f(n)) \leq \exp(f(n)) \frac{\beta K}{2} \E_{\Phi} l(\hat{\sigma}, \sigma_0) + \frac{1}{2}.
 \]
-Let $f(n) = \log \frac{1}{4 \E_{\Phi} l(\hat{\sigma}, \sigma_0)}$, then 
+Let $f(n) = \log \frac{1}{2 \beta K  \E_{\Phi} \tilde{l}(\hat{\sigma}, \sigma_0)}$, then 
 
 \[
-P_{\Psi}\left(\mathcal{Q} \leq \log \frac{1}{4 \E_{\Phi} l(\hat{\sigma}, \sigma_0)} \right) \leq \frac{3}{4}.
+P_{\Psi}\left(\mathcal{Q} \leq \log \frac{1}{2 \beta K \E_{\Phi} l(\hat{\sigma}, \sigma_0)} \right) \leq \frac{3}{4}.
 \]
 From Chebyshev's inequality, we also have that
 \[
 P_{\Psi}\left( \mathcal{Q} \leq \E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})} \right) \geq 4/5,
 \]
-where $V_\Psi(Q)$ is the variance of $Q$ under measure $\Psi$. Hence, we get that $\log \frac{1}{4 \E_{\Phi} l(\hat{\sigma},\sigma_0)} \leq \E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})}$, stated equivalently as
+where $V_\Psi(Q)$ is the variance of $Q$ under measure $\Psi$. Hence, we get that $\log \frac{1}{2 \beta K \E_{\Phi} l(\hat{\sigma},\sigma_0)} \leq \E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})}$, stated equivalently as
 \[
-\E_{\Phi} l(\hat{\sigma}, \sigma_0) \geq \frac{1}{4} \exp\Big( - (\E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})} ) \Big).
+\E_{\Phi} l(\hat{\sigma}, \sigma_0) \geq \frac{1}{2 \beta K} \exp\Big( - (\E_{\Psi} \mathcal{Q} + \sqrt{ 5 V_{\Psi}(\mathcal{Q})} ) \Big).
 \]
-We now just need to compute $\E_{\Psi} \mathcal{Q}$ and $V_{\Psi}(\mathcal{Q})$. Calculating the expected value first, we obtain
+We now just need to compute $\E_{\Psi} \mathcal{Q}$ and $V_{\Psi}(\mathcal{Q})$. We first compute $\E_{\Psi} \mathcal{Q}$.
+
+\[
+\E_{\Psi} \mathcal{Q} = \E_{\Psi} [ \mathcal{Q} \given \sigma^* = \sigma_0^1 ] \frac{1}{2} + 
+              \E_{\Psi} [ \mathcal{Q} \given \sigma^* = \sigma_0^2 ] \frac{1}{2} 
+\]
+
 \begin{align*}
-\E_{\Psi} \mathcal{Q} &= \E_{\Psi}  \sum_{v \neq 1,\, v \in C_1} \log \frac{Y(A_{1v})}{P(A_{1v})} + \sum_{v \neq 1,\, v \in C_2} \log \frac{Y(A_{1v})}{Q(A_{1v})}  \\
-     &= (\frac{n}{\beta K} - 1) \int \log \frac{dY}{dP} dY + (\frac{n}{\beta K}) \int \log \frac{dY}{dQ} dY \\
-     &= (\frac{n}{\beta K} - 1/2) 2 D\\
-     &= (\frac{n}{\beta K} - 1/2) I \\
-     &= \frac{nI}{\beta K} (1 + o(1)). 
+\E_{\Psi} [\mathcal{Q} \given \sigma^* = \sigma_0^1] &= \E_{\Psi}  \sum_{u: \, u \neq v_1,\, \sigma_0^1(u) = 1} \log \frac{Y(A_{uv_1})}{P(A_{uv_1})} + \sum_{u :\, \sigma_0^1(u) = 2} \log \frac{Y(A_{uv_1})}{Q(A_{uv_1})}  \\
+     &= \frac{n}{\beta K}  \int \log \frac{dY}{dP} dY + \frac{n}{\beta K} \int \log \frac{dY}{dQ} dY \\
+     &= \frac{n}{\beta K} 2 D\\
+     &= \frac{n}{\beta K} I \\
 \end{align*}
 
+In like fashion, we can show that
+\[
+\E_{\Psi}[ \mathcal{Q} \given \sigma^* = \sigma_0^2] = \frac{n}{\beta K} I
+\]
 
+Therefore, we have that
+\begin{align}
+\E_{\Psi} \mathcal{Q} = \frac{n I}{\beta K} \label{eqn:expectation_psi_Q_equality}
+\end{align}
 
 
 The bound for the variance term is involved. We start with the decomposition:
+
 \begin{align*}
-V_{\Psi}(\mathcal{Q}) &= \sum_{v \neq 1, v\in C_1} V_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right) +
-                        \sum_{v \neq 1, v\in C_2} V_{\Psi} \left( \log \frac{Y(A_{1v})}{Q(A_{1v})} \right)  \\
-   &\leq (\frac{n}{\beta K} - 1) \E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 + 
-         \frac{n}{\beta K} \E_{\Psi} \left( \log \frac{Y(A_{1v})}{Q(A_{1v})} \right)^2. 
+V_{\Psi}(\mathcal{Q}) &= V( \E_{\Psi}[ \mathcal{Q} \given \sigma^* ] ) + 
+              E[ V_{\Psi}( \mathcal{Q} \given \sigma^* ) ] \\
+      &=   E[ V_{\Psi}( \mathcal{Q} \given \sigma^* ) ] \\
+      &=  V_{\Psi}( \mathcal{Q} \given \sigma^* = \sigma_0^1) \frac{1}{2} + 
+          V_{\Psi}( \mathcal{Q} \given \sigma^* = \sigma_0^2) \frac{1}{2}
 \end{align*}
 
 
-We will show that $\E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2$ can be bounded by $C I$ so that $\sqrt{ 5 V_{\Psi}(\mathcal{Q})} \leq C \sqrt{\frac{nI}{\beta K}} $. We have that
+\begin{align*}
+V_{\Psi}(\mathcal{Q} \given \sigma^* = \sigma_0^1) &= \sum_{u:\, u \neq 1, \sigma_0^1(u) = 1 } 
+         V_{\Psi} \left( \log \frac{Y(A_{v_1 u})}{P(A_{v_1 u})} \right) +
+                        \sum_{u :\, \sigma_0^1(u) = 2} V_{\Psi} \left( \log \frac{Y(A_{v_1 u})}{Q(A_{v_1 u})} \right)  \\
+   &\leq \frac{n}{\beta K}  \E_{\Psi} \left( \log \frac{Y(A_{v_1 u})}{P(A_{v_1 u})} \right)^2 + 
+         \frac{n}{\beta K} \E_{\Psi} \left( \log \frac{Y(A_{v_1 u})}{Q(A_{v_1 u})} \right)^2. 
+\end{align*}
+
+
+We will show that $\E_{\Psi} \left( \log \frac{Y(A_{v_1 u})}{P(A_{v_1 u})} \right)^2$ can be bounded by $C I$ so that $\sqrt{ 5 V_{\Psi}(\mathcal{Q})} \leq C \sqrt{\frac{nI}{\beta K}} $. We have that
 \begin{align}
-\E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 &= 
+\E_{\Psi} \left( \log \frac{Y(A_{uv^*})}{P(A_{uv^*})} \right)^2 &= 
     \int \left( \log \frac{dY}{dP} \right)^2 dY \nonumber \\
   &= Y_0 \log^2 \frac{Y_0}{P_0} + (1-Y_0) \int y(x) \log^2 \frac{(1-Y_0) y(x)}{(1-P_0)p(x)} dx. \label{eqn:lower_bound_var_terms}
 \end{align}
@@ -3394,7 +3750,7 @@ Therefore, we have that
 Combining the above bound with \ref{eqn:lower_bound_var_term_1}, we can now 
 go back to Equation~\ref{eqn:lower_bound_var_terms} and get that
 \begin{align*}
-\E_{\Psi} \left( \log \frac{Y(A_{1v})}{P(A_{1v})} \right)^2 \leq C I 
+\E_{\Psi} \left( \log \frac{Y(A_{uv^*})}{P(A_{uv^*})} \right)^2 \leq C I 
 \end{align*}
 
 Hence, $\sqrt{5 V_{\Psi} (\mathcal{Q})} \leq C \sqrt{ \frac{n I}{\beta K}}$. 
@@ -3407,9 +3763,6 @@ Now, suppose $\frac{nI}{K} \rightarrow \infty$. Then, we have that $\sqrt{\frac{
 Suppose $nI/K \rightarrow c < \infty$, then $\E_{\Psi} \mathcal{Q} = c (1 + o(1))$ and $\sqrt{ 5 V_{\Psi}(\mathcal{Q})} \leq C ( 1 + o(1))$. Therefore, 
 
  $\E_{\Phi} l(\hat{\sigma}, \sigma_0) > c' > 0$ for some constant $c'$. 
-
-
-
 
 
 
@@ -3427,13 +3780,13 @@ Suppose $nI/K \rightarrow c < \infty$, then $\E_{\Psi} \mathcal{Q} = c (1 + o(1)
 
 \begin{lemma}
 \label{lem:renyi_hellinger}
-Let $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and let $H = (\sqrt{P_0} - \sqrt{Q_0})^2 + \int \left( \sqrt{ (1-P_0) p(x)} - \sqrt{ (1-Q_0) q(x)} \right)^2 dx$. If $I < 1- \epsilon$, then we have that
+Let $I = -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \right)$ and let $I^{h} = (\sqrt{P_0} - \sqrt{Q_0})^2 + \int \left( \sqrt{ (1-P_0) p(x)} - \sqrt{ (1-Q_0) q(x)} \right)^2 dx$. If $I^h < 2 - 2\epsilon$, then we have that
 
 \[
-I = H(1+\eta)
+I = I^h(1+\eta)
 \]
 
-where $|\eta| \leq \frac{H}{4\epsilon}$. Therefore, we have that $I \rightarrow 0$ iff $H \rightarrow 0$ and that if $I \rightarrow 0$, $ I = H(1+o(1))$.
+where $|\eta| \leq \frac{I^h}{2\epsilon}$. Therefore, we have that $I \rightarrow 0$ iff $I^h \rightarrow 0$ and that if $I \rightarrow 0$, $ I = I^h(1+o(1))$.
 
 \end{lemma}
 
@@ -3444,11 +3797,11 @@ I &= -2 \log \left( \sqrt{P_0 Q_0} + \int \sqrt{(1-P_0)(1-Q_0) p(x) q(x)} dx \ri
   &= -2 \log \left( 1 - \frac{1}{2} \left( 
                 (\sqrt{P_0} - \sqrt{Q_0})^2 + 
                \int (\sqrt{(1-P_0)p(x)} - \sqrt{(1-Q_0)q(x)} )^2 dx \right) \right)\\
- &= -2 \log \left(1 - \frac{1}{2} H \right) \\
-  &= 2 \frac{1}{2} H (1 + \eta)
+ &= -2 \log \left(1 - \frac{1}{2} I^h \right) \\
+  &= 2 \frac{1}{2} I^h (1 + \eta)
 \end{align*}
+where $|\eta| \leq \frac{I^h}{2 \epsilon}$. The last equality follows from lemma~\ref{lem:log_linearize}.
 
-where $|\eta| \leq \frac{H}{2 \epsilon}$. 
 \end{proof}
 
 \begin{lemma}
