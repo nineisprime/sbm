@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  31 MAR 2017 15:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.24)  18 APR 2017 20:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -569,81 +569,612 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 55.
 LaTeX Info: Redefining \pageref on input line 55.
 LaTeX Info: Redefining \nameref on input line 55.
-  !name(paper_all_in_one.tex) !offset(2878) 
-./_region_.tex:60: Preview: Snippet 1 started.
+  !name(paper_all_in_one.tex) !offset(581) 
+./_region_.tex:62: Preview: Snippet 1 started.
 <-><->
       
-l.60 \[
-       
+l.62 For an $
+             n \times n$ matrix $A$ and a permutation $\pi \in S_n$, define ...
+
 Not a real error.
 
-LaTeX Font Info:    Try loading font information for OMX+yhex on input line 60.
+LaTeX Font Info:    Try loading font information for OMX+yhex on input line 62.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/yhmath/OMXyhex.fd
 File: OMXyhex.fd 
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 )
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <10> on input line 60.
+(Font)              <10> on input line 62.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <7> on input line 60.
+(Font)              <7> on input line 62.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <5> on input line 60.
-LaTeX Font Info:    Try loading font information for U+msa on input line 60.
+(Font)              <5> on input line 62.
+LaTeX Font Info:    Try loading font information for U+msa on input line 62.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 60.
+LaTeX Font Info:    Try loading font information for U+msb on input line 62.
 
 (/usr/local/texlive/2014basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-./_region_.tex:62: Misplaced alignment tab character &.
-l.62                 &
-                      \leq  \| \theta_1 - \theta_0 \| \sup_\theta \| \nabla_...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 Preview: Tightpage -32891 -32891 32891 32891
-./_region_.tex:63: Preview: Snippet 1 ended.(1555646+0x19550972).
+./_region_.tex:62: Preview: Snippet 1 ended.(382293+54613x1587730).
 <-><->
       
-l.63 \]
-       
+l.62 For an $n \times n$
+                         matrix $A$ and a permutation $\pi \in S_n$, define ...
+
 Not a real error.
 
 [1{/usr/local/texlive/2014basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
- !name(paper_all_in_one.tex) !offset(3809) 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 67.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 67.
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 67.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 67.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 67.
+./_region_.tex:62: Preview: Snippet 2 started.
+<-><->
+      
+l.62 For an $n \times n$ matrix $
+                                 A$ and a permutation $\pi \in S_n$, define ...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 2 ended.(447828+0x491521).
+<-><->
+      
+l.62 For an $n \times n$ matrix $A$
+                                    and a permutation $\pi \in S_n$, define ...
+
+Not a real error.
+
+[2]
+./_region_.tex:62: Preview: Snippet 3 started.
+<-><->
+      
+l.62 ...n \times n$ matrix $A$ and a permutation $
+                                                  \pi \in S_n$, define $\pi ...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 3 ended.(447828+98303x1956671).
+<-><->
+      
+l.62 ...matrix $A$ and a permutation $\pi \in S_n$
+                                                  , define $\pi A$ as an $n ...
+
+Not a real error.
+
+[3]
+./_region_.tex:62: Preview: Snippet 4 started.
+<-><->
+      
+l.62 ... and a permutation $\pi \in S_n$, define $
+                                                  \pi A$ as an $n \times n$ ...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 4 ended.(447828+0x888607).
+<-><->
+      
+l.62 ... permutation $\pi \in S_n$, define $\pi A$
+                                                   as an $n \times n$ matrix...
+
+Not a real error.
+
+[4]
+./_region_.tex:62: Preview: Snippet 5 started.
+<-><->
+      
+l.62 ...tion $\pi \in S_n$, define $\pi A$ as an $
+                                                  n \times n$ matrix such th...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 5 ended.(382293+54613x1587730).
+<-><->
+      
+l.62 ...in S_n$, define $\pi A$ as an $n \times n$
+                                                   matrix such that $[\pi A]...
+
+Not a real error.
+
+[5]
+./_region_.tex:62: Preview: Snippet 6 started.
+<-><->
+      
+l.62 ...i A$ as an $n \times n$ matrix such that $
+                                                  [\pi A]_{uv} = A_{\pi^{-1}...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 6 ended.(491520+238480x6702728).
+<-><->
+      
+l.62 ...pi A]_{uv} = A_{\pi^{-1}(u), \pi^{-1}(v)}$
+                                                  . In other words, $\pi A$ ...
+
+Not a real error.
+
+[6]
+./_region_.tex:62: Preview: Snippet 7 started.
+<-><->
+      
+l.62 ...^{-1}(u), \pi^{-1}(v)}$. In other words, $
+                                                  \pi A$ is the result of ap...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 7 ended.(447828+0x888607).
+<-><->
+      
+l.62 ...u), \pi^{-1}(v)}$. In other words, $\pi A$
+                                                   is the result of applying...
+
+Not a real error.
+
+[7]
+./_region_.tex:62: Preview: Snippet 8 started.
+<-><->
+      
+l.62 ...words, $\pi A$ is the result of applying $
+                                                  \pi$ to the rows and colum...
+
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 8 ended.(282168+0x397086).
+<-><->
+      
+l.62 ...s, $\pi A$ is the result of applying $\pi$
+                                                   to the rows and columns o...
+
+Not a real error.
+
+[8]
+./_region_.tex:62: Preview: Snippet 9 started.
+<-><->
+      
+l.62 ...pplying $\pi$ to the rows and columns of $
+                                                  A$. \\
+Not a real error.
+
+./_region_.tex:62: Preview: Snippet 9 ended.(447828+0x491521).
+<-><->
+      
+l.62 ...lying $\pi$ to the rows and columns of $A$
+                                                  . \\
+Not a real error.
+
+[9]
+./_region_.tex:64: Preview: Snippet 10 started.
+<-><->
+      
+l.64 \noindent Let $
+                    \hat{\sigma}$ be a clustering algorithm, that is, $\hat{...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 10 ended.(473316+0x397994).
+<-><->
+      
+l.64 \noindent Let $\hat{\sigma}$
+                                  be a clustering algorithm, that is, $\hat{...
+
+Not a real error.
+
+[10]
+./_region_.tex:64: Preview: Snippet 11 started.
+<-><->
+      
+l.64 ...ma}$ be a clustering algorithm, that is, $
+                                                  \hat{\sigma}(A)$ is a clus...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 11 ended.(491520+163840x1399241).
+<-><->
+      
+l.64 ...ring algorithm, that is, $\hat{\sigma}(A)$
+                                                   is a clustering $[n] \rig...
+
+Not a real error.
+
+[11]
+./_region_.tex:64: Preview: Snippet 12 started.
+<-><->
+      
+l.64 ...at is, $\hat{\sigma}(A)$ is a clustering $
+                                                  [n] \rightarrow [K]$ for a...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 12 ended.(491520+163840x2744468).
+<-><->
+      
+l.64 ...(A)$ is a clustering $[n] \rightarrow [K]$
+                                                   for any $n \times n$ matr...
+
+Not a real error.
+
+[12]
+./_region_.tex:64: Preview: Snippet 13 started.
+<-><->
+      
+l.64 ...clustering $[n] \rightarrow [K]$ for any $
+                                                  n \times n$ matrix $A$. We...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 13 ended.(382293+54613x1587730).
+<-><->
+      
+l.64 ...$[n] \rightarrow [K]$ for any $n \times n$
+                                                   matrix $A$. We say that $...
+
+Not a real error.
+
+[13]
+./_region_.tex:64: Preview: Snippet 14 started.
+<-><->
+      
+l.64 ...htarrow [K]$ for any $n \times n$ matrix $
+                                                  A$. We say that $\hat{\sig...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 14 ended.(447828+0x491521).
+<-><->
+      
+l.64 ...arrow [K]$ for any $n \times n$ matrix $A$
+                                                  . We say that $\hat{\sigma...
+
+Not a real error.
+
+[14]
+./_region_.tex:64: Preview: Snippet 15 started.
+<-><->
+      
+l.64 ...any $n \times n$ matrix $A$. We say that $
+                                                  \hat{\sigma}$ is \textbf{p...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 15 ended.(473316+0x397994).
+<-><->
+      
+l.64 ... n$ matrix $A$. We say that $\hat{\sigma}$
+                                                   is \textbf{permutation-in...
+
+Not a real error.
+
+[15]
+./_region_.tex:64: Preview: Snippet 16 started.
+<-><->
+      
+l.64 ...extbf{permutation-invariant} if, for any $
+                                                  A$ and any $\pi \in S_n$, ...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 16 ended.(447828+0x491521).
+<-><->
+      
+l.64 ...tbf{permutation-invariant} if, for any $A$
+                                                   and any $\pi \in S_n$, th...
+
+Not a real error.
+
+[16]
+./_region_.tex:64: Preview: Snippet 17 started.
+<-><->
+      
+l.64 ...ation-invariant} if, for any $A$ and any $
+                                                  \pi \in S_n$, there exists...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 17 ended.(447828+98303x1956671).
+<-><->
+      
+l.64 ...ant} if, for any $A$ and any $\pi \in S_n$
+                                                  , there exists $\tau \in S...
+
+Not a real error.
+
+[17]
+./_region_.tex:64: Preview: Snippet 18 started.
+<-><->
+      
+l.64 ... $A$ and any $\pi \in S_n$, there exists $
+                                                  \tau \in S_K$ such that $$...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 18 ended.(447828+98303x2068794).
+<-><->
+      
+l.64 ...$\pi \in S_n$, there exists $\tau \in S_K$
+                                                   such that $$ \hat{\sigma}...
+
+Not a real error.
+
+[18]
+./_region_.tex:64: Preview: Snippet 19 started.
+<-><->
+      
+l.64 ...$, there exists $\tau \in S_K$ such that $
+                                                  $ \hat{\sigma}(\pi A) = \t...
+
+Not a real error.
+
+./_region_.tex:64: Preview: Snippet 19 ended.(985660+0x28417720).
+<-><->
+      
+l.64 ...au \circ \hat{\sigma}(A) \circ \pi^{-1}.$$
+                                                  
+Not a real error.
+
+[19]
+./_region_.tex:67: Preview: Snippet 20 started.
+<-><->
+      
+l.67 In other words, if $
+                         \hat{\sigma}$ is permutation-invariant, then
+Not a real error.
+
+./_region_.tex:67: Preview: Snippet 20 ended.(473316+0x397994).
+<-><->
+      
+l.67 In other words, if $\hat{\sigma}$
+                                       is permutation-invariant, then
+Not a real error.
+
+[20]
+./_region_.tex:68: Preview: Snippet 21 started.
+<-><->
+      
+l.68 $
+      $l(\hat{\sigma}(A) \circ \pi^{-1}, \hat{\sigma}(\pi A)) =
+Not a real error.
+
+./_region_.tex:69: Preview: Snippet 21 ended.(1375964+0x28417720).
+<-><->
+      
+l.69 ...\circ \pi^{-1}, \hat{\sigma}(\pi A)) = 0$$
+                                                  
+Not a real error.
+
+[21]
+./_region_.tex:70: Preview: Snippet 22 started.
+<-><->
+      
+l.70 for any $
+              A$ and any $\pi$. Intuitively, $\hat{\sigma}$ is permutation i...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 22 ended.(447828+0x491521).
+<-><->
+      
+l.70 for any $A$
+                 and any $\pi$. Intuitively, $\hat{\sigma}$ is permutation i...
+
+Not a real error.
+
+[22]
+./_region_.tex:70: Preview: Snippet 23 started.
+<-><->
+      
+l.70 for any $A$ and any $
+                          \pi$. Intuitively, $\hat{\sigma}$ is permutation i...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 23 ended.(282168+0x397086).
+<-><->
+      
+l.70 for any $A$ and any $\pi$
+                              . Intuitively, $\hat{\sigma}$ is permutation i...
+
+Not a real error.
+
+[23]
+./_region_.tex:70: Preview: Snippet 24 started.
+<-><->
+      
+l.70 for any $A$ and any $\pi$. Intuitively, $
+                                              \hat{\sigma}$ is permutation i...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 24 ended.(473316+0x397994).
+<-><->
+      
+l.70 ...and any $\pi$. Intuitively, $\hat{\sigma}$
+                                                   is permutation invariant ...
+
+Not a real error.
+
+[24]
+./_region_.tex:70: Preview: Snippet 25 started.
+<-><->
+      
+l.70 ...odes are labeled. To see this, note that $
+                                                  \pi A$ is the result of re...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 25 ended.(447828+0x888607).
+<-><->
+      
+l.70 ...re labeled. To see this, note that $\pi A$
+                                                   is the result of relabeli...
+
+Not a real error.
+
+[25]
+./_region_.tex:70: Preview: Snippet 26 started.
+<-><->
+      
+l.70 ...is the result of relabeling the nodes in $
+                                                  A$ by $\pi$ -- $A_{uv} = [...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 26 ended.(447828+0x491521).
+<-><->
+      
+l.70 ... the result of relabeling the nodes in $A$
+                                                   by $\pi$ -- $A_{uv} = [\p...
+
+Not a real error.
+
+[26]
+./_region_.tex:70: Preview: Snippet 27 started.
+<-><->
+      
+l.70 ...result of relabeling the nodes in $A$ by $
+                                                  \pi$ -- $A_{uv} = [\pi A]_...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 27 ended.(282168+0x397086).
+<-><->
+      
+l.70 ...lt of relabeling the nodes in $A$ by $\pi$
+                                                   -- $A_{uv} = [\pi A]_{\pi...
+
+Not a real error.
+
+[27]
+./_region_.tex:70: Preview: Snippet 28 started.
+<-><->
+      
+l.70 ... relabeling the nodes in $A$ by $\pi$ -- $
+                                                  A_{uv} = [\pi A]_{\pi(u), ...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 28 ended.(491520+233018x5481194).
+<-><->
+      
+l.70 ...pi$ -- $A_{uv} = [\pi A]_{\pi(u), \pi(v)}$
+                                                  . If $\hat{\sigma}$ is per...
+
+Not a real error.
+
+[28]
+./_region_.tex:70: Preview: Snippet 29 started.
+<-><->
+      
+l.70 ... $A_{uv} = [\pi A]_{\pi(u), \pi(v)}$. If $
+                                                  \hat{\sigma}$ is permutati...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 29 ended.(473316+0x397994).
+<-><->
+      
+l.70 ...pi A]_{\pi(u), \pi(v)}$. If $\hat{\sigma}$
+                                                   is permutation-invariant,...
+
+Not a real error.
+
+[29]
+./_region_.tex:70: Preview: Snippet 30 started.
+<-><->
+      
+l.70 ...rmutation-invariant, then the clustering $
+                                                  \hat{\sigma}(\pi A)$ is th...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 30 ended.(491520+163840x1796327).
+<-><->
+      
+l.70 ... then the clustering $\hat{\sigma}(\pi A)$
+                                                   is the result of relabeli...
+
+Not a real error.
+
+[30]
+./_region_.tex:70: Preview: Snippet 31 started.
+<-><->
+      
+l.70 ...is the result of relabeling the nodes in $
+                                                  \hat{\sigma}(A)$ by $\pi$ ...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 31 ended.(491520+163840x1399241).
+<-><->
+      
+l.70 ... relabeling the nodes in $\hat{\sigma}(A)$
+                                                   by $\pi$ -- $\hat{\sigma}...
+
+Not a real error.
+
+[31]
+./_region_.tex:70: Preview: Snippet 32 started.
+<-><->
+      
+l.70 ...beling the nodes in $\hat{\sigma}(A)$ by $
+                                                  \pi$ -- $\hat{\sigma}(A)(v...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 32 ended.(282168+0x397086).
+<-><->
+      
+l.70 ...ng the nodes in $\hat{\sigma}(A)$ by $\pi$
+                                                   -- $\hat{\sigma}(A)(v) = ...
+
+Not a real error.
+
+[32]
+./_region_.tex:70: Preview: Snippet 33 started.
+<-><->
+      
+l.70 ...e nodes in $\hat{\sigma}(A)$ by $\pi$ -- $
+                                                  \hat{\sigma}(A)(v) = \hat{...
+
+Not a real error.
+
+./_region_.tex:70: Preview: Snippet 33 ended.(491520+163840x6678000).
+<-><->
+      
+l.70 ...igma}(A)(v) = \hat{\sigma}(\pi A)(\pi(v))$
+                                                  .
+Not a real error.
+
+[33]  !name(paper_all_in_one.tex) !offset(4169) 
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 76.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 76.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 76.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 76.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 76.
  ) 
 Here is how much of TeX's memory you used:
  9139 strings out of 494522
  130365 string characters out of 6167205
- 227751 words of memory out of 5000000
+ 228751 words of memory out of 5000000
  12254 multiletter control sequences out of 15000+600000
  5987 words of font info for 23 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 29i,5n,35p,496b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,5n,35p,734b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
 0.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mmi10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy10.pfb>
-Output written on _region_.pdf (1 page, 49512 bytes).
+cm/cmmi5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy7.pfb>
+Output written on _region_.pdf (33 pages, 88588 bytes).
 PDF statistics:
- 33 PDF objects out of 1000 (max. 8388607)
- 23 compressed objects within 1 object stream
+ 152 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

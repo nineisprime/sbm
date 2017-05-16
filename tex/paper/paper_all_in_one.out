@@ -14,28 +14,30 @@
 \BOOKMARK [1][-]{section.5}{Proof sketch: Recovery algorithm}{}% 14
 \BOOKMARK [2][-]{subsection.5.1}{Analysis of community recovery on a labeled network}{section.5}% 15
 \BOOKMARK [2][-]{subsection.5.2}{Discretization of the Renyi divergence}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.3}{Analysis on the transformation function}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.3}{Analysis of the transformation function}{section.5}% 17
 \BOOKMARK [1][-]{section.6}{Conclusion}{}% 18
 \BOOKMARK [1][-]{appendix.A}{Proof of Proposition 5.1}{}% 19
-\BOOKMARK [1][-]{appendix.B}{Appendix for Proposition 5.1}{}% 20
+\BOOKMARK [1][-]{appendix.B}{Supporting results for Proposition 5.1}{}% 20
 \BOOKMARK [2][-]{subsection.B.1}{Analysis of estimation error of l and l}{appendix.B}% 21
-\BOOKMARK [2][-]{subsection.B.2}{Analysis of the spectral clustering algorithm}{appendix.B}% 22
-\BOOKMARK [2][-]{subsection.B.3}{Analysis of the Initialization Scheme}{appendix.B}% 23
-\BOOKMARK [2][-]{subsection.B.4}{Choosing label l*}{appendix.B}% 24
-\BOOKMARK [2][-]{subsection.B.5}{Analysis of probability of error for a single node}{appendix.B}% 25
-\BOOKMARK [2][-]{subsection.B.6}{Lemmas for Proposition 5.1}{appendix.B}% 26
-\BOOKMARK [1][-]{appendix.C}{Proof of Proposition 5.2}{}% 27
-\BOOKMARK [1][-]{appendix.D}{Appendix for Proposition 5.2}{}% 28
-\BOOKMARK [2][-]{subsection.D.1}{Proof of Proposition D.1}{appendix.D}% 29
-\BOOKMARK [2][-]{subsection.D.2}{Lemmas for Proposition 5.2}{appendix.D}% 30
-\BOOKMARK [1][-]{appendix.E}{Proof of Proposition 5.3}{}% 31
-\BOOKMARK [2][-]{subsection.E.1}{Appendix for Proposition 5.3}{appendix.E}% 32
-\BOOKMARK [1][-]{appendix.F}{Proofs of Theorems 4.1 and Theorem 4.2}{}% 33
-\BOOKMARK [2][-]{subsection.F.1}{Main argument: Proof of Theorem 4.1}{appendix.F}% 34
-\BOOKMARK [2][-]{subsection.F.2}{Main argument: Proof of Theorem 4.2}{appendix.F}% 35
-\BOOKMARK [2][-]{subsection.F.3}{Transformation Analysis}{appendix.F}% 36
-\BOOKMARK [1][-]{appendix.G}{Proof of Proposition 4.1}{}% 37
-\BOOKMARK [2][-]{subsection.G.1}{Supporting propositions}{appendix.G}% 38
-\BOOKMARK [2][-]{subsection.G.2}{Supporting lemmas}{appendix.G}% 39
-\BOOKMARK [1][-]{appendix.H}{Appendix for Theorem 4.3}{}% 40
-\BOOKMARK [1][-]{appendix.I}{Additional useful lemmas}{}% 41
+\BOOKMARK [2][-]{subsection.B.2}{Analysis of spectral clustering}{appendix.B}% 22
+\BOOKMARK [2][-]{subsection.B.3}{Choosing the label l*}{appendix.B}% 23
+\BOOKMARK [2][-]{subsection.B.4}{Analysis of error probability for a single node}{appendix.B}% 24
+\BOOKMARK [2][-]{subsection.B.5}{Additional lemmas for Proposition 5.1}{appendix.B}% 25
+\BOOKMARK [1][-]{appendix.C}{Proof of Proposition 5.2}{}% 26
+\BOOKMARK [1][-]{appendix.D}{Appendix for Proposition 5.2}{}% 27
+\BOOKMARK [2][-]{subsection.D.1}{Proof of Proposition C.1}{appendix.D}% 28
+\BOOKMARK [2][-]{subsection.D.2}{Lemmas for Proposition 5.2}{appendix.D}% 29
+\BOOKMARK [1][-]{appendix.E}{Proof of Proposition 5.3}{}% 30
+\BOOKMARK [1][-]{appendix.F}{Proofs of Theorems 4.1 and Theorem 4.2}{}% 31
+\BOOKMARK [2][-]{subsection.F.1}{Main argument: Proof of Theorem 4.1}{appendix.F}% 32
+\BOOKMARK [2][-]{subsection.F.2}{Main argument: Proof of Theorem 4.2}{appendix.F}% 33
+\BOOKMARK [2][-]{subsection.F.3}{Transformation Analysis}{appendix.F}% 34
+\BOOKMARK [1][-]{appendix.G}{Proof of Proposition 4.1}{}% 35
+\BOOKMARK [2][-]{subsection.G.1}{Supporting lemmas}{appendix.G}% 36
+\BOOKMARK [2][-]{subsection.G.2}{Proof of examples}{appendix.G}% 37
+\BOOKMARK [1][-]{appendix.H}{Appendix for Theorem 4.3}{}% 38
+\BOOKMARK [2][-]{subsection.H.1}{Proof of Theorem 4.3}{appendix.H}% 39
+\BOOKMARK [2][-]{subsection.H.2}{Properties of permutation-equivariant estimators}{appendix.H}% 40
+\BOOKMARK [2][-]{subsection.H.3}{Properties of Renyi divergence}{appendix.H}% 41
+\BOOKMARK [2][-]{subsection.H.4}{Bounding the variance}{appendix.H}% 42
+\BOOKMARK [1][-]{appendix.I}{Additional useful lemmas}{}% 43

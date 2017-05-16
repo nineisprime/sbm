@@ -1,48 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2016)
+This is BibTeX, Version 0.99d (TeX Live 2015)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: paper_all_in_one.aux
 The style file: plain.bst
 Database file #1: paper.bib
-Warning--empty year in MosEtal12
-You've used 34 entries,
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            727 strings with 9433 characters,
-and the built_in function-call counts, 11272 in all, are:
-= -- 1115
-> -- 557
+            724 strings with 9236 characters,
+and the built_in function-call counts, 11003 in all, are:
+= -- 1091
+> -- 539
 < -- 4
-+ -- 221
-- -- 184
-* -- 804
-:= -- 1912
-add.period$ -- 105
-call.type$ -- 34
-change.case$ -- 189
++ -- 214
+- -- 178
+* -- 787
+:= -- 1862
+add.period$ -- 102
+call.type$ -- 33
+change.case$ -- 184
 chr.to.int$ -- 0
-cite$ -- 35
-duplicate$ -- 416
-empty$ -- 841
-format.name$ -- 184
-if$ -- 2316
+cite$ -- 33
+duplicate$ -- 406
+empty$ -- 824
+format.name$ -- 178
+if$ -- 2264
 int.to.chr$ -- 0
-int.to.str$ -- 34
-missing$ -- 37
-newline$ -- 174
-num.names$ -- 68
-pop$ -- 176
+int.to.str$ -- 33
+missing$ -- 36
+newline$ -- 169
+num.names$ -- 66
+pop$ -- 169
 preamble$ -- 1
-purify$ -- 158
+purify$ -- 154
 quote$ -- 0
-skip$ -- 299
+skip$ -- 291
 stack$ -- 0
-substring$ -- 682
-swap$ -- 77
+substring$ -- 677
+swap$ -- 76
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 130
-warning$ -- 1
-while$ -- 109
-width$ -- 36
-write$ -- 369
-(There was 1 warning)
+type$ -- 126
+warning$ -- 0
+while$ -- 107
+width$ -- 35
+write$ -- 360
