@@ -1,43 +1,47 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Model and problem formulation}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Model definition}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Community estimation}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Recovery algorithm}{}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Algorithm overview}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Transformation and discretization}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{Add noise}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.4}{Initialization}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.5}{Refinement and consensus}{section.3}% 10
-\BOOKMARK [1][-]{section.4}{Analysis of misclustering error}{}% 11
-\BOOKMARK [2][-]{subsection.4.1}{Rate of convergence}{section.4}% 12
-\BOOKMARK [2][-]{subsection.4.2}{Lower bound}{section.4}% 13
-\BOOKMARK [1][-]{section.5}{Proof sketch: Recovery algorithm}{}% 14
-\BOOKMARK [2][-]{subsection.5.1}{Analysis of community recovery on a labeled network}{section.5}% 15
-\BOOKMARK [2][-]{subsection.5.2}{Discretization of the Renyi divergence}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.3}{Analysis of the transformation function}{section.5}% 17
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 18
-\BOOKMARK [1][-]{appendix.A}{Proof of Proposition 5.1}{}% 19
-\BOOKMARK [1][-]{appendix.B}{Supporting results for Proposition 5.1}{}% 20
-\BOOKMARK [2][-]{subsection.B.1}{Analysis of estimation error of l and l}{appendix.B}% 21
-\BOOKMARK [2][-]{subsection.B.2}{Analysis of spectral clustering}{appendix.B}% 22
-\BOOKMARK [2][-]{subsection.B.3}{Choosing the label l*}{appendix.B}% 23
-\BOOKMARK [2][-]{subsection.B.4}{Analysis of error probability for a single node}{appendix.B}% 24
-\BOOKMARK [2][-]{subsection.B.5}{Additional lemmas for Proposition 5.1}{appendix.B}% 25
-\BOOKMARK [1][-]{appendix.C}{Proof of Proposition 5.2}{}% 26
-\BOOKMARK [1][-]{appendix.D}{Appendix for Proposition 5.2}{}% 27
-\BOOKMARK [2][-]{subsection.D.1}{Proof of Proposition C.1}{appendix.D}% 28
-\BOOKMARK [2][-]{subsection.D.2}{Lemmas for Proposition 5.2}{appendix.D}% 29
-\BOOKMARK [1][-]{appendix.E}{Proof of Proposition 5.3}{}% 30
-\BOOKMARK [1][-]{appendix.F}{Proofs of Theorems 4.1 and Theorem 4.2}{}% 31
-\BOOKMARK [2][-]{subsection.F.1}{Main argument: Proof of Theorem 4.1}{appendix.F}% 32
-\BOOKMARK [2][-]{subsection.F.2}{Main argument: Proof of Theorem 4.2}{appendix.F}% 33
-\BOOKMARK [2][-]{subsection.F.3}{Transformation Analysis}{appendix.F}% 34
-\BOOKMARK [1][-]{appendix.G}{Proof of Proposition 4.1}{}% 35
-\BOOKMARK [2][-]{subsection.G.1}{Supporting lemmas}{appendix.G}% 36
-\BOOKMARK [2][-]{subsection.G.2}{Proof of examples}{appendix.G}% 37
-\BOOKMARK [1][-]{appendix.H}{Appendix for Theorem 4.3}{}% 38
-\BOOKMARK [2][-]{subsection.H.1}{Proof of Theorem 4.3}{appendix.H}% 39
-\BOOKMARK [2][-]{subsection.H.2}{Properties of permutation-equivariant estimators}{appendix.H}% 40
-\BOOKMARK [2][-]{subsection.H.3}{Properties of Renyi divergence}{appendix.H}% 41
-\BOOKMARK [2][-]{subsection.H.4}{Bounding the variance}{appendix.H}% 42
-\BOOKMARK [1][-]{appendix.I}{Additional useful lemmas}{}% 43
+\BOOKMARK [2][-]{subsection.1.1}{Notation}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Model and problem formulation}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Weighted Stochastic Block Model}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Community estimation}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Permutation Equivariance}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Overview of main results}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Relation to Previous Work}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Estimation algorithm}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Algorithm overview}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Transformation and discretization}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Add noise}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.4}{Initialization}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.5}{Refinement and consensus}{section.4}% 14
+\BOOKMARK [1][-]{section.5}{Optimal Misclustering Error}{}% 15
+\BOOKMARK [2][-]{subsection.5.1}{Upper Bound}{section.5}% 16
+\BOOKMARK [2][-]{subsection.5.2}{Lower bound}{section.5}% 17
+\BOOKMARK [1][-]{section.6}{Proof sketch: Recovery algorithm}{}% 18
+\BOOKMARK [2][-]{subsection.6.1}{Analysis of community recovery on a labeled network}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.2}{Discretization of the Renyi divergence}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.3}{Analysis of the transformation function}{section.6}% 21
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 22
+\BOOKMARK [1][-]{appendix.A}{Proof of Proposition 6.1}{}% 23
+\BOOKMARK [1][-]{appendix.B}{Supporting results for Proposition 6.1}{}% 24
+\BOOKMARK [2][-]{subsection.B.1}{Analysis of estimation error of l and l}{appendix.B}% 25
+\BOOKMARK [2][-]{subsection.B.2}{Analysis of spectral clustering}{appendix.B}% 26
+\BOOKMARK [2][-]{subsection.B.3}{Choosing the label l*}{appendix.B}% 27
+\BOOKMARK [2][-]{subsection.B.4}{Analysis of error probability for a single node}{appendix.B}% 28
+\BOOKMARK [2][-]{subsection.B.5}{Additional lemmas for Proposition 6.1}{appendix.B}% 29
+\BOOKMARK [1][-]{appendix.C}{Proof of Proposition 6.3}{}% 30
+\BOOKMARK [1][-]{appendix.D}{Appendix for Proposition 6.3}{}% 31
+\BOOKMARK [2][-]{subsection.D.1}{Proof of Proposition C.1}{appendix.D}% 32
+\BOOKMARK [2][-]{subsection.D.2}{Lemmas for Proposition 6.3}{appendix.D}% 33
+\BOOKMARK [1][-]{appendix.E}{Proof of Proposition 6.2}{}% 34
+\BOOKMARK [1][-]{appendix.F}{Proofs of Theorems 5.2 and Theorem 5.1}{}% 35
+\BOOKMARK [2][-]{subsection.F.1}{Main argument: Proof of Theorem 5.2}{appendix.F}% 36
+\BOOKMARK [2][-]{subsection.F.2}{Main argument: Proof of Theorem 5.1}{appendix.F}% 37
+\BOOKMARK [2][-]{subsection.F.3}{Transformation Analysis}{appendix.F}% 38
+\BOOKMARK [1][-]{appendix.G}{Proof of Proposition 5.1}{}% 39
+\BOOKMARK [2][-]{subsection.G.1}{Supporting lemmas}{appendix.G}% 40
+\BOOKMARK [2][-]{subsection.G.2}{Proof of examples}{appendix.G}% 41
+\BOOKMARK [1][-]{appendix.H}{Appendix for Theorem 5.3}{}% 42
+\BOOKMARK [2][-]{subsection.H.1}{Proof of Theorem 5.3}{appendix.H}% 43
+\BOOKMARK [2][-]{subsection.H.2}{Properties of permutation-equivariant estimators}{appendix.H}% 44
+\BOOKMARK [2][-]{subsection.H.3}{Properties of Renyi divergence}{appendix.H}% 45
+\BOOKMARK [2][-]{subsection.H.4}{Bounding the variance}{appendix.H}% 46
+\BOOKMARK [1][-]{appendix.I}{Additional useful lemmas}{}% 47

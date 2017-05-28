@@ -30,6 +30,9 @@
 \usepackage{color}
 %This is for repeating theorems, lemmas
 \makeatletter
+
+\newtheorem*{theorem*}{Theorem}
+
 \newtheorem*{rep@theorem}{\rep@title}
 \newcommand{\newreptheorem}[2]{%
 \newenvironment{rep#1}[1]{%
@@ -54,28 +57,10 @@
 
 \begin{document}
 
-\message{ !name(paper_all_in_one.tex) !offset(581) }
+\message{ !name(paper_all_in_one.tex) !offset(554) }
 
+Define $\mathcal{G}^{\textrm{upper} \prime}_\Phi \subset (\mathcal{P} \times \mathcal{P})^\infty$ as sequences of densities $p(x), q(x)$ that satisfy $H \equiv \int_S (\sqrt{p(x)} - \sqrt{q(x)})^2 dx = o(1)$ as well as the following conditions:
 
-
-\begin{definition}
-For an $n \times n$ matrix $A$ and a permutation $\pi \in S_n$, define $\pi A$ as an $n \times n$ matrix such that $[\pi A]_{uv} = A_{\pi^{-1}(u), \pi^{-1}(v)}$. In other words, $\pi A$ is the result of applying $\pi$ to the rows and columns of $A$. \\
-
-\noindent Let $\hat{\sigma}$ be a clustering algorithm, that is, $\hat{\sigma}(A)$ is a clustering $[n] \rightarrow [K]$ for any $n \times n$ matrix $A$. We say that $\hat{\sigma}$ is \textbf{permutation-invariant} if, for any $A$ and any $\pi \in S_n$, there exists $\tau \in S_K$ such that $$ \hat{\sigma}(\pi A) = \tau \circ \hat{\sigma}(A) \circ \pi^{-1}.$$
-\end{definition}
-
-In other words, if $\hat{\sigma}$ is permutation-invariant, then 
-$$l(\hat{\sigma}(A) \circ \pi^{-1}, \hat{\sigma}(\pi A)) = 
-     \min_{\tau \in S_K} d_H(\tau \circ \hat{\sigma}(A) \circ \pi^{-1}, \hat{\sigma}(\pi A)) = 0$$ 
-for any $A$ and any $\pi$. Intuitively, $\hat{\sigma}$ is permutation invariant if the output clustering doesn't dependent upon how the nodes are labeled. To see this, note that $\pi A$ is the result of relabeling the nodes in $A$ by $\pi$ -- $A_{uv} = [\pi A]_{\pi(u), \pi(v)}$. If $\hat{\sigma}$ is permutation-invariant, then the clustering $\hat{\sigma}(\pi A)$ is the result of relabeling the nodes in $\hat{\sigma}(A)$ by $\pi$ -- $\hat{\sigma}(A)(v) = \hat{\sigma}(\pi A)(\pi(v))$.
-
-
-
-\message{ !name(paper_all_in_one.tex) !offset(4169) }
+\message{ !name(paper_all_in_one.tex) !offset(4022) }
 
 \end{document}
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% End:
